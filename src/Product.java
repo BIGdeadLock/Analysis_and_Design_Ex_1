@@ -25,6 +25,8 @@ public class Product {
         this.items = new ArrayList<>();
     }
 
+    // GETTERS
+
     public String getId() {
         return id;
     }
@@ -44,6 +46,8 @@ public class Product {
     public PremiumAccount getPremiumAccount() {
         return premiumAccount;
     }
+
+    // SETTERS
 
     /**
      * supplier set -> product has to have exactly one supplier.
