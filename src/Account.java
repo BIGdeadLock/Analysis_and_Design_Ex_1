@@ -42,7 +42,7 @@ public class Account {
 
     /**
      * Account has to have exactly one shoppingCart.
-     * @param shoppingCart
+     * @param shoppingCart - ShoppingCart
      * @throws InvalidArgumentException
      */
     public void setShoppingCart(ShoppingCart shoppingCart) throws InvalidArgumentException {
