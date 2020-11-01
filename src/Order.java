@@ -86,4 +86,24 @@ public class Order {
     public void addPayment(Payment pay){
         this.payments.add(pay);
     }
+
+    // TODO: Check if need to add customer and shit
+
+    /**
+     * The print method of the class
+     * @return String | String representation of the class.
+     */
+    public String toString(){
+        String print="";
+        print="number:"+this.number+" Order Date:"+this.ordered+" Shipped Date:"+this.shipped+" ship to:"+this.ship_to+
+                " status:"+this.status+" total:"+this.total+"\n Account:"+this.account+"\n Payments:";
+        for(int i=0; i<this.payments.size()-1; i++)
+            print+=payments.get(i)+", ";
+        print+=lineItems.get(this.lineItems.size()-1)+" \n LineItems: ";
+        for(int i=0; i<this.lineItems.size()-1; i++)
+            print+=lineItems.get(i)+", ";
+        print+=lineItems.get(this.lineItems.size()-1);
+        return print;
+    }
+
 }

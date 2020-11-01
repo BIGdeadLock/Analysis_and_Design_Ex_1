@@ -1,9 +1,6 @@
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -11,24 +8,29 @@ public class Main {
     static String currentLoggedIn="";
     static Account currentLoggedInAccount=null;
     static HashMap<String, Account> usersAccountMap;
+    static HashMap<String, String> objectsMap;
 
     public static void main(String[] args) throws InvalidArgumentException {
         Scanner scanner = new Scanner(System.in);
-        HashMap<String, ShoppingCart> shoppingCartHashMap;
         usersMap = new HashMap<>();
         usersAccountMap = new HashMap<>();
+        objectsMap = new HashMap<>();
 
         System.out.println("1. Add WebUser");
         System.out.println("2. Remove WebUser");
         System.out.println("3. Login WebUser");
         System.out.println("4. LogOut WebUser");
+        System.out.println("6. Display Last Order");
 
         String userChoice = "";
+        String Login_id;
         switch (Integer.parseInt(userChoice)) {
 
             case 1:
                 try {
-                    addUser(scanner);
+                    System.out.println("Enter new login id");
+                    Login_id = scanner.nextLine();
+                    AddWebUser(Login_id);
                 }
                 catch(InvalidArgumentException e){
                     e.printStackTrace();
@@ -36,37 +38,84 @@ public class Main {
                 break;
 
             case 2:
-                removeUser(scanner);
+                System.out.println("Enter login id to remove");
+                Login_id = scanner.nextLine();
+                RemoveWebUser(Login_id);
                 break;
 
             case 3:
-                loginUser(scanner);
+                System.out.println("Enter login id to log in");
+                Login_id = scanner.nextLine();
+                LoginWebUser(Login_id);
                 break;
 
             case 4:
-                logOutUser(scanner);
+                System.out.println("Enter login id to log out");
+                Login_id = scanner.nextLine();
+                LogoutWebUser(Login_id);
                 break;
+
+            case 6:
+                Displayorder();
+
 
         }
     }
 
-    private static void logOutUser(Scanner scanner) {
+    private static void LogoutWebUser(String Login_id) {
+        if(currentLoggedIn.equals(Login_id)) {
+            currentLoggedInAccount = null;
+            currentLoggedIn = "";
+        }
+
     }
 
-    private static void loginUser(Scanner scanner) {
-    }
+    /**
+     * The function will get a user name and validate the user credentials.
+     * After that the user will be logged in
+     * @param Login_id - String | the username
+     */
+    private static void LoginWebUser(String Login_id) {
+        Scanner scanner = new Scanner(System.in);
 
-    private static void removeUser(Scanner scanner) {
-    }
+        if (currentLoggedIn != null)
+            LogoutWebUser(currentLoggedIn);
 
-    public static void addUser(Scanner scanner)throws InvalidArgumentException {
-
-        //create the user
-        System.out.println("Enter login id");
-        String userName = scanner.nextLine();
+        // Validate user password
         System.out.println("Enter password");
         String password = scanner.nextLine();
-        usersMap.put(userName, password);
+        if (usersMap.get(Login_id).equals(password)) {
+            currentLoggedIn = Login_id;
+            currentLoggedInAccount = usersAccountMap.get(Login_id);
+        } else
+            System.out.println("Incorrect password");
+
+    }
+
+
+    public static void RemoveWebUser(String Login_id){
+        if(usersMap.containsKey(Login_id)) {
+            usersMap.remove(Login_id);
+            usersAccountMap.remove(Login_id);
+            if(currentLoggedIn.equals(Login_id)){
+                currentLoggedInAccount=null;
+                currentLoggedIn="";
+            }
+        }
+        else
+            System.out.println(Login_id + " not in the system");
+    }
+
+
+    public static void AddWebUser(String Login_id)throws InvalidArgumentException {
+        Scanner scanner = new Scanner(System.in);
+        //create the user
+        System.out.println("Enter password");
+        String password = scanner.nextLine();
+        // If the user already exist in the system - don't add it
+        if(usersMap.containsKey(Login_id))
+            return;
+        usersMap.put(Login_id, password);
 
         //create the user's customer profile
         System.out.println("Building customer profile...");
@@ -81,22 +130,52 @@ public class Main {
 
         //create the user's account
         System.out.println("Building customer account...");
+        System.out.println("Please enter your account id");
+        String account_id = scanner.nextLine();
         System.out.println("Please enter your billing address");
         String account_billing_address = scanner.nextLine();
 
 
         //set customer -> set webUser with customer, set account with customer -> set customer's account
         Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email);
-        WebUser new_webUser = new WebUser(userName, password, UserState.New, new_customer);
-        Account new_account = new Account(customer_id,account_billing_address,false,new Date(),
-                null, 0,new_customer,new ShoppingCart(new Date(),new_webUser));
+        WebUser new_webUser = new WebUser(Login_id, password, UserState.New, new_customer);
+
+        // Create the account according to the user type
+        System.out.println("Do you have a premium account? (Y/N)");
+        String answer = scanner.nextLine().toLowerCase();
+        Account new_account;
+        // The Date is the id of the shopping cart
+        Date shoppingCartDate = new Date();
+        if (answer.equals("y")) {
+            new_account = new PremiumAccount(account_id, account_billing_address, false, new Date(),
+                    null, 0, new_customer, new ShoppingCart(shoppingCartDate, new_webUser));
+        }
+        else{
+            new_account = new Account(account_id,account_billing_address,false,new Date(),
+                    null, 0,new_customer,new ShoppingCart(shoppingCartDate,new_webUser));
+        }
 
         new_customer.setAccount(new_account);
         new_customer.setWebUser(new_webUser);
 
-        System.out.println("Do you have a premium account? (Y/N)");
+        // Add the objects to the Data structure
+        objectsMap.put("Customer", customer_id);
+        objectsMap.put("WebUser", Login_id);
+        objectsMap.put("Account", account_id);
+        objectsMap.put("ShoppingCart", shoppingCartDate.toString());
 
-        System.out.println("Do you have a shopping cart? (Y/N)");
+    }
+
+    public static void Displayorder(){
+        List<Order> ord=currentLoggedInAccount.getOrders();
+        int size= currentLoggedInAccount.getOrderSize();
+        if(ord.isEmpty())
+            System.out.println("there is no orders");
+        else {
+            // Get the last order of the current logged in user
+            Order LastOrder = ord.get(size-1);
+            System.out.println(LastOrder);
+        }
 
     }
 
