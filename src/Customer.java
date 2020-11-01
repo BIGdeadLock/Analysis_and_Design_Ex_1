@@ -8,12 +8,11 @@ public class Customer  {
     private Account account;
     private WebUser webUser;
 
-    public Customer(String id, String address, String phone, String email,Account account,WebUser webUser)throws InvalidArgumentException {
+    public Customer(String id, String address, String phone, String email,Account account)throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         Email = email;
-        this.webUser = webUser;
         setAccount(account);
 
     }
@@ -27,5 +26,9 @@ public class Customer  {
         if(account == null)
             throw new InvalidArgumentException(new String[]{"Customer must be related to one account"});
         this.account = account;
+    }
+
+    public void setWebUser(WebUser webUser){
+        this.webUser = webUser;
     }
 }

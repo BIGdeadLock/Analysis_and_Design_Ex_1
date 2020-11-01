@@ -7,12 +7,12 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id, String password, UserState state,ShoppingCart shoppingCart,Customer customer) throws InvalidArgumentException {
+    public WebUser(String login_id, String password, UserState state,Customer customer) throws InvalidArgumentException {
         this.login_id = login_id;
         this.password = password;
         this.state = state;
         setCustomer(customer);
-        this.shoppingCart = shoppingCart;
+        //this.shoppingCart = shoppingCart;
     }
 
     /**
@@ -37,4 +37,8 @@ public class WebUser {
             throw new InvalidArgumentException(new String[]{"WebUser must be related to one shoppingCart"});
         this.shoppingCart = shoppingCart;
     }*/
+
+    public void setShoppingCart(ShoppingCart shoppingCart){
+        this.shoppingCart =shoppingCart;
+    }
 }

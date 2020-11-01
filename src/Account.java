@@ -25,8 +25,8 @@ public class Account {
         this.balance = balance;
         setCustomer(customer);
         setShoppingCart(shoppingCart);
-        this.orders = new ArrayList<Order>();
-        this.payments = new ArrayList<Payment>();
+        this.orders = new ArrayList<>();
+        this.payments = new ArrayList<>();
     }
 
     /**
