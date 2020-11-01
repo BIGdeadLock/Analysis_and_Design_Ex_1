@@ -27,8 +27,6 @@ public abstract class Payment  {
         this.paid = paid;
         this.total = total;
         this.details = details;
-        this.order = order;
-        this.account = account;
         setAccount(account);
         setOrder(order);
     }

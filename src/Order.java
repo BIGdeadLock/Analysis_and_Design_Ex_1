@@ -33,7 +33,6 @@ public class Order {
         this.ship_to = ship_to;
         this.status = status;
         this.total = total;
-        this.account = account;
         setAccount(account);
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();

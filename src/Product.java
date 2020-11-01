@@ -20,7 +20,6 @@ public class Product {
     public Product(String id, String name, Supplier sup) throws InvalidArgumentException{
         this.id = id;
         this.name = name;
-        this.sup = sup;
         setSupplier(sup);
         this.items = new ArrayList<>();
     }
