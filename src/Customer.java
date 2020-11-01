@@ -5,22 +5,22 @@ public class Customer  {
     private String address;
     private String phone;
     private String Email;
+
     private Account account;
     private WebUser webUser;
 
-    public Customer(String id, String address, String phone, String email,Account account)throws InvalidArgumentException {
+    /**
+     * create customer first and then add its account (avoid BIGDEADLOCK)
+     */
+    public Customer(String id, String address, String phone, String email){
         this.id = id;
         this.address = address;
         this.phone = phone;
-        Email = email;
-        setAccount(account);
+        this.Email = email;
     }
 
-    /*public Customer(String customer_id, String customer_address, String customer_phone_number, String customer_email) {
-    }*/
-
     /**
-     * Customer has to have exactly one account.
+     * Customer has to have exactly one account (will be set after account is created).
      * @param account
      * @throws InvalidArgumentException
      */

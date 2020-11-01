@@ -5,24 +5,32 @@ import java.util.Date;
 import java.util.List;
 
 public class Account {
+
     private String id;
     private String billing_address;
     private boolean is_closed;
     private Date open;
     private Date closed;
     private int balance;
+
     private Customer customer;
     private ShoppingCart shoppingCart;
+
     private List<Order> orders;
     private List<Payment> payments;
 
-    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    /**
+     * account will be set with customer --> then customer will set its account (by function)
+     * @throws InvalidArgumentException
+     */
+    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance,Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = is_closed;
         this.open = open;
         this.closed = closed;
         this.balance = balance;
+        setCustomer(customer);
         setShoppingCart(shoppingCart);
         this.orders = new ArrayList<>();
         this.payments = new ArrayList<>();
@@ -36,7 +44,7 @@ public class Account {
         return billing_address;
     }
 
-    public boolean isIs_closed() {
+    public boolean getIs_closed() {
         return is_closed;
     }
 

@@ -6,10 +6,18 @@ import java.util.List;
 
 public class ShoppingCart {
     private Date created;
+
     private Account account;
     private WebUser webUser;
+
     private List<LineItem> lineItems;
 
+    /**
+     * account related to shopping cart will be added by function(eliminate deadlock)
+     * @param created
+     * @param webUser
+     * @throws InvalidArgumentException
+     */
     public ShoppingCart(Date created,WebUser webUser) throws InvalidArgumentException {
         this.created = created;
         setWebUser(webUser);

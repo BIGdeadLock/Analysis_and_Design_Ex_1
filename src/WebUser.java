@@ -12,7 +12,6 @@ public class WebUser {
         this.password = password;
         this.state = state;
         setCustomer(customer);
-        //this.shoppingCart = shoppingCart;
     }
 
     /**
@@ -31,13 +30,6 @@ public class WebUser {
      * @param shoppingCart-ShoppingCart
      * @throws InvalidArgumentException
      */
-    /*
-    public void setShoppingCart(ShoppingCart shoppingCart) throws InvalidArgumentException {
-        if(shoppingCart == null)
-            throw new InvalidArgumentException(new String[]{"WebUser must be related to one shoppingCart"});
-        this.shoppingCart = shoppingCart;
-    }*/
-
     public void setShoppingCart(ShoppingCart shoppingCart){
         this.shoppingCart =shoppingCart;
     }
