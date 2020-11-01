@@ -10,10 +10,8 @@ public class ShoppingCart {
     private WebUser webUser;
     private List<LineItem> lineItems;
 
-    public ShoppingCart(Date created , Account account , WebUser webUser ) throws InvalidArgumentException {
+    public ShoppingCart(Date created) throws InvalidArgumentException {
         this.created = created;
-        setAccount(account);
-        setWebUser(webUser);
         this.lineItems = new ArrayList<>();
     }
 

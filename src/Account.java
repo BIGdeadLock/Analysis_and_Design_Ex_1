@@ -16,14 +16,13 @@ public class Account {
     private List<Order> orders;
     private List<Payment> payments;
 
-    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = is_closed;
         this.open = open;
         this.closed = closed;
         this.balance = balance;
-        setShoppingCart(shoppingCart);
         this.orders = new ArrayList<>();
         this.payments = new ArrayList<>();
     }
