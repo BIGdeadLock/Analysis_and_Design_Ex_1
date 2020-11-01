@@ -39,7 +39,7 @@ public class LineItem {
     }
 
     /**
-     * LineItem has to have exactly one Order.
+     * LineItem has to have exactly one Product.
      * @param product-ShoppingCart
      * @throws InvalidArgumentException
      */
