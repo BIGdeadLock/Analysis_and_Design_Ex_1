@@ -16,17 +16,60 @@ public class Account {
     private List<Order> orders;
     private List<Payment> payments;
 
-    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance,Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance,ShoppingCart shoppingCart) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = is_closed;
         this.open = open;
         this.closed = closed;
         this.balance = balance;
-        setCustomer(customer);
         setShoppingCart(shoppingCart);
         this.orders = new ArrayList<>();
         this.payments = new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBilling_address() {
+        return billing_address;
+    }
+
+    public boolean isIs_closed() {
+        return is_closed;
+    }
+
+    public Date getOpen() {
+        return open;
+    }
+
+    public Date getClosed() {
+        return closed;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public int getOrderSize(){
+        return orders.size();
     }
 
     /**
