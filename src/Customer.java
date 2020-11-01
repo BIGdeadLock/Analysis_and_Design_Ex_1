@@ -2,15 +2,15 @@ import com.sun.javaws.exceptions.InvalidArgumentException;
 
 public class Customer  {
     private String id;
-    private Address adress;
+    private String address;
     private String phone;
     private String Email;
     private Account account;
     private WebUser webUser;
 
-    public Customer(String id, Adress adress, String phone, String email,Account account,WebUser webUser) {
+    public Customer(String id, String address, String phone, String email,Account account,WebUser webUser)throws InvalidArgumentException {
         this.id = id;
-        this.adress = adress;
+        this.address = address;
         this.phone = phone;
         Email = email;
         this.webUser = webUser;
