@@ -8,11 +8,12 @@ public class Customer  {
     private Account account;
     private WebUser webUser;
 
-    public Customer(String id, String address, String phone, String email)throws InvalidArgumentException {
+    public Customer(String id, String address, String phone, String email,Account account)throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         Email = email;
+        setAccount(account);
     }
 
     /*public Customer(String customer_id, String customer_address, String customer_phone_number, String customer_email) {
