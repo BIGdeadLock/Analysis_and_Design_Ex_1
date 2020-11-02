@@ -271,7 +271,7 @@ public class Main {
 
     public static void DeleteProduct(String Product_name){
         boolean Exist = false;
-        //check if the product is in the system, if it is delete the product
+        //Check if the product is in the system, if it is delete the product
         for(int i=0; i<products.size(); i++){
             if (Product_name.equals(products.get(i).getName())){
                 products.remove(i);
