@@ -188,10 +188,11 @@ public class Main {
         System.out.println("Enter password");
         String password = scanner.nextLine();
         // If the user already exist in the system - don't add it
-        if(usersMap.containsKey(Login_id)) {
-            //TODO : Add while loop
+
+        while (usersMap.containsKey(Login_id)) {
             System.out.println("Login id already exists. Please try again.");
-            return;
+            System.out.println("Enter Login id again");
+            Login_id = scanner.nextLine();
         }
         usersMap.put(Login_id, password);
 
@@ -199,6 +200,12 @@ public class Main {
         System.out.println("Building customer profile...");
         System.out.println("Please enter your customer id");
         String customer_id = scanner.nextLine();
+        // Check if the id already exist. If Yes - ask the user's input again
+        while (factory.getObjectType(customer_id) == null){
+            System.out.println("Customer id already exists. Please try again.");
+            System.out.println("Enter Customer id again");
+            customer_id = scanner.nextLine();
+        }
         System.out.println("Please enter your address");
         String customer_address = scanner.nextLine();
         System.out.println("Please enter your phone number");
@@ -210,6 +217,13 @@ public class Main {
         System.out.println("Building customer account...");
         System.out.println("Please enter your account id");
         String account_id = scanner.nextLine();
+        // Check if the id already exist. If Yes - ask the user's input again
+        while (factory.getObjectType(account_id) == null){
+            System.out.println("Account id already exists. Please try again.");
+            System.out.println("Enter Account id again");
+            account_id = scanner.nextLine();
+        }
+
         System.out.println("Please enter your billing address");
         String account_billing_address = scanner.nextLine();
 
@@ -224,23 +238,28 @@ public class Main {
         Account new_account;
         // The Date is the id of the shopping cart
         Date shoppingCartDate = new Date();
+        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser)
         if (answer.equals("y")) {
             new_account = new PremiumAccount(account_id, account_billing_address,
-                    new_customer, new ShoppingCart(shoppingCartDate, new_webUser));
+                    new_customer, new_shoppingcart);
         }
         else{
             new_account = new Account(account_id,account_billing_address, new_customer,
-                    new ShoppingCart(shoppingCartDate,new_webUser));
+                    new_shoppingcart);
         }
 
         new_customer.setAccount(new_account);
         new_customer.setWebUser(new_webUser);
 
-        // Add the objects to the Data structure
+        // Add the objects to the Data structures
         objectsMap.put(customer_id, "Customer");
         objectsMap.put(Login_id, "WebUser");
         objectsMap.put(account_id, "Account");
         objectsMap.put(shoppingCartDate.toString(), "ShoppingCart");
+        factory.addObject(customer_id, new_customer);
+        factory.addObject(Login_id, new_webUser);
+        factory.addObject(account_id, new_account);
+        factory.addObject(shoppingCartDate.toString(), new_shoppingcart);
 
     }
 
