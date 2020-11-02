@@ -9,16 +9,18 @@ public class Main {
     static Account currentLoggedInAccount=null;
     static HashMap<String, Account> usersAccountMap;
     static HashMap<String, String> objectsMap;
-    static ArrayList<Product> products;
+    static HashMap<String,Product> products;
     static HashMap<String,PremiumAccount> premiumAccounts;
+    static HashMap<String,Supplier> suppliers;
 
     public static void main(String[] args) throws InvalidArgumentException {
         Scanner scanner = new Scanner(System.in);
         usersMap = new HashMap<>();
         usersAccountMap = new HashMap<>();
         objectsMap = new HashMap<>();
-        products = new ArrayList<>();
+        products = new HashMap<>();
         premiumAccounts = new HashMap<>();
+        suppliers = new HashMap<>();
 
         System.out.println("1. Add WebUser");
         System.out.println("2. Remove WebUser");
@@ -28,6 +30,7 @@ public class Main {
 
         String userChoice = "";
         String Login_id;
+        String Product_name;
         switch (Integer.parseInt(userChoice)) {
 
             case 1:
@@ -63,6 +66,21 @@ public class Main {
                 Displayorder();
                 break;
 
+            case 7:
+                System.out.println("Please enter Product name");
+                Product_name = scanner.nextLine();
+                LinkProduct(Product_name);
+                break;
+
+            case 8:
+                AddProduct();
+                break;
+
+            case 9:
+                System.out.println("Please enter Product name");
+                Product_name = scanner.nextLine();
+                DeleteProduct(Product_name);
+                break;
 
             case 10:
                 ShowAllObjects();
@@ -177,34 +195,86 @@ public class Main {
     }
 
     public static void Displayorder(){
-        List<Order> ord=currentLoggedInAccount.getOrders();
-        int size= currentLoggedInAccount.getOrderSize();
-        if(ord.isEmpty())
-            System.out.println("there is no orders");
+        if(currentLoggedIn!=null) {
+            List<Order> ord = currentLoggedInAccount.getOrders();
+            int size = currentLoggedInAccount.getOrderSize();
+            if (ord.isEmpty())
+                System.out.println("There is no orders");
+            else {
+                // Get the last order of the current logged in user
+                Order LastOrder = ord.get(size - 1);
+                System.out.println(LastOrder);
+            }
+        }
         else {
-            // Get the last order of the current logged in user
-            Order LastOrder = ord.get(size-1);
-            System.out.println(LastOrder);
+            System.out.println("No account is logged in");
         }
 
     }
 
     public static void LinkProduct(String product_name){
         Product pro = null;
-        for(int i=0; i<products.size(); i++){
-            if (product_name.equals(products.get(i).getName())){
-                pro = products.get(i);
-            }
+        //check if the product exist in the system
+        if (products.containsKey(product_name)){
+                pro = products.get(product_name);
         }
         if (pro==null){
             System.out.println("Product not in the system");
         }
+        //check if the account logged in is premium, if it is premium link the product to this account
         if (premiumAccounts.containsKey(currentLoggedIn)){
-            PremiumAccount Pre = (PremiumAccount) currentLoggedInAccount;
+            PremiumAccount Pre = premiumAccounts.get(currentLoggedIn);
             Pre.addProduct(pro);
         }
         else {
             System.out.println("User not Premium");
+        }
+    }
+
+    public static void AddProduct() throws InvalidArgumentException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter Product id");
+        String product_id = scanner.nextLine();
+        while (objectsMap.get(product_id) != null){
+            System.out.println("id already exist , please write another id\n");
+            product_id = scanner.nextLine();
+        }
+        System.out.println("Please enter Product name");
+        String product_name = scanner.nextLine();
+        System.out.println("Please enter Supplier id");
+        String supplier_id = scanner.nextLine();
+        while (objectsMap.get(supplier_id) != null && objectsMap.get(supplier_id)!="Supplier"){
+            System.out.println("id already exist , please write another id\n");
+            supplier_id = scanner.nextLine();
+        }
+        System.out.println("Please enter Supplier name");
+        String supplier_name = scanner.nextLine();
+        Supplier new_supplier = null;
+        if(suppliers.containsKey(supplier_id)){
+            new_supplier = suppliers.get(supplier_id);
+        }
+        else {
+            new_supplier = new Supplier(supplier_id,supplier_name);
+            suppliers.put(supplier_id,new_supplier);
+            objectsMap.put(supplier_id,"Supplier");
+        }
+        Product new_product = new Product(product_id,product_name,new_supplier);
+        products.put(product_id,new_product);
+        objectsMap.put(product_id,"Product");
+    }
+
+    public static void DeleteProduct(String Product_name){
+        boolean Exist = false;
+        //check if the product is in the system, if it is delete the product
+        for(int i=0; i<products.size(); i++){
+            if (Product_name.equals(products.get(i).getName())){
+                products.remove(i);
+                objectsMap.remove(products.get(i).getId());
+                Exist = true;
+            }
+        }
+        if(Exist==false){
+            System.out.println("Product not in the system");
         }
     }
 
