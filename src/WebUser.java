@@ -7,10 +7,10 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id, String password, UserState state,Customer customer) throws InvalidArgumentException {
+    public WebUser(String login_id, String password,Customer customer) throws InvalidArgumentException {
         this.login_id = login_id;
         this.password = password;
-        this.state = state;
+        this.state = UserState.New;
         setCustomer(customer);
     }
 
@@ -32,5 +32,13 @@ public class WebUser {
      */
     public void setShoppingCart(ShoppingCart shoppingCart){
         this.shoppingCart =shoppingCart;
+    }
+
+    /**
+     * This function is used to change the user state. For example if the user logged out
+     * @param state - Enum type. Options: New, Active, Blocked, Banned
+     */
+    public void setState(UserState state) {
+        this.state = state;
     }
 }
