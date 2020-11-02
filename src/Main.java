@@ -9,12 +9,16 @@ public class Main {
     static Account currentLoggedInAccount=null;
     static HashMap<String, Account> usersAccountMap;
     static HashMap<String, String> objectsMap;
+    static ArrayList<Product> products;
+    static HashMap<String,PremiumAccount> premiumAccounts;
 
     public static void main(String[] args) throws InvalidArgumentException {
         Scanner scanner = new Scanner(System.in);
         usersMap = new HashMap<>();
         usersAccountMap = new HashMap<>();
         objectsMap = new HashMap<>();
+        products = new ArrayList<>();
+        premiumAccounts = new HashMap<>();
 
         System.out.println("1. Add WebUser");
         System.out.println("2. Remove WebUser");
@@ -57,6 +61,12 @@ public class Main {
 
             case 6:
                 Displayorder();
+                break;
+
+
+            case 10:
+                ShowAllObjects();
+                break;
 
 
         }
@@ -178,6 +188,35 @@ public class Main {
         }
 
     }
+
+    public static void LinkProduct(String product_name){
+        Product pro = null;
+        for(int i=0; i<products.size(); i++){
+            if (product_name.equals(products.get(i).getName())){
+                pro = products.get(i);
+            }
+        }
+        if (pro==null){
+            System.out.println("Product not in the system");
+        }
+        if (premiumAccounts.containsKey(currentLoggedIn)){
+            PremiumAccount Pre = (PremiumAccount) currentLoggedInAccount;
+            Pre.addProduct(pro);
+        }
+        else {
+            System.out.println("User not Premium");
+        }
+    }
+
+    public static void ShowAllObjects(){
+        for (Map.Entry object : objectsMap.entrySet()) {
+            System.out.println("the id i : "+ object.getKey() + " ,the Value is: " + object.getValue());
+        }
+
+    }
+
+
+
 
 
 }
