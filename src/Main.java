@@ -199,10 +199,10 @@ public class Main {
         new_customer.setWebUser(new_webUser);
 
         // Add the objects to the Data structure
-        objectsMap.put("Customer", customer_id);
-        objectsMap.put("WebUser", Login_id);
-        objectsMap.put("Account", account_id);
-        objectsMap.put("ShoppingCart", shoppingCartDate.toString());
+        objectsMap.put(customer_id, "Customer");
+        objectsMap.put(Login_id, "WebUser");
+        objectsMap.put(account_id, "Account");
+        objectsMap.put(shoppingCartDate.toString(), "ShoppingCart");
 
     }
 

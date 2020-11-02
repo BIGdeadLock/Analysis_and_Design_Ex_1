@@ -8,42 +8,45 @@ public class ObjectsFactory {
         objectMap.put(id, o);
     }
 
-    public Object getObjectType (Object o) {
+    public Object getObjectType (String id) {
 
-        if(o instanceof Account)
-            return (Account)o;
+        if (!this.objectMap.containsKey(id))
+            return null;
+
+        if(this.objectMap.get(id) instanceof Account)
+            return (Account)this.objectMap.get(id);
         
-        else if(o instanceof PremiumAccount)
-            return (PremiumAccount) o;
+        else if(this.objectMap.get(id) instanceof PremiumAccount)
+            return (PremiumAccount) this.objectMap.get(id);
 
-        else if(o instanceof Customer)
-            return (Customer) o;
+        else if(this.objectMap.get(id) instanceof Customer)
+            return (Customer) this.objectMap.get(id);
 
-        else if(o instanceof DelayedPayment)
-            return (DelayedPayment) o;
+        else if(this.objectMap.get(id) instanceof DelayedPayment)
+            return (DelayedPayment) this.objectMap.get(id);
 
-        else if(o instanceof ImmediatePayment)
-            return (ImmediatePayment) o;
+        else if(this.objectMap.get(id) instanceof ImmediatePayment)
+            return (ImmediatePayment) this.objectMap.get(id);
 
-        else if(o instanceof LineItem)
-            return (LineItem) o;
+        else if(this.objectMap.get(id) instanceof LineItem)
+            return (LineItem) this.objectMap.get(id);
 
-        else if(o instanceof Order)
-            return (Order) o;
+        else if(this.objectMap.get(id) instanceof Order)
+            return (Order) this.objectMap.get(id);
 
-        else if(o instanceof Payment)
-            return (Payment) o;
+        else if(this.objectMap.get(id) instanceof Payment)
+            return (Payment) this.objectMap.get(id);
 
-        else if(o instanceof Product)
-            return (Product) o;
+        else if(this.objectMap.get(id) instanceof Product)
+            return (Product) this.objectMap.get(id);
 
-        else if(o instanceof ShoppingCart)
-            return (ShoppingCart) o;
+        else if(this.objectMap.get(id) instanceof ShoppingCart)
+            return (ShoppingCart) this.objectMap.get(id);
 
-        else if(o instanceof Supplier)
-            return (Supplier) o;
+        else if(this.objectMap.get(id) instanceof Supplier)
+            return (Supplier) this.objectMap.get(id);
 
         else
-            return (WebUser) o;
+            return (WebUser) this.objectMap.get(id);
     }
 }
