@@ -11,4 +11,10 @@ public class DelayedPayment extends Payment {
     }
 
     public Date getPaymentDate() { return paymentDate; }
+
+    public String toString(){
+        String print="";
+        print="Payment Date: "+this.paymentDate;
+        return print;
+    }
 }

@@ -33,4 +33,11 @@ public class Customer  {
     public void setWebUser(WebUser webUser){
         this.webUser = webUser;
     }
+
+    public String toString(){
+        String print="";
+        print="Customer ID: "+this.id+"\nAddress: "+this.address+
+                " Phone Number: "+this.phone+" Email: "+this.Email;
+        return print;
+    }
 }

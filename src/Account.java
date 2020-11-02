@@ -106,4 +106,12 @@ public class Account {
         this.payments.add(payment);
     }
     public void addOrder(Order order){ this.orders.add(order); }
+
+    public String toString(){
+        String print="";
+        print="Account ID: "+this.id+"\nBilling Address: "+this.billing_address+
+                " closed status: "+this.is_closed+" Date Opened: "+this.open+
+                " Date Closed: "+this.closed+" Balance:"+this.balance;
+        return print;
+    }
 }

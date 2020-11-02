@@ -50,4 +50,10 @@ public class ShoppingCart {
     public void addLineItem(LineItem lineItem){
         this.lineItems.add(lineItem);
     }
+
+    public String toString(){
+        String print="";
+        print="Shopping Cart Date Created: "+this.created;
+        return print;
+    }
 }

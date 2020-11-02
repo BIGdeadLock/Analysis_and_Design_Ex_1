@@ -9,4 +9,9 @@ public class ImmediatePayment extends Payment {
         super(id, paid, total, details, order, account);
         this.phoneConfirmation = phoneConfirmation;
     }
+    public String toString(){
+        String print="";
+        print="Payment Confirmation: "+this.phoneConfirmation;
+        return print;
+    }
 }

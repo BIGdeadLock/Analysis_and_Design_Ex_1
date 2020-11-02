@@ -95,8 +95,9 @@ public class Order {
      */
     public String toString(){
         String print="";
-        print="number:"+this.number+" Order Date:"+this.ordered+" Shipped Date:"+this.shipped+" ship to:"+this.ship_to+
-                " status:"+this.status+" total:"+this.total;
+        print="Order Number:"+this.number+"\nDate Ordered:"+this.ordered+" Date Shipped: " +
+                this.shipped+" Shipping Destination:"+this.ship_to+
+                " Status:"+this.status+" Total:"+this.total;
         return print;
     }
 

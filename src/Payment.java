@@ -67,5 +67,12 @@ public abstract class Payment  {
         this.account = acc;
     }
 
+    public String toString(){
+        String print="";
+        print="Payment ID: "+this.id+"\nDate: "+this.paid+" Total: "+this.total+
+        " Details: "+this.details;
+        return print;
+    }
+
 }
 

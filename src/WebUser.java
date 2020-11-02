@@ -41,4 +41,11 @@ public class WebUser {
     public void setState(UserState state) {
         this.state = state;
     }
+
+    public String toString(){
+        String print="";
+        print="WebUser ID: "+this.login_id+"\nPassword: "+this.password+
+                " state: "+this.state;
+        return print;
+    }
 }

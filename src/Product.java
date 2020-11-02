@@ -74,4 +74,11 @@ public class Product {
     public void addLineItem(LineItem item){
         this.items.add(item);
     }
+
+    public String toString(){
+        String print="";
+        print="Product ID: "+this.id+"\nName: "+this.name+
+                " Premium Account: "+this.premiumAccount;
+        return print;
+    }
 }

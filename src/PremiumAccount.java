@@ -13,5 +13,13 @@ public class PremiumAccount extends Account {
     public void addProduct(Product product){
         this.products.add(product);
     }
+
+    public String toString(){
+        String print="";
+        print="Premium Account ID: "+getId()+"\nBilling Address: "+getBilling_address()+
+                " closed status: "+getIs_closed()+" Date Opened: "+getOpen()+
+                " Date Closed: "+getClosed()+" Balance:"+getBalance()+"\nProducts: "+this.products;
+        return print;
+    }
 }
 

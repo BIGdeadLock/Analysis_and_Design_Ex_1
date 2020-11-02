@@ -48,4 +48,10 @@ public class LineItem {
             throw new InvalidArgumentException(new String[]{"LineItem must be related to one product"});
         this.product = product;
     }
+
+    public String toString(){
+        String print="";
+        print="LineItem Quantity: "+this.quantity+"\nPrice: "+this.price;
+        return print;
+    }
 }

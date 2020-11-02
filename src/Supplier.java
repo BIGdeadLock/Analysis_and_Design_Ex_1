@@ -37,4 +37,11 @@ public class Supplier {
     public void addProduct(Product product){
         this.products.add(product);
     }
+
+    public String toString(){
+        String print="";
+        print="Supplier ID: "+this.id+"\nName: "+this.name+
+                " Products: "+this.products;
+        return print;
+    }
 }
