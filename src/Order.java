@@ -21,17 +21,16 @@ public class Order {
      * @param ordered - Date
      * @param shipped - Date
      * @param ship_to - string
-     * @param status - OrderStatus
      * @param total - float
      * @param account - Account
      * @throws InvalidArgumentException
      */
-    public Order(String number, Date ordered, Date shipped, String ship_to, OrderStatus status, float total, Account account) throws InvalidArgumentException {
+    public Order(String number, Date ordered, Date shipped, String ship_to, float total, Account account) throws InvalidArgumentException {
         this.number = number;
         this.ordered = ordered;
         this.shipped = shipped;
         this.ship_to = ship_to;
-        this.status = status;
+        this.status = OrderStatus.New;
         this.total = total;
         setAccount(account);
         this.lineItems = new ArrayList<>();

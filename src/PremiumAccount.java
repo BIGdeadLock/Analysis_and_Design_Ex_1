@@ -21,5 +21,9 @@ public class PremiumAccount extends Account {
                 " Date Closed: "+getClosed()+" Balance:"+getBalance()+"\nProducts: "+this.products;
         return print;
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
 }
 
