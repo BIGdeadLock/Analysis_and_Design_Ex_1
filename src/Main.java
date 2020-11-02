@@ -127,7 +127,10 @@ public class Main {
                 ShowAllObjects();
                 break;
 
-
+            case 11:
+                System.out.println("Please enter object id");
+                String object_id = scanner.nextLine();
+                ShowObjectId(String object_id);
         }
     }
 
@@ -238,7 +241,7 @@ public class Main {
         Account new_account;
         // The Date is the id of the shopping cart
         Date shoppingCartDate = new Date();
-        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser)
+        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
         if (answer.equals("y")) {
             new_account = new PremiumAccount(account_id, account_billing_address,
                     new_customer, new_shoppingcart);
@@ -354,6 +357,14 @@ public class Main {
 
     }
 
+    /**
+     * The function will get an object id and will print all of its details.
+     *
+     * @param id - String | Representing and id of an existing object in the system
+     */
+    public static void ShowObjectId(String id){
+        System.out.println(factory.getObjectType(id));
+    }
 
 
 
