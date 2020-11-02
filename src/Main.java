@@ -25,11 +25,49 @@ public class Main {
         suppliers = new HashMap<>();
         factory = new ObjectsFactory();
 
+        //Saved Data
+        Supplier S=new Supplier("123","Moshe");
+        Product P=new Product("Bamba","Bamba",S);
+        Product P2=new Product("Ramen","Ramen",S);
+
+        Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com");
+        WebUser W=new WebUser("Dani","Dani123",C);
+        C.setWebUser(W);
+        Date to = new Date();
+        ShoppingCart SC=new ShoppingCart(to,W);
+        Account A=new Account("DaniAccount","Tel Mond",C,SC);
+        C.setAccount(A);
+
+        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com");
+        WebUser W1=new WebUser("Dana","Dana123",C1);
+        C1.setWebUser(W1);
+        ShoppingCart SC1=new ShoppingCart(to,W1);
+        PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
+        C1.setAccount(A1);
+        A1.addProduct(P);
+
+        factory.addObject("123",S);
+        factory.addObject("Bamba",P);
+        factory.addObject("Ramen",P2);
+        factory.addObject("Dani",W);
+        factory.addObject("DaniCustomer",C);
+        factory.addObject("DaniAccount",A);
+        factory.addObject("DanaCustomer",C1);
+        factory.addObject("Dana",W1);
+        factory.addObject("DanaAccount",A1);
+
+
         System.out.println("1. Add WebUser");
         System.out.println("2. Remove WebUser");
         System.out.println("3. Login WebUser");
         System.out.println("4. LogOut WebUser");
+        System.out.println("5: Make Order From User");
         System.out.println("6. Display Last Order");
+        System.out.println("7. Add Link Product to the Account Logged In");
+        System.out.println("8. Add Product");
+        System.out.println("9. Remove Product");
+        System.out.println("10. Show All Objects");
+        System.out.println("11. Show An Object");
 
         String userChoice = "";
         String Login_id;
