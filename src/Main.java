@@ -88,8 +88,11 @@ public class Main {
     private static void LoginWebUser(String Login_id) {
         Scanner scanner = new Scanner(System.in);
 
-        if (currentLoggedIn != null)
+        if (currentLoggedIn != null) {
+            // TODO: change the user state to blocked
             LogoutWebUser(currentLoggedIn);
+            System.out.println("Successfully logged in to the system");
+        }
 
         // Validate user password
         System.out.println("Enter password");
@@ -97,6 +100,9 @@ public class Main {
         if (usersMap.get(Login_id).equals(password)) {
             currentLoggedIn = Login_id;
             currentLoggedInAccount = usersAccountMap.get(Login_id);
+            // Need to change the user state to active - meaning he is logged in
+            // TODO: Change the webuser state
+
         } else
             System.out.println("Incorrect password");
 
@@ -148,7 +154,7 @@ public class Main {
 
         //set customer -> set webUser with customer, set account with customer -> set customer's account
         Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email);
-        WebUser new_webUser = new WebUser(Login_id, password, UserState.New, new_customer);
+        WebUser new_webUser = new WebUser(Login_id, password, new_customer);
 
         // Create the account according to the user type
         System.out.println("Do you have a premium account? (Y/N)");
@@ -157,12 +163,12 @@ public class Main {
         // The Date is the id of the shopping cart
         Date shoppingCartDate = new Date();
         if (answer.equals("y")) {
-            new_account = new PremiumAccount(account_id, account_billing_address, false, new Date(),
-                    null, 0, new_customer, new ShoppingCart(shoppingCartDate, new_webUser));
+            new_account = new PremiumAccount(account_id, account_billing_address,
+                    new_customer, new ShoppingCart(shoppingCartDate, new_webUser));
         }
         else{
-            new_account = new Account(account_id,account_billing_address,false,new Date(),
-                    null, 0,new_customer,new ShoppingCart(shoppingCartDate,new_webUser));
+            new_account = new Account(account_id,account_billing_address, new_customer,
+                    new ShoppingCart(shoppingCartDate,new_webUser));
         }
 
         new_customer.setAccount(new_account);

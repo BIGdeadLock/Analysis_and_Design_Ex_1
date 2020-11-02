@@ -23,13 +23,13 @@ public class Account {
      * account will be set with customer --> then customer will set its account (by function)
      * @throws InvalidArgumentException
      */
-    public Account(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance,Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public Account(String id, String billing_address, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
-        this.is_closed = is_closed;
-        this.open = open;
-        this.closed = closed;
-        this.balance = balance;
+        this.is_closed = false;
+        this.open = new Date();
+        this.closed = null;
+        this.balance = 0;
         setCustomer(customer);
         setShoppingCart(shoppingCart);
         this.orders = new ArrayList<>();

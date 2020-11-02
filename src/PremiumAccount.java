@@ -6,8 +6,8 @@ import java.util.List;
 
 public class PremiumAccount extends Account {
     private List<Product> products;
-    public PremiumAccount(String id, String billing_address, boolean is_closed, Date open, Date closed, int balance, Customer costume, ShoppingCart shoppingCart) throws InvalidArgumentException {
-        super(id, billing_address, is_closed, open, closed, balance, costume, shoppingCart);
+    public PremiumAccount(String id, String billing_address, Customer costume, ShoppingCart shoppingCart) throws InvalidArgumentException {
+        super(id, billing_address, costume, shoppingCart);
         this.products = new ArrayList<>();
     }
 
