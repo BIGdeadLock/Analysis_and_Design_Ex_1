@@ -1,7 +1,6 @@
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PremiumAccount extends Account {

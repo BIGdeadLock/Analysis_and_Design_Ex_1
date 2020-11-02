@@ -13,6 +13,8 @@ public class Main {
     static HashMap<String,PremiumAccount> premiumAccounts;
     static HashMap<String,Supplier> suppliers;
 
+    static ObjectsFactory factory;
+
     public static void main(String[] args) throws InvalidArgumentException {
         Scanner scanner = new Scanner(System.in);
         usersMap = new HashMap<>();
@@ -21,6 +23,7 @@ public class Main {
         products = new HashMap<>();
         premiumAccounts = new HashMap<>();
         suppliers = new HashMap<>();
+        factory = new ObjectsFactory();
 
         System.out.println("1. Add WebUser");
         System.out.println("2. Remove WebUser");
@@ -147,8 +150,11 @@ public class Main {
         System.out.println("Enter password");
         String password = scanner.nextLine();
         // If the user already exist in the system - don't add it
-        if(usersMap.containsKey(Login_id))
+        if(usersMap.containsKey(Login_id)) {
+            //TODO : Add while loop
+            System.out.println("Login id already exists. Please try again.");
             return;
+        }
         usersMap.put(Login_id, password);
 
         //create the user's customer profile
