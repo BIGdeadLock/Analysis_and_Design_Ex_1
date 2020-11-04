@@ -33,13 +33,9 @@ public class Main {
         Product P=new Product("Bamba","Bamba",S);
         Product P2=new Product("Ramen","Ramen",S);
 
-        Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com");
+        Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond");
         WebUser W=new WebUser("Dani","Dani123",C);
         C.setWebUser(W);
-        Date to = new Date();
-        ShoppingCart SC=new ShoppingCart(to,W);
-        Account A=new Account("DaniAccount","Tel Mond",C,SC);
-        C.setAccount(A);
 
         Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com");
         WebUser W1=new WebUser("Dana","Dana123",C1);
@@ -49,12 +45,13 @@ public class Main {
         C1.setAccount(A1);
         A1.addProduct(P);
 
+        //there is no shopping cart in the factory
         factory.addObject("123",S);
         factory.addObject("Bamba",P);
         factory.addObject("Ramen",P2);
         factory.addObject("Dani",W);
         factory.addObject("DaniCustomer",C);
-        factory.addObject("DaniAccount",A);
+        factory.addObject("DaniAccount",C.getAccount());
         factory.addObject("DanaCustomer",C1);
         factory.addObject("Dana",W1);
         factory.addObject("DanaAccount",A1);
@@ -74,21 +71,20 @@ public class Main {
         System.out.println("1. Add WebUser");
         System.out.println("2. Remove WebUser");
         System.out.println("3. Login WebUser");
-        System.out.println("4. LogOut WebUser");
-        System.out.println("5: Make Order From User");
-        System.out.println("6. Display Last Order");
-        System.out.println("7. Add Link Product to the Account Logged In");
+        System.out.println("4. Logout WebUser");
+        System.out.println("5: Make order");
+        System.out.println("6. Display order");
+        System.out.println("7. Link Product");
         System.out.println("8. Add Product");
-        System.out.println("9. Remove Product");
-        System.out.println("10. Show All Objects");
-        System.out.println("11. Show An Object");
+        System.out.println("9. Delete Product");
+        System.out.println("10. ShowAllObjects");
+        System.out.println("11. ShowObjectId");
 
         String userChoice = "";
         String Login_id;
         String Product_name;
-        switch (Integer.parseInt(userChoice)) {
-
-            case 1:
+        switch (userChoice){
+            case "Add WebUser":
                 try {
                     System.out.println("Enter new login id");
                     Login_id = scanner.nextLine();
@@ -99,53 +95,53 @@ public class Main {
                 }
                 break;
 
-            case 2:
+            case "Remove WebUser":
                 System.out.println("Enter login id to remove");
                 Login_id = scanner.nextLine();
                 RemoveWebUser(Login_id);
                 break;
 
-            case 3:
+            case "Login WebUser":
                 System.out.println("Enter login id to log in");
                 Login_id = scanner.nextLine();
                 LoginWebUser(Login_id);
                 break;
 
-            case 4:
+            case "Logout WebUser":
                 System.out.println("Enter login id to log out");
                 Login_id = scanner.nextLine();
                 LogoutWebUser(Login_id);
                 break;
 
-            case 5:
+            case "Make order":
                 Makeorder();
                 break;
 
-            case 6:
+            case "Display order":
                 Displayorder();
                 break;
 
-            case 7:
+            case "Link Product":
                 System.out.println("Please enter Product name");
                 Product_name = scanner.nextLine();
                 LinkProduct(Product_name);
                 break;
 
-            case 8:
+            case "Add Product":
                 AddProduct();
                 break;
 
-            case 9:
+            case "Delete Product":
                 System.out.println("Please enter Product name");
                 Product_name = scanner.nextLine();
                 DeleteProduct(Product_name);
                 break;
 
-            case 10:
+            case "ShowAllObjects":
                 ShowAllObjects();
                 break;
 
-            case 11:
+            case "ShowObjectId":
                 System.out.println("Please enter object id");
                 String object_id = scanner.nextLine();
                 ShowObjectId(object_id);

@@ -20,12 +20,12 @@ public class Customer  {
         setAccount(account);
     }
 
-    public Customer(String id, String address, String phone, String email,String idAccount, String billing_address, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public Customer(String id, String address, String phone, String email,String idAccount, String billing_address) throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.Email = email;
-        this.account = new Account(idAccount,billing_address,customer,shoppingCart);
+        this.account = new Account(idAccount,billing_address,this);
     }
 
     public String getId() {
