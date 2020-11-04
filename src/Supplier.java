@@ -39,9 +39,10 @@ public class Supplier {
     public void addProduct(Product product)throws InvalidArgumentException{
         if(product == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
-        assert(!products.contains(product));
-        product.setSupplier(this);
+        if(products.contains(product))
+            throw new InvalidArgumentException(new String[]{"Can't add the same product more than once "});
         this.products.add(product);
+        product.setSupplier(this);
     }
 
     public String toString(){

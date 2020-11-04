@@ -50,15 +50,19 @@ public class Product {
 
     /**
      * supplier set -> product has to have exactly one supplier.
-     * @param sup-Supplier
+     * @param supplier-Supplier
      * @throws InvalidArgumentException
      */
-    public void setSupplier(Supplier sup) throws InvalidArgumentException {
-        if(sup == null)
+    public void setSupplier(Supplier supplier) throws InvalidArgumentException {
+        if(supplier == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
-        //product does not yet have a supplier
-        assert(this.sup==null);
-        this.sup = sup;
+        if(this.sup != null)
+            throw new InvalidArgumentException(new String[]{"Can't add more than one supplier"});
+        if(!supplier.getProducts().contains(this) )
+            supplier.addProduct(this);
+        else
+            throw new InvalidArgumentException(new String[]{"Can't add the same product more than once"});
+        this.sup = supplier;
     }
 
     /**
@@ -80,9 +84,10 @@ public class Product {
     public void addLineItem(LineItem item) throws InvalidArgumentException {
         if(item == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
-        assert(!items.contains(item));
-        item.setProduct(this);
+        if(items.contains(item))
+            throw new InvalidArgumentException(new String[]{"Can't contain the same item more than once"});
         this.items.add(item);
+        item.setProduct(this);
     }
 
     public String toString(){
