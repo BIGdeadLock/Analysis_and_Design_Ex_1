@@ -39,6 +39,8 @@ public class Supplier {
     public void addProduct(Product product)throws InvalidArgumentException{
         if(product == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        if(product.getSup()!=null)
+            throw new InvalidArgumentException(new String[]{"product can only have one supplier"});
         if(products.contains(product))
             throw new InvalidArgumentException(new String[]{"Can't add the same product more than once "});
         this.products.add(product);

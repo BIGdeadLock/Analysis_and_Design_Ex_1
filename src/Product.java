@@ -60,8 +60,7 @@ public class Product {
             throw new InvalidArgumentException(new String[]{"Can't add more than one supplier"});
         if(!supplier.getProducts().contains(this) )
             supplier.addProduct(this);
-        else
-            throw new InvalidArgumentException(new String[]{"Can't add the same product more than once"});
+
         this.sup = supplier;
     }
 
