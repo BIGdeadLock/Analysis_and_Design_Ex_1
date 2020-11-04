@@ -81,8 +81,8 @@ public class Product {
         if(item == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
         assert(!items.contains(item));
-        this.items.add(item);
         item.setProduct(this);
+        this.items.add(item);
     }
 
     public String toString(){
