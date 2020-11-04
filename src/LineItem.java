@@ -1,5 +1,7 @@
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
+import java.util.List;
+
 public class LineItem {
     private int quantity;
     private int price;
@@ -24,6 +26,9 @@ public class LineItem {
     public void setShoppingCart(ShoppingCart sp) throws InvalidArgumentException {
         if(sp == null)
             throw new InvalidArgumentException(new String[]{"LineItem must be related to one shopping cart"});
+        if(this.shoppingCart != null){
+            throw new InvalidArgumentException(new String[]{"Can't add shopping cart because LineItem has one"});
+        }
         this.shoppingCart = sp;
     }
 
@@ -35,6 +40,9 @@ public class LineItem {
     public void setOrder(Order order) throws InvalidArgumentException {
         if(order == null)
             throw new InvalidArgumentException(new String[]{"LineItem must be related to one order"});
+        if(this.order!=null){
+            throw new InvalidArgumentException(new String[]{"Can't add order because LineItem has one"});
+        }
         this.order = order;
     }
 
@@ -46,6 +54,9 @@ public class LineItem {
     public void setProduct(Product product) throws InvalidArgumentException {
         if(product == null)
             throw new InvalidArgumentException(new String[]{"LineItem must be related to one product"});
+        if(this.product!=null){
+            throw new InvalidArgumentException(new String[]{"Can't add product because LineItem has one"});
+        }
         this.product = product;
     }
 
