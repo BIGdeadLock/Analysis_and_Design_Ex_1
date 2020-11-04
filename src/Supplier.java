@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +36,12 @@ public class Supplier {
      * add a product to the Products list (optional *)
      * @param product - Product
      */
-    public void addProduct(Product product){
+    public void addProduct(Product product)throws InvalidArgumentException{
+        if(product == null)
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        assert(!products.contains(product));
         this.products.add(product);
+        product.setSupplier(this);
     }
 
     public String toString(){

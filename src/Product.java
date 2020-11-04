@@ -55,15 +55,21 @@ public class Product {
      */
     public void setSupplier(Supplier sup) throws InvalidArgumentException {
         if(sup == null)
-            throw new InvalidArgumentException(new String[]{"product must be related to one supplier"});
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        //product does not yet have a supplier
+        assert(this.sup==null);
         this.sup = sup;
     }
 
     /**
-     * product can have one premium account or none (no input validation is required)
+     * product can have one premium account or none
      * @param premiumAccount -PremiumAccount
      */
-    public void setPremiumAccount(PremiumAccount premiumAccount) {
+    public void setPremiumAccount(PremiumAccount premiumAccount)throws InvalidArgumentException {
+        if(premiumAccount == null)
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        //product does not yet have a premiumAccount
+        assert(this.premiumAccount==null);
         this.premiumAccount = premiumAccount;
     }
 
@@ -71,8 +77,12 @@ public class Product {
      * add items to the LineItem list (initiated int the constructor)
      * @param item - LineItem
      */
-    public void addLineItem(LineItem item){
+    public void addLineItem(LineItem item) throws InvalidArgumentException {
+        if(item == null)
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        assert(!items.contains(item));
         this.items.add(item);
+        item.setProduct(this);
     }
 
     public String toString(){
