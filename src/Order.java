@@ -22,17 +22,15 @@ public class Order {
      * @param shipped - Date
      * @param ship_to - string
      * @param total - float
-     * @param account - Account
-     * @throws InvalidArgumentException
      */
-    public Order(String number, Date ordered, Date shipped, String ship_to, float total, Account account) throws InvalidArgumentException {
+    public Order(String number, Date ordered, Date shipped, String ship_to, float total)  {
         this.number = number;
         this.ordered = ordered;
         this.shipped = shipped;
         this.ship_to = ship_to;
         this.status = OrderStatus.New;
         this.total = total;
-        setAccount(account);
+
         this.lineItems = new ArrayList<>();
         this.payments = new ArrayList<>();
     }
@@ -66,7 +64,11 @@ public class Order {
      */
     public void setAccount(Account acc) throws InvalidArgumentException {
         if(acc == null)
-            throw new InvalidArgumentException(new String[]{"order must be related to one account"});
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+
+        // Before assigment need to check that the order is not related to any account
+        // (composition relation)
+        assert  (this.account == null);
         this.account = acc;
     }
 
@@ -74,7 +76,11 @@ public class Order {
      * add items to the LineItem list (initiated int the constructor)
      * @param item - LineItem
      */
-    public void addLineItem(LineItem item){
+    public void addLineItem(LineItem item)
+    {
+        // Instances assertions - each order instance can't
+        // be related to the same Lineitem instance twice
+        assert(!this.lineItems.contains(item));
         this.lineItems.add(item);
     }
 
@@ -83,10 +89,12 @@ public class Order {
      * @param pay - Payment
      */
     public void addPayment(Payment pay){
+        // Instances assertions - each order instance can't
+        // be related to the same pay instance twice
+        assert(!this.payments.contains(pay));
         this.payments.add(pay);
     }
 
-    // TODO: Check if need to add customer and shit
 
     /**
      * The print method of the class
