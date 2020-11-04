@@ -76,11 +76,13 @@ public class Order {
      * add items to the LineItem list (initiated int the constructor)
      * @param item - LineItem
      */
-    public void addLineItem(LineItem item)
-    {
+    public void addLineItem(LineItem item) throws InvalidArgumentException {
+        if(item == null)
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
         // Instances assertions - each order instance can't
         // be related to the same Lineitem instance twice
         assert(!this.lineItems.contains(item));
+        item.setOrder(this);
         this.lineItems.add(item);
     }
 
@@ -88,10 +90,14 @@ public class Order {
      * add payment to the payment list (initiated int the constructor)
      * @param pay - Payment
      */
-    public void addPayment(Payment pay){
+    public void addPayment(Payment pay) throws InvalidArgumentException {
+        if(pay == null)
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        // Instances assertions - each order instance can't
         // Instances assertions - each order instance can't
         // be related to the same pay instance twice
         assert(!this.payments.contains(pay));
+        pay.setOrder(this);
         this.payments.add(pay);
     }
 
