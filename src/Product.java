@@ -72,7 +72,8 @@ public class Product {
         if(premiumAccount == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
         //product does not yet have a premiumAccount
-        assert(this.premiumAccount==null);
+        if(this.premiumAccount != null)
+            throw new InvalidArgumentException(new String[]{"Can't add more than one premium account"});
         this.premiumAccount = premiumAccount;
     }
 
