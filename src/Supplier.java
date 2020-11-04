@@ -40,8 +40,8 @@ public class Supplier {
         if(product == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
         assert(!products.contains(product));
-        this.products.add(product);
         product.setSupplier(this);
+        this.products.add(product);
     }
 
     public String toString(){
