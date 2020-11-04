@@ -54,10 +54,10 @@ public class LineItem {
     public void setProduct(Product product) throws InvalidArgumentException {
         if(product == null)
             throw new InvalidArgumentException(new String[]{"LineItem must be related to one product"});
-        if(this.product!=null){
+        if(this.product!=null)
             throw new InvalidArgumentException(new String[]{"Can't add product because LineItem has one"});
-        }
         this.product = product;
+        product.addLineItem(this);
     }
 
     public String toString(){
