@@ -88,6 +88,17 @@ public class Account {
     public void setCustomer(Customer customer) throws InvalidArgumentException {
         if(customer == null)
             throw new InvalidArgumentException(new String[]{"Account must be related to one custumer"});
+        if(this.customer != null){
+            throw new InvalidArgumentException(new String[]{"Can't add customer because account has one"});
+        }
+        if(customer.getAccount() != this ){
+            if(customer.getAccount() == null){
+                customer.setAccount(this);
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add customer because account has customer"});
+            }
+        }
         this.customer = customer;
     }
 
@@ -99,13 +110,54 @@ public class Account {
     public void setShoppingCart(ShoppingCart shoppingCart) throws InvalidArgumentException {
         if(shoppingCart == null)
             throw new InvalidArgumentException(new String[]{"Account must be related to one shoppingCart"});
+        if(this.shoppingCart != null){
+            throw new InvalidArgumentException(new String[]{"Can't add shopping cart because it has one"});
+        }
+        if(shoppingCart.getAccount() != this ){
+            if(shoppingCart.getAccount() == null){
+                shoppingCart.setAccount(this);
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add shoping cart because it has account"});
+            }
+        }
         this.shoppingCart = shoppingCart;
     }
 
-    public void addPayment(Payment payment){
+    public void addPayment(Payment payment) throws InvalidArgumentException {
+        if(payment == null){
+            throw new InvalidArgumentException(new String[]{"Can't add a null"});
+        }
+        if(this.payments.contains(payment)){
+            throw new InvalidArgumentException(new String[]{"already has this payment"});
+        }
+        if(payment.getAccount() != this) {
+            if (payment.getAccount() != null) {
+                throw new InvalidArgumentException(new String[]{"Can't add payment because it has account "});
+            }
+            else{
+                payment.setAccount(this);
+            }
+        }
         this.payments.add(payment);
     }
-    public void addOrder(Order order){ this.orders.add(order); }
+    public void addOrder(Order order) throws InvalidArgumentException {
+        if(order == null){
+            throw new InvalidArgumentException(new String[]{"Can't add a null"});
+        }
+        if(this.orders.contains(order)){
+            throw new InvalidArgumentException(new String[]{"already has this order"});
+        }
+        if(order.getAccount() != this) {
+            if (order.getAccount() != null) {
+                throw new InvalidArgumentException(new String[]{"Can't add order because it has account "});
+            }
+            else{
+                order.setAccount(this);
+            }
+        }
+        this.orders.add(order);
+    }
 
     public String toString(){
         String print="";
