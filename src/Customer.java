@@ -74,7 +74,18 @@ public class Customer  {
         this.account = account;
     }
 
-    public void setWebUser(WebUser webUser){
+    public void setWebUser(WebUser webUser) throws InvalidArgumentException {
+        if(this.webUser != null){
+            throw new InvalidArgumentException(new String[]{"Can't add web user because customer has one"});
+        }
+        if(webUser.getCustomer() != this ){
+            if(webUser.getCustomer() == null){
+                webUser.setCustomer(this);
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add web user because it has another customer"});
+            }
+        }
         this.webUser = webUser;
     }
 
