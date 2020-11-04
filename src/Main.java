@@ -37,10 +37,10 @@ public class Main {
         WebUser W=new WebUser("Dani","Dani123",C);
         C.setWebUser(W);
 
-        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com");
+        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com","DanAccount", "Tel Mond");
         WebUser W1=new WebUser("Dana","Dana123",C1);
         C1.setWebUser(W1);
-        ShoppingCart SC1=new ShoppingCart(to,W1);
+        ShoppingCart SC1=new ShoppingCart(new Date(),W1);
         PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
         C1.setAccount(A1);
         A1.addProduct(P);
@@ -80,7 +80,7 @@ public class Main {
         System.out.println("10. ShowAllObjects");
         System.out.println("11. ShowObjectId");
 
-        String userChoice = "";
+        String userChoice = scanner.nextLine();
         String Login_id;
         String Product_name;
         switch (userChoice){
@@ -246,7 +246,9 @@ public class Main {
 
 
         //set customer -> set webUser with customer, set account with customer -> set customer's account
-        Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email);
+        Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
+                account_id, account_billing_address
+                );
         WebUser new_webUser = new WebUser(Login_id, password, new_customer);
 
         // Create the account according to the user type
