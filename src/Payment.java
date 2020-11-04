@@ -53,6 +53,10 @@ public abstract class Payment  {
     public void setOrder(Order ord) throws InvalidArgumentException {
         if(ord == null)
             throw new InvalidArgumentException(new String[]{"payment must be related to one order"});
+        if(this.order != null){
+            throw new InvalidArgumentException(new String[]{"Can't add Order because Payment has one"});
+        }
+        ord.addPayment(this);
         this.order = ord;
     }
 
@@ -64,6 +68,10 @@ public abstract class Payment  {
     public void setAccount(Account acc) throws InvalidArgumentException {
         if(acc == null)
             throw new InvalidArgumentException(new String[]{"payment must be related to one account"});
+        if(this.account != null){
+            throw new InvalidArgumentException(new String[]{"Can't add Account because Payment has one"});
+        }
+        acc.addPayment(this);
         this.account = acc;
     }
 
