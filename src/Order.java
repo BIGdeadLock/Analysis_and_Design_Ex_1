@@ -35,6 +35,18 @@ public class Order {
         this.payments = new ArrayList<>();
     }
 
+    public Order(String number, Date ordered, Date shipped, String ship_to, OrderStatus status, float total, Account account) {
+        this.number = number;
+        this.ordered = ordered;
+        this.shipped = shipped;
+        this.ship_to = ship_to;
+        this.status = status;
+        this.total = total;
+        this.account = account;
+        this.lineItems = new ArrayList<>();
+        this.payments = new ArrayList<>();
+    }
+
     // GETTERS
 
     public String getNumber() { return number; }
