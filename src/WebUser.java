@@ -22,6 +22,17 @@ public class WebUser {
     public void setCustomer(Customer customer) throws InvalidArgumentException {
         if(customer == null)
             throw new InvalidArgumentException(new String[]{"WebUser must be related to one customer"});
+        if(this.customer != null){
+            throw new InvalidArgumentException(new String[]{"Can't add costumer because web user has one"});
+        }
+        if(customer.getWebUser() != this ){
+            if(customer.getWebUser() == null){
+                customer.setWebUser(this);
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add web user because customer has one"});
+            }
+        }
         this.customer = customer;
     }
 
@@ -30,8 +41,19 @@ public class WebUser {
      * @param shoppingCart-ShoppingCart
      * @throws InvalidArgumentException
      */
-    public void setShoppingCart(ShoppingCart shoppingCart){
-        this.shoppingCart =shoppingCart;
+    public void setShoppingCart(ShoppingCart shoppingCart) throws InvalidArgumentException {
+        if(this.shoppingCart != null){
+            throw new InvalidArgumentException(new String[]{"Can't add shopping cart because web user has one"});
+        }
+        if(shoppingCart.getWebUser() != this ){
+            if(shoppingCart.getWebUser() == null){
+                shoppingCart.setWebUser(this); //TODO: need to check if it worked fine?
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add shopping cart because it has web user"});
+            }
+        }
+        this.shoppingCart = shoppingCart;
     }
 
     /**

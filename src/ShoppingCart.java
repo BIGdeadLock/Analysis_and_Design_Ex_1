@@ -24,6 +24,21 @@ public class ShoppingCart {
         this.lineItems = new ArrayList<>();
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public WebUser getWebUser() {
+        return webUser;
+    }
+
+    public List<LineItem> getLineItems() {
+        return lineItems;
+    }
 
     /**
      * Shopping cart has to have exactly one account.
