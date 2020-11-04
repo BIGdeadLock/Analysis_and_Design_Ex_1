@@ -14,6 +14,27 @@ public class WebUser {
         setCustomer(customer);
     }
 
+
+    public String getLogin_id() {
+        return login_id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserState getState() {
+        return state;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
     /**
      * WebUser has to have exactly one customer.
      * @param customer-ShoppingCart

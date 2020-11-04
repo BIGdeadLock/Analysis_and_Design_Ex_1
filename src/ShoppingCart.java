@@ -48,6 +48,17 @@ public class ShoppingCart {
     public void setAccount(Account account) throws InvalidArgumentException {
         if(account == null)
             throw new InvalidArgumentException(new String[]{"shopping cart must be related to one account"});
+        if(this.account != null){
+            throw new InvalidArgumentException(new String[]{"Can't add account because shopping cart has one"});
+        }
+        if(account.getShoppingCart() != this ){
+            if(account.getShoppingCart() == null){
+                account.setShoppingCart(this);
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add shopping cart because account has one"});
+            }
+        }
         this.account = account;
     }
 
@@ -58,11 +69,28 @@ public class ShoppingCart {
      */
     public void setWebUser(WebUser webUser) throws InvalidArgumentException {
         if(webUser == null)
-            throw new InvalidArgumentException(new String[]{"shopping cart must be related to one shopping web user"});
+            throw new InvalidArgumentException(new String[]{"shopping cart must be related to one web user"});
+        if(this.webUser != null){
+            throw new InvalidArgumentException(new String[]{"Can't add web user because shopping cart has one"});
+        }
+        if(webUser.getShoppingCart() != this ){
+            if(webUser.getShoppingCart() == null){
+                webUser.setShoppingCart(this);
+            }
+            else{
+                throw new InvalidArgumentException(new String[]{"Can't add shopping cart because web user has one"});
+            }
+        }
         this.webUser = webUser;
     }
 
-    public void addLineItem(LineItem lineItem){
+    public void addLineItem(LineItem lineItem) throws InvalidArgumentException{
+        if(lineItem == null)
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        if(this.lineItems.contains(lineItem)){
+            throw new InvalidArgumentException(new String[]{"line item already exist in the list"});
+        }
+        lineItem.setShoppingCart(this);
         this.lineItems.add(lineItem);
     }
 
