@@ -12,11 +12,20 @@ public class Customer  {
     /**
      * create customer first and then add its account (avoid BIGDEADLOCK)
      */
-    public Customer(String id, String address, String phone, String email){
+    public Customer(String id, String address, String phone, String email,Account account) throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.Email = email;
+        setAccount(account);
+    }
+
+    public Customer(String id, String address, String phone, String email,String idAccount, String billing_address, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+        this.id = id;
+        this.address = address;
+        this.phone = phone;
+        this.Email = email;
+        this.account = new Account(idAccount,billing_address,customer,shoppingCart);
     }
 
     public String getId() {
