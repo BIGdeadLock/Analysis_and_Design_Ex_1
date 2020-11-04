@@ -33,28 +33,32 @@ public class Main {
         Product P=new Product("Bamba","Bamba",S);
         Product P2=new Product("Ramen","Ramen",S);
 
-        Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond");
-        WebUser W=new WebUser("Dani","Dani123",C);
-        C.setWebUser(W);
-
-        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com","DanAccount", "Tel Mond");
-        WebUser W1=new WebUser("Dana","Dana123",C1);
-        C1.setWebUser(W1);
-        ShoppingCart SC1=new ShoppingCart(new Date(),W1);
-        PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
-        C1.setAccount(A1);
-        A1.addProduct(P);
+        //Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
+        WebUser W=new WebUser("Dani","Dani123",
+                "DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
+        //C.setWebUser(W);
+//
+//        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
+//                "DanAccount", "Tel Mond", true, W);
+        WebUser W1=new WebUser("Dana","Dana123",
+                "DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
+                "DanAccount", "Tel Mond", false);
+        //C1.setWebUser(W1);
+        //ShoppingCart SC1=new ShoppingCart(new Date(),W1);
+        //PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
+       // C1.setAccount(A1);
+        //A1.addProduct(P);
 
         //there is no shopping cart in the factory
         factory.addObject("123",S);
         factory.addObject("Bamba",P);
         factory.addObject("Ramen",P2);
         factory.addObject("Dani",W);
-        factory.addObject("DaniCustomer",C);
-        factory.addObject("DaniAccount",C.getAccount());
-        factory.addObject("DanaCustomer",C1);
+        factory.addObject("DaniCustomer",W.getCustomer());
+        factory.addObject("DaniAccount",W.getCustomer().getAccount());
+        factory.addObject("DanaCustomer",W1.getCustomer());
         factory.addObject("Dana",W1);
-        factory.addObject("DanaAccount",A1);
+        factory.addObject("DanaAccount",W1.getCustomer().getAccount());
         objectsMap.put("123","Supplier");
         objectsMap.put("Bamba","Product");
         objectsMap.put("Ramen","Product");
@@ -83,6 +87,9 @@ public class Main {
         String userChoice = scanner.nextLine();
         String Login_id;
         String Product_name;
+        String[] userChoice_split = userChoice.split(" ");
+
+        String func_call = userChoice_split[0] + " " + userChoice_split[1];
         switch (userChoice){
             case "Add WebUser":
                 try {
@@ -165,7 +172,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         if (currentLoggedIn != null) {
-            // TODO: change the user state to blocked
+            ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Blocked);
+
             LogoutWebUser(currentLoggedIn);
             System.out.println("Successfully logged in to the system");
         }
@@ -177,8 +185,7 @@ public class Main {
             currentLoggedIn = Login_id;
             currentLoggedInAccount = usersAccountMap.get(Login_id);
             // Need to change the user state to active - meaning he is logged in
-            // TODO: Change the webuser state
-
+            ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Active);
         } else
             System.out.println("Incorrect password");
 
@@ -246,38 +253,47 @@ public class Main {
 
 
         //set customer -> set webUser with customer, set account with customer -> set customer's account
-        Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
-                account_id, account_billing_address
-                );
-        WebUser new_webUser = new WebUser(Login_id, password, new_customer);
+//        Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
+//                account_id, account_billing_address, false
+//                );
+//        WebUser new_webUser = new WebUser(Login_id, password, new_customer);
 
         // Create the account according to the user type
         System.out.println("Do you have a premium account? (Y/N)");
         String answer = scanner.nextLine().toLowerCase();
-        Account new_account;
+        WebUser new_webUser;
+        Customer new_customer;
         // The Date is the id of the shopping cart
         Date shoppingCartDate = new Date();
-        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
+//        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
         if (answer.equals("y")) {
-            new_account = new PremiumAccount(account_id, account_billing_address,
-                    new_customer, new_shoppingcart);
+            //new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
+            //        account_id, account_billing_address, true,
+            //);
+            new_webUser = new WebUser(Login_id, password,
+                    customer_id,customer_address,customer_phone_number,customer_email,
+                           account_id, account_billing_address, true);
         }
         else{
-            new_account = new Account(account_id,account_billing_address, new_customer,
-                    new_shoppingcart);
-        }
+//            new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
+//                    account_id, account_billing_address, false
+//            );
+            new_webUser = new WebUser(Login_id, password,
+                    customer_id,customer_address,customer_phone_number,customer_email,
+                    account_id, account_billing_address, true);        }
 
-        new_customer.setAccount(new_account);
-        new_customer.setWebUser(new_webUser);
+//        new_customer.setAccount(new_account);
+//        new_customer.setWebUser(new_webUser);
+        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
 
         // Add the objects to the Data structures
         objectsMap.put(customer_id, "Customer");
         objectsMap.put(Login_id, "WebUser");
         objectsMap.put(account_id, "Account");
         objectsMap.put(shoppingCartDate.toString(), "ShoppingCart");
-        factory.addObject(customer_id, new_customer);
+        factory.addObject(customer_id, new_webUser.getCustomer());
         factory.addObject(Login_id, new_webUser);
-        factory.addObject(account_id, new_account);
+        factory.addObject(account_id, new_webUser.getCustomer().getAccount());
         factory.addObject(shoppingCartDate.toString(), new_shoppingcart);
 
     }
@@ -391,7 +407,7 @@ public class Main {
 
     }
 
-    public static void LinkProduct(String product_name){
+    public static void LinkProduct(String product_name) throws InvalidArgumentException {
         Product pro = null;
         //check if the product exist in the system
         if (factory.getObjectType(product_name) instanceof Product){

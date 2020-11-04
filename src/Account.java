@@ -106,13 +106,14 @@ public class Account {
         }
         if(customer.getAccount() != this ){
             if(customer.getAccount() == null){
+                this.customer = customer;
                 customer.setAccount(this);
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add customer because account has customer"});
             }
         }
-        this.customer = customer;
+
     }
 
     /**

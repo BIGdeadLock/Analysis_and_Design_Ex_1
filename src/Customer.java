@@ -12,20 +12,35 @@ public class Customer  {
     /**
      * create customer first and then add its account (avoid BIGDEADLOCK)
      */
-    public Customer(String id, String address, String phone, String email,Account account) throws InvalidArgumentException {
+    public Customer(String id, String address, String phone, String email,Account account, WebUser webuser) throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.Email = email;
+        setWebUser(webuser);
         setAccount(account);
     }
 
-    public Customer(String id, String address, String phone, String email,String idAccount, String billing_address) throws InvalidArgumentException {
+
+    public Customer(String id, String address, String phone, String email,String idAccount, String billing_address
+    , boolean isPremium, WebUser webuser) throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.Email = email;
-        this.account = new Account(idAccount,billing_address,this);
+        setWebUser(webuser);
+        if(isPremium)
+            this.account = new PremiumAccount(idAccount,billing_address,this);
+        else
+            this.account = new Account(idAccount,billing_address,this);
+    }
+
+    public Customer(String id, String address, String phone, String email, Account account) {
+        this.id = id;
+        this.address = address;
+        this.phone = phone;
+        Email = email;
+        this.account = account;
     }
 
     public String getId() {
@@ -80,13 +95,13 @@ public class Customer  {
         }
         if(webUser.getCustomer() != this ){
             if(webUser.getCustomer() == null){
+                this.webUser = webUser;
                 webUser.setCustomer(this);
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add web user because it has another customer"});
             }
         }
-        this.webUser = webUser;
     }
 
     public String toString(){

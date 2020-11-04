@@ -14,6 +14,14 @@ public class WebUser {
         setCustomer(customer);
     }
 
+    public WebUser(String login_id, String password, String id , String address, String phone, String email, String idAccount,
+                   String billing_address, boolean isPremium) throws InvalidArgumentException {
+        this.login_id = login_id;
+        this.password = password;
+        this.state = UserState.New;
+        this.customer  = new Customer(id ,address,phone, email, idAccount,
+                 billing_address, isPremium, this);
+    }
 
     public String getLogin_id() {
         return login_id;

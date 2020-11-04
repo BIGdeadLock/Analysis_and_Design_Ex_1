@@ -75,13 +75,13 @@ public class ShoppingCart {
         }
         if(webUser.getShoppingCart() != this ){
             if(webUser.getShoppingCart() == null){
+                this.webUser = webUser;
                 webUser.setShoppingCart(this);
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add shopping cart because web user has one"});
             }
         }
-        this.webUser = webUser;
     }
 
     public void addLineItem(LineItem lineItem) throws InvalidArgumentException{
