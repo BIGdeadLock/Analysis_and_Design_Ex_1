@@ -15,7 +15,7 @@ public class Main {
     static HashMap<String,PremiumAccount> premiumAccounts;
     static HashMap<String,Supplier> suppliers;
     static int id =0;
-
+    static HashMap<String,String> functions_call;
     static ObjectsFactory factory;
 
     public static void main(String[] args) throws InvalidArgumentException, ParseException {
@@ -27,132 +27,144 @@ public class Main {
         premiumAccounts = new HashMap<>();
         suppliers = new HashMap<>();
         factory = new ObjectsFactory();
-
         //Saved Data
-        Supplier S=new Supplier("123","Moshe");
-        Product P=new Product("Bamba","Bamba",S);
-        Product P2=new Product("Ramen","Ramen",S);
+        Supplier S = new Supplier("123", "Moshe");
+        Product P = new Product("Bamba", "Bamba", S);
+        Product P2 = new Product("Ramen", "Ramen", S);
 
         //Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
-        WebUser W=new WebUser("Dani","Dani123",
-                "DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
+        WebUser W = new WebUser("Dani", "Dani123",
+                "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond", false);
         //C.setWebUser(W);
 //
 //        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
 //                "DanAccount", "Tel Mond", true, W);
-        WebUser W1=new WebUser("Dana","Dana123",
-                "DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
+        WebUser W1 = new WebUser("Dana", "Dana123",
+                "DanaCustomer", "Tel Mond", "054654321", "Dana@gmail.com",
                 "DanAccount", "Tel Mond", false);
         //C1.setWebUser(W1);
         //ShoppingCart SC1=new ShoppingCart(new Date(),W1);
         //PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
-       // C1.setAccount(A1);
+        // C1.setAccount(A1);
         //A1.addProduct(P);
 
         //there is no shopping cart in the factory
-        factory.addObject("123",S);
-        factory.addObject("Bamba",P);
-        factory.addObject("Ramen",P2);
-        factory.addObject("Dani",W);
-        factory.addObject("DaniCustomer",W.getCustomer());
-        factory.addObject("DaniAccount",W.getCustomer().getAccount());
-        factory.addObject("DanaCustomer",W1.getCustomer());
-        factory.addObject("Dana",W1);
-        factory.addObject("DanaAccount",W1.getCustomer().getAccount());
-        objectsMap.put("123","Supplier");
-        objectsMap.put("Bamba","Product");
-        objectsMap.put("Ramen","Product");
-        objectsMap.put("Dani","WebUser");
-        objectsMap.put("DaniCustomer","Customer");
-        objectsMap.put("DaniAccount","Account");
-        objectsMap.put("DanaCustomer","Customer");
-        objectsMap.put("Dana","WebUser");
-        objectsMap.put("DanaAccount","Account");
-        usersMap.put("Dani","Dani123");
-        usersMap.put("Dana","Dana123");
+        factory.addObject("123", S);
+        factory.addObject("Bamba", P);
+        factory.addObject("Ramen", P2);
+        factory.addObject("Dani", W);
+        factory.addObject("DaniCustomer", W.getCustomer());
+        factory.addObject("DaniAccount", W.getCustomer().getAccount());
+        factory.addObject("DanaCustomer", W1.getCustomer());
+        factory.addObject("Dana", W1);
+        factory.addObject("DanaAccount", W1.getCustomer().getAccount());
+        objectsMap.put("123", "Supplier");
+        objectsMap.put("Bamba", "Product");
+        objectsMap.put("Ramen", "Product");
+        objectsMap.put("Dani", "WebUser");
+        objectsMap.put("DaniCustomer", "Customer");
+        objectsMap.put("DaniAccount", "Account");
+        objectsMap.put("DanaCustomer", "Customer");
+        objectsMap.put("Dana", "WebUser");
+        objectsMap.put("DanaAccount", "Account");
+        usersMap.put("Dani", "Dani123");
+        usersMap.put("Dana", "Dana123");
 
 
-        System.out.println("1. Add WebUser");
-        System.out.println("2. Remove WebUser");
-        System.out.println("3. Login WebUser");
-        System.out.println("4. Logout WebUser");
-        System.out.println("5: Make order");
-        System.out.println("6. Display order");
-        System.out.println("7. Link Product");
-        System.out.println("8. Add Product");
-        System.out.println("9. Delete Product");
-        System.out.println("10. ShowAllObjects");
-        System.out.println("11. ShowObjectId");
 
-        String userChoice = scanner.nextLine();
-        String Login_id;
-        String Product_name;
-        String[] userChoice_split = userChoice.split(" ");
 
-        String func_call = userChoice_split[0] + " " + userChoice_split[1];
-        switch (userChoice){
-            case "Add WebUser":
-                try {
-                    System.out.println("Enter new login id");
-                    Login_id = scanner.nextLine();
-                    AddWebUser(Login_id);
+        functions_call = new HashMap();
+        functions_call.put("Add WebUser", "*");
+        functions_call.put("Remove WebUser", "*");
+        functions_call.put("Login WebUser", "*");
+        functions_call.put("Logout WebsUser", "*");
+        functions_call.put("Make Order", "");
+        functions_call.put("Display order", "");
+        functions_call.put("Link Product", "*");
+        functions_call.put("Add Product", "");
+        functions_call.put("Delete Product", "*");
+        functions_call.put("ShowAllObjects", "");
+        functions_call.put("ShowObjectId", "*");
+
+        do {
+            System.out.println("1. Add WebUser");
+            System.out.println("2. Remove WebUser");
+            System.out.println("3. Login WebUser");
+            System.out.println("4. Logout WebUser");
+            System.out.println("5: Make order");
+            System.out.println("6. Display order");
+            System.out.println("7. Link Product");
+            System.out.println("8. Add Product");
+            System.out.println("9. Delete Product");
+            System.out.println("10. ShowAllObjects");
+            System.out.println("11. ShowObjectId");
+            String userChoice = scanner.nextLine();
+            String[] userChoice_split = userChoice.split(" ");
+            String argument = "", function_call = "";
+
+            // Check the functions call map too see if the function the user has given
+            // needs to have arguments or not
+            for (String function : functions_call.keySet()) {
+                if (userChoice.contains(function)) {
+                    if (functions_call.get(function).equals("*"))
+                        argument = userChoice_split[userChoice_split.length - 1];
+
+                    function_call = function;
+                    break;
                 }
-                catch(InvalidArgumentException e){
-                    e.printStackTrace();
-                }
-                break;
+            }
 
-            case "Remove WebUser":
-                System.out.println("Enter login id to remove");
-                Login_id = scanner.nextLine();
-                RemoveWebUser(Login_id);
-                break;
+            switch (function_call) {
+                case "Add WebUser":
+                    try {
+                        AddWebUser(argument);
+                    } catch (InvalidArgumentException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
-            case "Login WebUser":
-                System.out.println("Enter login id to log in");
-                Login_id = scanner.nextLine();
-                LoginWebUser(Login_id);
-                break;
+                case "Remove WebUser":
+                    RemoveWebUser(argument);
+                    break;
 
-            case "Logout WebUser":
-                System.out.println("Enter login id to log out");
-                Login_id = scanner.nextLine();
-                LogoutWebUser(Login_id);
-                break;
+                case "Login WebUser":
+                    LoginWebUser(argument);
+                    break;
 
-            case "Make order":
-                Makeorder();
-                break;
+                case "Logout WebUser":
+                    LogoutWebUser(argument);
+                    break;
 
-            case "Display order":
-                Displayorder();
-                break;
+                case "Make order":
+                    Makeorder();
+                    break;
 
-            case "Link Product":
-                System.out.println("Please enter Product name");
-                Product_name = scanner.nextLine();
-                LinkProduct(Product_name);
-                break;
+                case "Display order":
+                    Displayorder();
+                    break;
 
-            case "Add Product":
-                AddProduct();
-                break;
+                case "Link Product":
+                    LinkProduct(argument);
+                    break;
 
-            case "Delete Product":
-                System.out.println("Please enter Product name");
-                Product_name = scanner.nextLine();
-                DeleteProduct(Product_name);
-                break;
+                case "Add Product":
+                    AddProduct();
+                    break;
 
-            case "ShowAllObjects":
-                ShowAllObjects();
-                break;
+                case "Delete Product":
+                    DeleteProduct(argument);
+                    break;
 
-            case "ShowObjectId":
-                System.out.println("Please enter object id");
-                String object_id = scanner.nextLine();
-                ShowObjectId(object_id);
-        }
+                case "ShowAllObjects":
+                    ShowAllObjects();
+                    break;
+
+                case "ShowObjectId":
+                    ShowObjectId(argument);
+                    break;
+            }
+
+        } while (true);
     }
 
     private static void LogoutWebUser(String Login_id) {
