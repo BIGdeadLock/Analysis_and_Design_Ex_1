@@ -30,12 +30,12 @@ public class PremiumAccount extends Account {
         if(!this.products.contains(product)) {
             if (product.getPremiumAccount() != this) {
                 if (product.getPremiumAccount() == null) {
+                    this.products.add(product);
                     product.setPremiumAccount(this);
                 } else {
                     throw new InvalidArgumentException(new String[]{"Can't add premium account because it has one"});
                 }
             }
-            this.products.add(product);
         }
         else{
             throw new InvalidArgumentException(new String[]{"premium account has this product alredy"});

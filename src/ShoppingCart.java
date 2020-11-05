@@ -53,13 +53,13 @@ public class ShoppingCart {
         }
         if(account.getShoppingCart() != this ){
             if(account.getShoppingCart() == null){
+                this.account = account;
                 account.setShoppingCart(this);
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add shopping cart because account has one"});
             }
         }
-        this.account = account;
     }
 
     /**
@@ -90,8 +90,15 @@ public class ShoppingCart {
         if(this.lineItems.contains(lineItem)){
             throw new InvalidArgumentException(new String[]{"line item already exist in the list"});
         }
-        lineItem.setShoppingCart(this);
-        this.lineItems.add(lineItem);
+        if(lineItem.getShoppingCart() != this) {
+            if (lineItem.getShoppingCart() != null) {
+                throw new InvalidArgumentException(new String[]{"Can't add line item because it has shopping cart "});
+            }
+            else{
+                this.lineItems.add(lineItem);
+                lineItem.setShoppingCart(this);
+            }
+        }
     }
 
     public String toString(){

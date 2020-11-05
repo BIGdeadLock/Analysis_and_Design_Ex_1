@@ -80,13 +80,14 @@ public class Customer  {
         }
         if(account.getCustomer() != this ){
             if(account.getCustomer() == null){
+                this.account = account;
                 account.setCustomer(this);
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add account because account has customer"});
             }
         }
-        this.account = account;
+
     }
 
     public void setWebUser(WebUser webUser) throws InvalidArgumentException {

@@ -41,7 +41,9 @@ public class Main {
 //                "DanAccount", "Tel Mond", true, W);
         WebUser W1 = new WebUser("Dana", "Dana123",
                 "DanaCustomer", "Tel Mond", "054654321", "Dana@gmail.com",
-                "DanAccount", "Tel Mond", false);
+                "DanAccount", "Tel Mond", true);
+        PremiumAccount PA=(PremiumAccount)(W1.getCustomer().getAccount());
+        PA.addProduct(P);
         //C1.setWebUser(W1);
         //ShoppingCart SC1=new ShoppingCart(new Date(),W1);
         //PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);

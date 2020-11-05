@@ -129,13 +129,14 @@ public class Account {
         }
         if(shoppingCart.getAccount() != this ){
             if(shoppingCart.getAccount() == null){
+                this.shoppingCart = shoppingCart;
                 shoppingCart.setAccount(this);
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add shoping cart because it has account"});
             }
         }
-        this.shoppingCart = shoppingCart;
+
     }
 
     public void addPayment(Payment payment) throws InvalidArgumentException {
@@ -150,10 +151,11 @@ public class Account {
                 throw new InvalidArgumentException(new String[]{"Can't add payment because it has account "});
             }
             else{
+                this.payments.add(payment);
                 payment.setAccount(this);
             }
         }
-        this.payments.add(payment);
+
     }
     public void addOrder(Order order) throws InvalidArgumentException {
         if(order == null){
@@ -167,10 +169,11 @@ public class Account {
                 throw new InvalidArgumentException(new String[]{"Can't add order because it has account "});
             }
             else{
+                this.orders.add(order);
                 order.setAccount(this);
             }
         }
-        this.orders.add(order);
+
     }
 
     public String toString(){

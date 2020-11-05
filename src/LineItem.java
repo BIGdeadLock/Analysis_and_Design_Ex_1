@@ -43,6 +43,8 @@ public class LineItem {
         if(this.order!=null){
             throw new InvalidArgumentException(new String[]{"Can't add order because LineItem has one"});
         }
+        if(!order.getLineItems().contains(this))
+            order.addLineItem(this);
         this.order = order;
     }
 
@@ -56,8 +58,10 @@ public class LineItem {
             throw new InvalidArgumentException(new String[]{"LineItem must be related to one product"});
         if(this.product!=null)
             throw new InvalidArgumentException(new String[]{"Can't add product because LineItem has one"});
+        if(!product.getItems().contains(this))
+            product.addLineItem(this);
         this.product = product;
-        product.addLineItem(this);
+
     }
 
     public String toString(){
@@ -65,4 +69,15 @@ public class LineItem {
         print="LineItem Quantity: "+this.quantity+"\nPrice: "+this.price;
         return print;
     }
+
+    //GETTERS
+    public int getQuantity() { return quantity; }
+
+    public int getPrice() { return price; }
+
+    public ShoppingCart getShoppingCart() { return shoppingCart; }
+
+    public Order getOrder() { return order; }
+
+    public Product getProduct() { return product; }
 }

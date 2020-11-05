@@ -76,13 +76,14 @@ public class WebUser {
         }
         if(shoppingCart.getWebUser() != this ){
             if(shoppingCart.getWebUser() == null){
+                this.shoppingCart = shoppingCart;
                 shoppingCart.setWebUser(this); //TODO: need to check if it worked fine?
             }
             else{
                 throw new InvalidArgumentException(new String[]{"Can't add shopping cart because it has web user"});
             }
         }
-        this.shoppingCart = shoppingCart;
+
     }
 
     /**
