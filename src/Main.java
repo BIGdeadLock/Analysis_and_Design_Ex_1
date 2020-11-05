@@ -44,6 +44,8 @@ public class Main {
                 "DanAccount", "Tel Mond", true);
         PremiumAccount PA=(PremiumAccount)(W1.getCustomer().getAccount());
         PA.addProduct(P);
+        P.setPrice(5);
+        P.setQuantity(2);
         //C1.setWebUser(W1);
         //ShoppingCart SC1=new ShoppingCart(new Date(),W1);
         //PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
@@ -80,7 +82,7 @@ public class Main {
         functions_call.put("Remove WebUser", "*");
         functions_call.put("Login WebUser", "*");
         functions_call.put("Logout WebsUser", "*");
-        functions_call.put("Make Order", "");
+        functions_call.put("Make order", "");
         functions_call.put("Display order", "");
         functions_call.put("Link Product", "*");
         functions_call.put("Add Product", "");
@@ -187,19 +189,19 @@ public class Main {
 
         if (currentLoggedIn != null) {
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Blocked);
-
             LogoutWebUser(currentLoggedIn);
-            System.out.println("Successfully logged in to the system");
         }
 
         // Validate user password
         System.out.println("Enter password");
         String password = scanner.nextLine();
-        if (usersMap.get(Login_id).equals(password)) {
+        if (usersMap.get(Login_id)!=null && usersMap.get(Login_id).equals(password)) {
             currentLoggedIn = Login_id;
-            currentLoggedInAccount = usersAccountMap.get(Login_id);
+            WebUser LoggedIn= (WebUser)factory.objectMap.get(Login_id);
+            currentLoggedInAccount = LoggedIn.getCustomer().getAccount();
             // Need to change the user state to active - meaning he is logged in
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Active);
+            System.out.println("Successfully logged in to the system");
         } else
             System.out.println("Incorrect password");
 
@@ -239,7 +241,7 @@ public class Main {
         System.out.println("Please enter your customer id");
         String customer_id = scanner.nextLine();
         // Check if the id already exist. If Yes - ask the user's input again
-        while (factory.getObjectType(customer_id) == null){
+        while (factory.getObjectType(customer_id) != null){
             System.out.println("Customer id already exists. Please try again.");
             System.out.println("Enter Customer id again");
             customer_id = scanner.nextLine();
@@ -256,7 +258,7 @@ public class Main {
         System.out.println("Please enter your account id");
         String account_id = scanner.nextLine();
         // Check if the id already exist. If Yes - ask the user's input again
-        while (factory.getObjectType(account_id) == null){
+        while (factory.getObjectType(account_id) != null){
             System.out.println("Account id already exists. Please try again.");
             System.out.println("Enter Account id again");
             account_id = scanner.nextLine();
@@ -314,91 +316,93 @@ public class Main {
 
     public static void Makeorder() throws InvalidArgumentException, ParseException {
         if(currentLoggedInAccount == null){
-            System.out.println("you cant make an order without be loged in");
+            System.out.println("You can't make an order without be logged in");
         }
         /*else if(!(currentLoggedInAccount instanceof  PremiumAccount)){
             System.out.println("you are not a premium, you cant buy");
         }*/
         else {
-            System.out.println("please enter the id of the user you want to but products from:\n");
+            System.out.println("Please enter the id of the user you want to buy from:");
             Scanner scanner = new Scanner(System.in);
             String idTobuyFrom = scanner.nextLine();
             //check if that user exists
             while (usersMap.get(idTobuyFrom) == null) {
-                System.out.println("user doesn't exists , please write another id\n");
+                System.out.println("User doesn't exists , please write another id");
                 idTobuyFrom = scanner.nextLine();
             }
-            List userProducts = new ArrayList();
-            Account user = usersAccountMap.get(idTobuyFrom);
-            if (user instanceof PremiumAccount) {
-                userProducts = ((PremiumAccount) user).getProducts();
-            }
-            System.out.println("these are the products you can choose from\n");
-            for (int i = 0; i < userProducts.size(); i++) {
-                System.out.println(userProducts.get(i));
-            }
-            String input;
-            boolean didOrder = false;
-            int sum=0;
-            do {
-            System.out.println("Do you want to buy anything?(Y/N)\n");
-            input = scanner.next();
-                if (input.equals("Y")) {
-                    didOrder = true;
-                    String orderName = scanner.next();
-                    for (int i = 0; i < userProducts.size(); i++) {
-                        if(((Product) userProducts.get(i)).getId().equals(orderName)){
-                            System.out.println("How many?\n");
-                            String amount = scanner.next();
-                            sum +=Integer.parseInt(amount);
-                        }
-                        else{
-                            System.out.println("Product not in the options");
+            List userProducts;
+            WebUser user = (WebUser) factory.objectMap.get(idTobuyFrom);
+            if (user.getCustomer().getAccount() instanceof PremiumAccount) {
+                userProducts = ((PremiumAccount) user.getCustomer().getAccount()).getProducts();
+                System.out.println("these are the products you can choose from:");
+                for (int i = 0; i < userProducts.size(); i++) {
+                    Product temp = (Product)userProducts.get(i);
+                    System.out.println(temp.getName()+" Price: "+temp.getPrice()+" Quantity: "+temp.getQuantity());
+                }
+                String input;
+                boolean didOrder = false;
+                int sum = 0;
+                do {
+                    System.out.println("Do you want to buy anything?(Y/N)");
+                    input = scanner.nextLine();
+                    if (input.equals("Y")) {
+                        didOrder = true;
+                        String orderName = scanner.nextLine();
+                        for (int i = 0; i < userProducts.size(); i++) {
+                            if (((Product) userProducts.get(i)).getId().equals(orderName)) {
+                                System.out.println("How many?");
+                                String amount = scanner.nextLine();
+                                sum += Integer.parseInt(amount);
+                            } else {
+                                System.out.println("Product not in the options");
+                            }
                         }
                     }
                 }
-            }
-            while (!input.equals("N"));
+                while (!input.equals("N"));
 
-            if (didOrder) {
-                while(objectsMap.containsKey(Integer.toString(id))){
-                    id++;
-                }
-                Date ordered = new Date();
-                Date shipped = ordered;
-                System.out.println("What is your shipping address?");
-                String address = scanner.nextLine();
-                Order ord = new Order(Integer.toString(id),ordered, shipped, address, sum, currentLoggedInAccount);
-                objectsMap.put(ord.getNumber(),"Order");
-                factory.addObject(ord.getNumber(),ord);
-                currentLoggedInAccount.addOrder(ord);
-                while(objectsMap.containsKey(Integer.toString(id))){
-                    id++;
-                }
-                System.out.println("Do you have something to add?");
-                String details = scanner.nextLine();
-                System.out.println("Do you want to pay immediate or delayed");
-                String pay = scanner.nextLine();
-                if(pay.equals("immediate")){
-                    System.out.println("Do you have a phone confirmation (Y/N)?");
-                    String con = scanner.nextLine();
-                    boolean ans = false;
-                    if(con.equals("Y")){
-                        ans = true;
+                if (didOrder) {
+                    while (objectsMap.containsKey(Integer.toString(id))) {
+                        id++;
                     }
-                    ImmediatePayment impay = new ImmediatePayment(Integer.toString(id),ordered,(float)sum,details,ord,currentLoggedInAccount,ans);
-                    objectsMap.put(impay.getId(),"Immediate Payment");
-                    factory.addObject(impay.getId(),impay);
+                    Date ordered = new Date();
+                    Date shipped = ordered;
+                    System.out.println("What is your shipping address?");
+                    String address = scanner.nextLine();
+                    Order ord = new Order(Integer.toString(id), ordered, shipped, address, sum, currentLoggedInAccount);
+                    objectsMap.put(ord.getNumber(), "Order");
+                    factory.addObject(ord.getNumber(), ord);
+                    currentLoggedInAccount.addOrder(ord);
+                    while (objectsMap.containsKey(Integer.toString(id))) {
+                        id++;
+                    }
+                    System.out.println("Do you have something to add?");
+                    String details = scanner.nextLine();
+                    System.out.println("Do you want to pay immediate or delayed");
+                    String pay = scanner.nextLine();
+                    if (pay.equals("immediate")) {
+                        System.out.println("Do you have a phone confirmation (Y/N)?");
+                        String con = scanner.nextLine();
+                        boolean ans = false;
+                        if (con.equals("Y")) {
+                            ans = true;
+                        }
+                        ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, ans);
+                        objectsMap.put(impay.getId(), "Immediate Payment");
+                        factory.addObject(impay.getId(), impay);
+                    } else {
+                        System.out.println("When do you want to pay?(DD/MM/YYYY)");
+                        String Dat = scanner.nextLine();
+                        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(Dat);
+                        DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, date);
+                        objectsMap.put(depay.getId(), "Delayed Payment");
+                        factory.addObject(depay.getId(), depay);
+                    }
+                    System.out.println("Order added successfully \n");
                 }
-                else{
-                    System.out.println("When do you want to pay?(DD/MM/YYYY)");
-                    String Dat = scanner.nextLine();
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(Dat);
-                    DelayedPayment depay = new DelayedPayment(Integer.toString(id),ordered,(float)sum,details,ord,currentLoggedInAccount,date);
-                    objectsMap.put(depay.getId(),"Delayed Payment");
-                    factory.addObject(depay.getId(),depay);
-                }
-                System.out.println("Order added successfully \n");
+            }
+            else {
+                System.out.println("You can't purchase from non premium account");
             }
         }
     }
@@ -423,20 +427,30 @@ public class Main {
 
     public static void LinkProduct(String product_name) throws InvalidArgumentException {
         Product pro = null;
+        Scanner scanner = new Scanner(System.in);
         //check if the product exist in the system
         if (factory.getObjectType(product_name) instanceof Product){
                 pro = (Product) factory.objectMap.get(product_name);
         }
-        if (pro==null){
+        if (pro!=null) {
+            //check if the account logged in is premium, if it is premium link the product to this account
+            WebUser user = (WebUser)factory.getObjectType(currentLoggedIn);
+            if ( user.getCustomer().getAccount() instanceof PremiumAccount) {
+                PremiumAccount Pre = (PremiumAccount)user.getCustomer().getAccount();
+                Pre.addProduct(pro);
+                System.out.println("How much from this product you want to add?");
+                String quantity = scanner.nextLine();
+                pro.setQuantity(Integer.parseInt(quantity));
+                System.out.println("How much do you want to sell this product?");
+                String price = scanner.nextLine();
+                pro.setPrice(Integer.parseInt(price));
+                System.out.println("Product added successfully");
+            } else {
+                System.out.println("User not Premium");
+            }
+        }
+        else{
             System.out.println("Product not in the system");
-        }
-        //check if the account logged in is premium, if it is premium link the product to this account
-        if (factory.getObjectType(currentLoggedIn) instanceof PremiumAccount){
-            PremiumAccount Pre = (PremiumAccount) factory.objectMap.get(currentLoggedIn);
-            Pre.addProduct(pro);
-        }
-        else {
-            System.out.println("User not Premium");
         }
     }
 
@@ -459,8 +473,8 @@ public class Main {
         System.out.println("Please enter Supplier name");
         String supplier_name = scanner.nextLine();
         Supplier new_supplier = null;
-        if(factory.objectMap.get(supplier_id)==null){
-            new_supplier = suppliers.get(supplier_id);
+        if(factory.objectMap.get(supplier_id)!=null){
+            new_supplier = (Supplier)factory.objectMap.get(supplier_id);
         }
         else {
             new_supplier = new Supplier(supplier_id,supplier_name);
@@ -470,6 +484,7 @@ public class Main {
         Product new_product = new Product(product_id,product_name,new_supplier);
         factory.addObject(product_id,new_product);
         objectsMap.put(product_id,"Product");
+        System.out.println("Product added successfully");
     }
 
     public static void DeleteProduct(String Product_name){
@@ -487,7 +502,7 @@ public class Main {
 
     public static void ShowAllObjects(){
         for (Map.Entry object : objectsMap.entrySet()) {
-            System.out.println("the id i : "+ object.getKey() + " ,the Value is: " + object.getValue());
+            System.out.println("The id is : "+ object.getKey() + " ,the Value is: " + object.getValue());
         }
 
     }

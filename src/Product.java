@@ -9,6 +9,8 @@ public class Product {
     private Supplier sup;
     private List<LineItem> items;
     private PremiumAccount premiumAccount;
+    private int quantity;
+    private int price;
 
     /**
      * Product constructor -> includes id and name and must have a supplier
@@ -46,6 +48,9 @@ public class Product {
         return premiumAccount;
     }
 
+    public int getQuantity() { return quantity; }
+
+    public int getPrice() { return price; }
 
     // SETTERS
 
@@ -88,6 +93,14 @@ public class Product {
             throw new InvalidArgumentException(new String[]{"Can't contain the same item more than once"});
         this.items.add(item);
         item.setProduct(this);
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String toString(){
