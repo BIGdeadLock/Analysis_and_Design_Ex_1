@@ -84,6 +84,9 @@ public class ObjectsFactory {
     public Object getObjectType (String id) {
 
 
+        if (!this.objectMap.containsKey(id))
+            return null;
+
         if(this.objectMap.get(id) instanceof Account)
             return (Account)this.objectMap.get(id);
         
