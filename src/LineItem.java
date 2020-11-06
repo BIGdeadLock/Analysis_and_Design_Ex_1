@@ -15,7 +15,12 @@ public class LineItem {
         setShoppingCart(shoppingCart);
         setOrder(order);
         setProduct(product);
+    }
 
+    public LineItem(int quantity, int price,Product product) throws InvalidArgumentException {
+        this.quantity = quantity;
+        this.price = price;
+        setProduct(product);
     }
 
     /**

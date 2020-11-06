@@ -8,13 +8,13 @@ public class PremiumAccount extends Account {
     private List<Product> products;
 
 
-    public PremiumAccount(String id, String billing_address, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
-        super(id, billing_address, customer, shoppingCart);
+    public PremiumAccount(String id, String billing_address,int balance, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+        super(id, billing_address,balance, customer, shoppingCart);
         this.products = new ArrayList<>();
     }
 
-    public PremiumAccount(String id, String billing_address, Customer customer) throws InvalidArgumentException {
-        super(id, billing_address, customer);
+    public PremiumAccount(String id, String billing_address,int balance, Customer customer) throws InvalidArgumentException {
+        super(id, billing_address,balance, customer);
         this.products = new ArrayList<>();
     }
 

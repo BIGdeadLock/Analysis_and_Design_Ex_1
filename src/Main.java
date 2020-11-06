@@ -27,14 +27,14 @@ public class Main {
 
         //Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
         WebUser W = new WebUser("Dani", "Dani123",
-                "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond", false);
+                "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond",5, false);
         //C.setWebUser(W);
 //
 //        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
 //                "DanAccount", "Tel Mond", true, W);
         WebUser W1 = new WebUser("Dana", "Dana123",
                 "DanaCustomer", "Tel Mond", "054654321", "Dana@gmail.com",
-                "DanAccount", "Tel Mond", true);
+                "DanAccount", "Tel Mond",500, true);
         PremiumAccount PA=(PremiumAccount)(W1.getCustomer().getAccount());
         PA.addProduct(P);
         P.setQuantity(2);
@@ -264,6 +264,8 @@ public class Main {
         System.out.println("Please enter your billing address");
         String account_billing_address = scanner.nextLine();
 
+        System.out.println("what is your balance?");
+        String balance = scanner.nextLine();
 
         //set customer -> set webUser with customer, set account with customer -> set customer's account
 //        Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
@@ -285,7 +287,7 @@ public class Main {
             //);
             new_webUser = new WebUser(Login_id, password,
                     customer_id,customer_address,customer_phone_number,customer_email,
-                           account_id, account_billing_address, true);
+                           account_id, account_billing_address,Integer.parseInt(balance), true);
         }
         else{
 //            new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
@@ -293,7 +295,7 @@ public class Main {
 //            );
             new_webUser = new WebUser(Login_id, password,
                     customer_id,customer_address,customer_phone_number,customer_email,
-                    account_id, account_billing_address, true);        }
+                    account_id, account_billing_address,Integer.parseInt(balance), false);        }
 
 //        new_customer.setAccount(new_account);
 //        new_customer.setWebUser(new_webUser);
@@ -324,7 +326,7 @@ public class Main {
                 idTobuyFrom = scanner.nextLine();
             }
             List userProducts;
-            WebUser user = (WebUser) factory.objectMap.get(idTobuyFrom);
+            WebUser user = (WebUser) factory.getObjectType(idTobuyFrom);
             if (user.getCustomer().getAccount() instanceof PremiumAccount) {
                 userProducts = ((PremiumAccount) user.getCustomer().getAccount()).getProducts();
                 System.out.println("these are the products you can choose from:");
@@ -335,6 +337,7 @@ public class Main {
                 String input;
                 boolean didOrder = false;
                 boolean found = false;
+                List <LineItem> lineItemList = new ArrayList<>();
                 int sum = 0;
                 do {
                     System.out.println("Do you want to buy anything?(Y/N)");
@@ -348,7 +351,20 @@ public class Main {
                                 found = true;
                                 System.out.println("How many?");
                                 String amount = scanner.nextLine();
-                                sum += Integer.parseInt(amount);
+                                while(Integer.parseInt(amount) > ((Product) userProducts.get(i)).getQuantity()){
+                                    System.out.println("please enter an amount the user has");
+                                    amount = scanner.nextLine();
+                                }
+                                sum += Integer.parseInt(amount)*((Product) userProducts.get(i)).getPrice();
+                                if(sum > currentLoggedInAccount.getBalance()){
+                                    sum -= Integer.parseInt(amount)*((Product) userProducts.get(i)).getPrice();
+                                    System.out.println("Sorry you don't have enough money");
+                                    break;
+                                }
+                                LineItem lineItem= new LineItem(Integer.parseInt(amount),((Product) userProducts.get(i)).getPrice(),(Product) userProducts.get(i));
+                                lineItemList.add(lineItem);
+                                ((Product) userProducts.get(i)).setQuantity(((Product) userProducts.get(i)).getQuantity() - Integer.parseInt(amount));
+
                             }
                         }
                         if(!found){
@@ -362,6 +378,9 @@ public class Main {
                     while (objectsMap.containsKey(Integer.toString(id))) {
                         id++;
                     }
+                    currentLoggedInAccount.setBalance(currentLoggedInAccount.getBalance()-sum);
+                    user.getCustomer().getAccount().setBalance(user.getCustomer().getAccount().getBalance() + sum);
+
                     Date ordered = new Date();
                     Date shipped = ordered;
                     System.out.println("What is your shipping address?");
@@ -377,6 +396,9 @@ public class Main {
                     String details = scanner.nextLine();
                     System.out.println("Do you want to pay immediate or delayed");
                     String pay = scanner.nextLine();
+                    System.out.println("How many payments do you want?");
+                    String howManyPay = scanner.nextLine();
+
                     if (pay.equals("immediate")) {
                         System.out.println("Do you have a phone confirmation (Y/N)?");
                         String con = scanner.nextLine();
@@ -384,16 +406,25 @@ public class Main {
                         if (con.equals("Y")) {
                             ans = true;
                         }
-                        ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, ans);
-                        objectsMap.put(impay.getId(), "Immediate Payment");
-                        factory.addObject(impay);
+                        for(int i = 0; i< Integer.parseInt(howManyPay);i++) {
+                            ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, ans);
+                            objectsMap.put(impay.getId(), "Immediate Payment");
+                            factory.addObject(impay);
+                        }
                     } else {
                         System.out.println("When do you want to pay?(DD/MM/YYYY)");
                         String Dat = scanner.nextLine();
                         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(Dat);
-                        DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, date);
-                        objectsMap.put(depay.getId(), "Delayed Payment");
-                        factory.addObject(depay);
+                        for(int i = 0; i< Integer.parseInt(howManyPay);i++) {
+                            DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, date);
+                            objectsMap.put(depay.getId(), "Delayed Payment");
+                            factory.addObject(depay);
+                        }
+                    }
+                    ord.setLineItems(lineItemList);
+                    for (LineItem lineItem : lineItemList) {
+                        lineItem.setOrder(ord);
+                        lineItem.setShoppingCart(currentLoggedInAccount.getShoppingCart());
                     }
                     System.out.println("Order added successfully \n");
                 }

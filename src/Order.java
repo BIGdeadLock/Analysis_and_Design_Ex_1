@@ -84,6 +84,13 @@ public class Order {
         this.account = acc;
     }
 
+    public void setLineItems(List<LineItem> lineItems) throws InvalidArgumentException {
+        if(lineItems == null){
+            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        }
+        this.lineItems = lineItems;
+    }
+
     /**
      * add items to the LineItem list (initiated int the constructor)
      * @param item - LineItem

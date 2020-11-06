@@ -23,16 +23,16 @@ public class Customer  {
 
 
     public Customer(String id, String address, String phone, String email,String idAccount, String billing_address
-    , boolean isPremium, WebUser webuser) throws InvalidArgumentException {
+    ,int balance, boolean isPremium, WebUser webuser) throws InvalidArgumentException {
         this.id = id;
         this.address = address;
         this.phone = phone;
         this.Email = email;
         setWebUser(webuser);
         if(isPremium)
-            this.account = new PremiumAccount(idAccount,billing_address,this);
+            this.account = new PremiumAccount(idAccount,billing_address,balance,this);
         else
-            this.account = new Account(idAccount,billing_address,this);
+            this.account = new Account(idAccount,billing_address,balance,this);
     }
 
     public Customer(String id, String address, String phone, String email, Account account) {

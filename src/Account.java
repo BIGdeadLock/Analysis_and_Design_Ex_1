@@ -23,26 +23,26 @@ public class Account {
      * account will be set with customer --> then customer will set its account (by function)
      * @throws InvalidArgumentException
      */
-    public Account(String id, String billing_address, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public Account(String id, String billing_address,int balance, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = false;
         this.open = new Date();
         this.closed = null;
-        this.balance = 0;
+        this.balance = balance;
         setCustomer(customer);
         setShoppingCart(shoppingCart);
         this.orders = new ArrayList<>();
         this.payments = new ArrayList<>();
     }
 
-    public Account(String id, String billing_address, Customer customer) throws InvalidArgumentException {
+    public Account(String id, String billing_address,int balance, Customer customer) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = false;
         this.open = new Date();
         this.closed = null;
-        this.balance = 0;
+        this.balance = balance;
         setCustomer(customer);
         this.shoppingCart = new ShoppingCart(new Date(),customer.getWebUser());
         this.orders = new ArrayList<>();
@@ -114,6 +114,10 @@ public class Account {
             }
         }
 
+    }
+
+    public void setBalance(int balance){
+        this.balance = balance;
     }
 
     /**
