@@ -26,23 +26,6 @@ public class Product {
         this.items = new ArrayList<>();
     }
 
-    /**
-     * Product constructor -> includes id and name and must have a supplier
-     * @param id - string
-     * @param name - string
-     * @param sup - supplier
-     * @param quantity - int
-     * @param price -int
-     * @throws InvalidArgumentException
-     */
-    public Product(String id, String name, int quantity, int price, Supplier sup) throws InvalidArgumentException{
-        this.id = id;
-        this.name = name;
-        setSupplier(sup);
-        this.items = new ArrayList<>();
-        this.quantity=quantity;
-        this.price=price;
-    }
     // GETTERS
 
     public String getId() {
@@ -110,6 +93,14 @@ public class Product {
             throw new InvalidArgumentException(new String[]{"Can't contain the same item more than once"});
         this.items.add(item);
         item.setProduct(this);
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public String toString(){

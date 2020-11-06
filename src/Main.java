@@ -29,7 +29,7 @@ public class Main {
         factory = new ObjectsFactory();
         //Saved Data
         Supplier S = new Supplier("123", "Moshe");
-        Product P = new Product("Bamba", "Bamba",2,5, S);
+        Product P = new Product("Bamba", "Bamba", S);
         Product P2 = new Product("Ramen", "Ramen", S);
 
         //Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
@@ -44,6 +44,8 @@ public class Main {
                 "DanAccount", "Tel Mond", true);
         PremiumAccount PA=(PremiumAccount)(W1.getCustomer().getAccount());
         PA.addProduct(P);
+        P.setQuantity(2);
+        P.setPrice(5);
         //C1.setWebUser(W1);
         //ShoppingCart SC1=new ShoppingCart(new Date(),W1);
         //PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
@@ -437,13 +439,11 @@ public class Main {
                 PremiumAccount Pre = (PremiumAccount)user.getCustomer().getAccount();
                 System.out.println("How much from this product you want to add?");
                 String quantity = scanner.nextLine();
+                pro.setQuantity(Integer.parseInt(quantity));
                 System.out.println("How much do you want to sell this product?");
                 String price = scanner.nextLine();
-                Product product_to_link= new Product(pro.getId(),pro.getName(),Integer.parseInt(quantity),Integer.parseInt(price),pro.getSup());
-                //waiting for id
-                //objectsMap.put(product_to_link.getId(),"Product");
-                //factory.addObject(product_to_link.getId(),product_to_link);
-                Pre.addProduct(product_to_link);
+                pro.setPrice(Integer.parseInt(price));
+                Pre.addProduct(pro);
                 System.out.println("Product added successfully");
             } else {
                 System.out.println("User not Premium");
