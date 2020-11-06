@@ -176,7 +176,6 @@ public class Main {
             currentLoggedInAccount = null;
             currentLoggedIn = "";
         }
-
     }
 
     /**
@@ -498,6 +497,7 @@ public class Main {
                 factory.objectMap.remove(Product_name);
                 objectsMap.remove(Product_name);
                 Exist = true;
+            System.out.println("Product was deleted successfully");
         }
         if(Exist==false){
             System.out.println("Product not in the system");
