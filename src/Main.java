@@ -6,14 +6,10 @@ import java.util.*;
 
 public class Main {
 
-    static HashMap<String, String> usersMap;
     static String currentLoggedIn="";
     static Account currentLoggedInAccount=null;
-    static HashMap<String, Account> usersAccountMap;
+    static HashMap<String, String> usersMap;
     static HashMap<String, String> objectsMap;
-    static HashMap<String,Product> products;
-    static HashMap<String,PremiumAccount> premiumAccounts;
-    static HashMap<String,Supplier> suppliers;
     static int id =0;
     static HashMap<String,String> functions_call;
     static ObjectsFactory factory;
@@ -21,11 +17,7 @@ public class Main {
     public static void main(String[] args) throws InvalidArgumentException, ParseException {
         Scanner scanner = new Scanner(System.in);
         usersMap = new HashMap<>();
-        usersAccountMap = new HashMap<>();
         objectsMap = new HashMap<>();
-        products = new HashMap<>();
-        premiumAccounts = new HashMap<>();
-        suppliers = new HashMap<>();
         factory = new ObjectsFactory();
         //Saved Data
         Supplier S = new Supplier("123", "Moshe");
@@ -210,7 +202,6 @@ public class Main {
     public static void RemoveWebUser(String Login_id){
         if(usersMap.containsKey(Login_id)) {
             usersMap.remove(Login_id);
-            usersAccountMap.remove(Login_id);
             if(currentLoggedIn.equals(Login_id)){
                 currentLoggedInAccount=null;
                 currentLoggedIn="";
@@ -317,9 +308,6 @@ public class Main {
         if(currentLoggedInAccount == null){
             System.out.println("You can't make an order without be logged in");
         }
-        /*else if(!(currentLoggedInAccount instanceof  PremiumAccount)){
-            System.out.println("you are not a premium, you cant buy");
-        }*/
         else {
             System.out.println("Please enter the id of the user you want to buy from:");
             Scanner scanner = new Scanner(System.in);
