@@ -183,7 +183,7 @@ public class Main {
     private static void LoginWebUser(String Login_id) {
         Scanner scanner = new Scanner(System.in);
 
-        if (currentLoggedIn != null) {
+        if (currentLoggedIn != "") {
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Blocked);
             System.out.println("Another user is currently logged in, please try again later");
             return;
@@ -194,7 +194,7 @@ public class Main {
         //usersMap.get(Login_id)!=null &&  -- check if needed
         if (usersMap.get(Login_id).equals(password)) {
             currentLoggedIn = Login_id;
-            WebUser LoggedIn= (WebUser)factory.objectMap.get(Login_id);
+            WebUser LoggedIn= (WebUser)factory.getObjectType(Login_id);
             currentLoggedInAccount = LoggedIn.getCustomer().getAccount();
             // Need to change the user state to active - meaning he is logged in
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Active);

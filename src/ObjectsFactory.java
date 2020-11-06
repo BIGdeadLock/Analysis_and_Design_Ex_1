@@ -93,9 +93,16 @@ public class ObjectsFactory {
 
     public Object getObjectType (String id) {
 
+        /* The are two options:
+        * 1. The id that was given is the system id of the object
+        * 2. The id that was given is an object's id. In that case we will need
+        * to change the id that was given to point to the object's system id */
 
-        if (!this.objectMap.containsKey(id))
+        if (!this.objectMap.containsKey(id) && !this.IdMap.containsKey(id))
             return null;
+
+        else if (this.IdMap.containsKey(id))
+            id = this.IdMap.get(id);
 
         if(this.objectMap.get(id) instanceof Account)
             return (Account)this.objectMap.get(id);
