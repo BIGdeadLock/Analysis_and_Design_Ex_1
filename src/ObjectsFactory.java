@@ -27,9 +27,17 @@ public class ObjectsFactory {
     }
 
     public void removeObject(Object o1) {
-        for (Map.Entry<String,Object>entry: objectMap.entrySet()){
-            if (o1.equals(entry.getValue()))
-                objectMap.remove(entry.getKey());
+        String object_id;
+        if (o1 instanceof  String) {
+            object_id = (String) o1;
+            o1 = objectMap.get(IdMap.get(object_id));
+        }
+
+        else {
+            for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
+                if (o1.equals(entry.getValue()))
+                    objectMap.remove(entry.getKey());
+            }
         }
         // Switch case to use the Delete function of every class that implements it
         try {
