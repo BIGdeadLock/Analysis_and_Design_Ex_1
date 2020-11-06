@@ -31,6 +31,7 @@ public class ObjectsFactory {
         if (o1 instanceof  String) {
             object_id = (String) o1;
             o1 = objectMap.get(IdMap.get(object_id));
+            objectMap.remove(IdMap.get(object_id));
         }
 
         else {
