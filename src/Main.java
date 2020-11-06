@@ -341,6 +341,7 @@ public class Main {
                 }
                 String input;
                 boolean didOrder = false;
+                boolean found = false;
                 int sum = 0;
                 do {
                     System.out.println("Do you want to buy anything?(Y/N)");
@@ -348,14 +349,17 @@ public class Main {
                     if (input.equals("Y")) {
                         didOrder = true;
                         String orderName = scanner.nextLine();
+                        found = false;
                         for (int i = 0; i < userProducts.size(); i++) {
                             if (((Product) userProducts.get(i)).getId().equals(orderName)) {
+                                found = true;
                                 System.out.println("How many?");
                                 String amount = scanner.nextLine();
                                 sum += Integer.parseInt(amount);
-                            } else {
-                                System.out.println("Product not in the options");
                             }
+                        }
+                        if(!found){
+                            System.out.println("Product not in the options");
                         }
                     }
                 }
