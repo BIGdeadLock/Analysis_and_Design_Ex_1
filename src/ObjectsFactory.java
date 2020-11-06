@@ -66,15 +66,19 @@ public class ObjectsFactory {
     }
 
     public String getObjecSystemtId(Object o1) {
+
+        // If o1 is String - the user intentions were get the system id
+        // that corresponds to the object id and passed the object id.
+        // Becuase String is an object as well we need to handle that special case
+        // separately
+        if (o1 instanceof String)
+            return IdMap.get((String)o1);
+
         for (Map.Entry<String,Object>entry: objectMap.entrySet()){
             if (o1.equals(entry.getValue()))
                 return entry.getKey();
         }
         return null;
-    }
-
-    public String getObjecSystemtId(String object_id) {
-        return IdMap.get(object_id);
     }
 
     public Object getObjectType (String object_id) {
