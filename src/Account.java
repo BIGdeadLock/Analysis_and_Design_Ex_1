@@ -176,6 +176,12 @@ public class Account {
         this.orders.add(order);
     }
 
+    public void Delete() throws InvalidArgumentException {
+      //  this.shoppingCart = null;
+     //   this.shoppingCart.Delete();
+       // this.customer.Delete();
+    }
+
     public String toString(){
         String print="";
         print="Account ID: "+this.id+"\nBilling Address: "+this.billing_address+

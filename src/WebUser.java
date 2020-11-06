@@ -94,6 +94,15 @@ public class WebUser {
         this.state = state;
     }
 
+    public void Delete() throws InvalidArgumentException{
+        if(this.customer!=null)
+            this.customer.setWebUser(null);
+        if(this.shoppingCart!=null)
+            this.shoppingCart.Delete();
+
+        this.customer=null;
+    }
+
     public String toString(){
         String print="";
         print="WebUser ID: "+this.login_id+"\nPassword: "+this.password+

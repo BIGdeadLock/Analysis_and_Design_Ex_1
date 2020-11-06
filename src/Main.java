@@ -45,15 +45,15 @@ public class Main {
         //A1.addProduct(P);
 
         //there is no shopping cart in the factory
-        factory.addObject("123", S);
-        factory.addObject("Bamba", P);
-        factory.addObject("Ramen", P2);
-        factory.addObject("Dani", W);
-        factory.addObject("DaniCustomer", W.getCustomer());
-        factory.addObject("DaniAccount", W.getCustomer().getAccount());
-        factory.addObject("DanaCustomer", W1.getCustomer());
-        factory.addObject("Dana", W1);
-        factory.addObject("DanaAccount", W1.getCustomer().getAccount());
+        factory.addObject( S);
+        factory.addObject( P);
+        factory.addObject( P2);
+        factory.addObject( W);
+        factory.addObject(W.getCustomer());
+        factory.addObject(W.getCustomer().getAccount());
+        factory.addObject(W1.getCustomer());
+        factory.addObject(W1);
+        factory.addObject(W1.getCustomer().getAccount());
         objectsMap.put("123", "Supplier");
         objectsMap.put("Bamba", "Product");
         objectsMap.put("Ramen", "Product");
@@ -158,6 +158,10 @@ public class Main {
                 case "ShowObjectId":
                     ShowObjectId(argument);
                     break;
+
+                default:
+                    System.out.println("Command Not Found. Please Try Again");
+                    break;
             }
 
         } while (true);
@@ -180,28 +184,30 @@ public class Main {
 
         if (currentLoggedIn != null) {
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Blocked);
-            LogoutWebUser(currentLoggedIn);
+            System.out.println("Another user is currently logged in, please try again later");
+            return;
         }
-
         // Validate user password
         System.out.println("Enter password");
         String password = scanner.nextLine();
-        if (usersMap.get(Login_id)!=null && usersMap.get(Login_id).equals(password)) {
+        //usersMap.get(Login_id)!=null &&  -- check if needed
+        if (usersMap.get(Login_id).equals(password)) {
             currentLoggedIn = Login_id;
             WebUser LoggedIn= (WebUser)factory.objectMap.get(Login_id);
             currentLoggedInAccount = LoggedIn.getCustomer().getAccount();
             // Need to change the user state to active - meaning he is logged in
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Active);
             System.out.println("Successfully logged in to the system");
-        } else
+        }
+        else
             System.out.println("Incorrect password");
-
     }
-
 
     public static void RemoveWebUser(String Login_id){
         if(usersMap.containsKey(Login_id)) {
             usersMap.remove(Login_id);
+            WebUser toRemove = (WebUser)factory.getObjectType(Login_id);
+            factory.removeObject(toRemove);
             if(currentLoggedIn.equals(Login_id)){
                 currentLoggedInAccount=null;
                 currentLoggedIn="";
@@ -292,22 +298,21 @@ public class Main {
 //        new_customer.setWebUser(new_webUser);
         ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
 
-        // Add the objects to the Data structures
+        // Add the objects to the Data structures (id given automatically)
         objectsMap.put(customer_id, "Customer");
         objectsMap.put(Login_id, "WebUser");
         objectsMap.put(account_id, "Account");
         objectsMap.put(shoppingCartDate.toString(), "ShoppingCart");
-        factory.addObject(customer_id, new_webUser.getCustomer());
-        factory.addObject(Login_id, new_webUser);
-        factory.addObject(account_id, new_webUser.getCustomer().getAccount());
-        factory.addObject(shoppingCartDate.toString(), new_shoppingcart);
+        factory.addObject(new_webUser.getCustomer());
+        factory.addObject(new_webUser);
+        factory.addObject(new_webUser.getCustomer().getAccount());
+        factory.addObject(new_shoppingcart);
 
     }
 
     public static void Makeorder() throws InvalidArgumentException, ParseException {
-        if(currentLoggedInAccount == null){
+        if(currentLoggedInAccount == null)
             System.out.println("You can't make an order without be logged in");
-        }
         else {
             System.out.println("Please enter the id of the user you want to buy from:");
             Scanner scanner = new Scanner(System.in);
@@ -362,7 +367,7 @@ public class Main {
                     String address = scanner.nextLine();
                     Order ord = new Order(Integer.toString(id), ordered, shipped, address, sum, currentLoggedInAccount);
                     objectsMap.put(ord.getNumber(), "Order");
-                    factory.addObject(ord.getNumber(), ord);
+                    factory.addObject(ord);
                     currentLoggedInAccount.addOrder(ord);
                     while (objectsMap.containsKey(Integer.toString(id))) {
                         id++;
@@ -380,14 +385,14 @@ public class Main {
                         }
                         ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, ans);
                         objectsMap.put(impay.getId(), "Immediate Payment");
-                        factory.addObject(impay.getId(), impay);
+                        factory.addObject(impay);
                     } else {
                         System.out.println("When do you want to pay?(DD/MM/YYYY)");
                         String Dat = scanner.nextLine();
                         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(Dat);
                         DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, date);
                         objectsMap.put(depay.getId(), "Delayed Payment");
-                        factory.addObject(depay.getId(), depay);
+                        factory.addObject(depay);
                     }
                     System.out.println("Order added successfully \n");
                 }
@@ -469,11 +474,11 @@ public class Main {
         }
         else {
             new_supplier = new Supplier(supplier_id,supplier_name);
-            factory.addObject(supplier_id,new_supplier);
+            factory.addObject(new_supplier);
             objectsMap.put(supplier_id,"Supplier");
         }
         Product new_product = new Product(product_id,product_name,new_supplier);
-        factory.addObject(product_id,new_product);
+        factory.addObject(new_product);
         objectsMap.put(product_id,"Product");
         System.out.println("Product added successfully");
     }
@@ -494,7 +499,7 @@ public class Main {
 
     public static void ShowAllObjects(){
         for (Map.Entry object : objectsMap.entrySet()) {
-            System.out.println("The id is : "+ object.getKey() + " ,the Value is: " + object.getValue());
+            System.out.println("The id is: "+ object.getKey() + " ,the Value is: " + object.getValue());
         }
 
     }

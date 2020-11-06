@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,41 +13,43 @@ public class ObjectsFactory {
         id ++;
     }
 
-    public void removeObject(Object o1){
+    public void removeObject(Object o1) {
         for (Map.Entry<String,Object>entry: objectMap.entrySet()){
             if (o1.equals(entry.getValue()))
                 objectMap.remove(entry.getKey());
         }
         // Switch case to use the Delete function of every class that implements it
-        if (o1 instanceof Customer)
-            ((Customer)o1).Delete();
+        try {
+            if (o1 instanceof Customer)
+                ((Customer) o1).Delete();
 
-        else if (o1 instanceof WebUser)
-            ((WebUser)o1).Delete();
+            else if (o1 instanceof WebUser)
+                ((WebUser) o1).Delete();
 
-        else if (o1 instanceof WebUser)
-            ((WebUser)o1).Delete();
+            else if (o1 instanceof Account)
+                ((Account) o1).Delete();
 
-        else if (o1 instanceof Account)
-            ((Account)o1).Delete();
+            else if (o1 instanceof ShoppingCart)
+                ((ShoppingCart)o1).Delete();
+        }
+        catch (InvalidArgumentException e){
+            e.printStackTrace();
+        }
 
-        else if (o1 instanceof LineItem)
-            ((LineItem)o1).Delete();
+      //  else if (o1 instanceof LineItem)
+     //       ((LineItem)o1).Delete();
 
-        else if (o1 instanceof Order)
-            ((Order)o1).Delete();
+      //  else if (o1 instanceof Order)
+       //     ((Order)o1).Delete();
 
-        else if (o1 instanceof Payment)
-            ((Payment)o1).Delete();
+     //   else if (o1 instanceof Payment)
+       //     ((Payment)o1).Delete();
 
-        else if (o1 instanceof Product)
-            ((Product)o1).Delete();
+      //  else if (o1 instanceof Product)
+       //     ((Product)o1).Delete();
 
-        else if (o1 instanceof ShoppingCart)
-            ((ShoppingCart)o1).Delete();
-
-        else if (o1 instanceof Supplier)
-            ((Supplier)o1).Delete();
+     //   else if (o1 instanceof Supplier)
+          //  ((Supplier)o1).Delete();
     }
 
     public String getObjectId(Object o1) {

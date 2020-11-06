@@ -105,6 +105,12 @@ public class Customer  {
         }
     }
 
+    public void Delete() throws InvalidArgumentException {
+        if(this.webUser!=null)
+            this.webUser.Delete();
+        this.account.Delete();
+    }
+
     public String toString(){
         String print="";
         print="Customer ID: "+this.id+"\nAddress: "+this.address+

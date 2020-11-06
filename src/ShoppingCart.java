@@ -101,6 +101,14 @@ public class ShoppingCart {
         }
     }
 
+    public void Delete(){
+        this.webUser=null;
+     //   for (int i = 0; i < lineItems.size() ; i++) {
+       //     lineItems.get(i).Delete(); //delete each line item (has to have one shopping cart)
+        //}
+   //     this.account.Delete();
+    }
+
     public String toString(){
         String print="";
         print="Shopping Cart Date Created: "+this.created;
