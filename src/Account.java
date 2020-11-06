@@ -173,7 +173,7 @@ public class Account {
                 order.setAccount(this);
             }
         }
-
+        this.orders.add(order);
     }
 
     public String toString(){

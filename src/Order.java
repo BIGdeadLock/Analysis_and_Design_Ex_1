@@ -109,8 +109,9 @@ public class Order {
         // Instances assertions - each order instance can't
         // be related to the same pay instance twice
         assert(!this.payments.contains(pay));
-        pay.setOrder(this);
         this.payments.add(pay);
+        pay.setOrder(this);
+
     }
 
 

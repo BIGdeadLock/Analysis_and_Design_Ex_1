@@ -95,7 +95,7 @@ public class Main {
             System.out.println("2. Remove WebUser");
             System.out.println("3. Login WebUser");
             System.out.println("4. Logout WebUser");
-            System.out.println("5: Make order");
+            System.out.println("5. Make order");
             System.out.println("6. Display order");
             System.out.println("7. Link Product");
             System.out.println("8. Add Product");
@@ -416,7 +416,7 @@ public class Main {
             List<Order> ord = currentLoggedInAccount.getOrders();
             int size = currentLoggedInAccount.getOrderSize();
             if (ord.isEmpty())
-                System.out.println("There is no orders");
+                System.out.println("There are no orders");
             else {
                 // Get the last order of the current logged in user
                 Order LastOrder = ord.get(size - 1);
