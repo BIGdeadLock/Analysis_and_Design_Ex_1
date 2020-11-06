@@ -5,11 +5,24 @@ import java.util.Map;
 
 public class ObjectsFactory {
     HashMap<String, Object> objectMap = new HashMap<>();
+    HashMap<String, String> IdMap = new HashMap<>(); // Key - Object id, Value - System id
     static int id = 0;
 
     public void addObject(Object o){
         assert (objectMap.containsKey(Integer.toString(id)));
         objectMap.put(Integer.toString(id), o);
+        id ++;
+    }
+
+    /**
+     *
+     * @param object_id - The object id UML attribute in string
+     * @param o - the object that was created
+     */
+    public void addObject(String object_id,Object o){
+        assert (objectMap.containsKey(Integer.toString(id)));
+        objectMap.put(Integer.toString(id), o);
+        IdMap.put(object_id, Integer.toString(id));
         id ++;
     }
 
@@ -52,7 +65,7 @@ public class ObjectsFactory {
           //  ((Supplier)o1).Delete();
     }
 
-    public String getObjectId(Object o1) {
+    public String getObjecSystemtId(Object o1) {
         for (Map.Entry<String,Object>entry: objectMap.entrySet()){
             if (o1.equals(entry.getValue()))
                 return entry.getKey();
@@ -60,10 +73,17 @@ public class ObjectsFactory {
         return null;
     }
 
-    public Object getObjectType (String id) {
+    public String getObjecSystemtId(String object_id) {
+        return IdMap.get(object_id);
+    }
 
-        if (!this.objectMap.containsKey(id))
+    public Object getObjectType (String object_id) {
+
+
+        if (!this.IdMap.containsKey(object_id))
             return null;
+
+        String id = IdMap.get(object_id);
 
         if(this.objectMap.get(id) instanceof Account)
             return (Account)this.objectMap.get(id);
