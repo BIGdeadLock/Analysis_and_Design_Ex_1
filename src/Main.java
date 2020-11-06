@@ -74,7 +74,7 @@ public class Main {
         functions_call.put("Add WebUser", "*");
         functions_call.put("Remove WebUser", "*");
         functions_call.put("Login WebUser", "*");
-        functions_call.put("Logout WebsUser", "*");
+        functions_call.put("Logout WebUser", "*");
         functions_call.put("Make order", "");
         functions_call.put("Display order", "");
         functions_call.put("Link Product", "*");
@@ -458,7 +458,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         //check if the product exist in the system
         if (factory.getObjectType(product_name) instanceof Product){
-                pro = (Product) factory.objectMap.get(product_name);
+            String product_id = factory.IdMap.get(product_name);
+            pro = (Product) factory.objectMap.get(product_id);
         }
         if (pro!=null) {
             //check if the account logged in is premium, if it is premium link the product to this account
@@ -501,16 +502,17 @@ public class Main {
         System.out.println("Please enter Supplier name");
         String supplier_name = scanner.nextLine();
         Supplier new_supplier = null;
-        if(factory.objectMap.get(supplier_id)!=null){
-            new_supplier = (Supplier)factory.objectMap.get(supplier_id);
+        String supplier_Sysid = factory.IdMap.get(supplier_id);
+        if(factory.objectMap.get(supplier_Sysid)!=null){
+            new_supplier = (Supplier)factory.objectMap.get(supplier_Sysid);
         }
         else {
             new_supplier = new Supplier(supplier_id,supplier_name);
-            factory.addObject(new_supplier);
+            factory.addObject(supplier_id,new_supplier);
             objectsMap.put(supplier_id,"Supplier");
         }
         Product new_product = new Product(product_id,product_name,new_supplier);
-        factory.addObject(new_product);
+        factory.addObject(product_id,new_product);
         objectsMap.put(product_id,"Product");
         System.out.println("Product added successfully");
     }
