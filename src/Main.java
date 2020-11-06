@@ -1,4 +1,5 @@
 import com.sun.javaws.exceptions.InvalidArgumentException;
+import sun.rmi.runtime.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,15 +46,15 @@ public class Main {
         //A1.addProduct(P);
 
         //there is no shopping cart in the factory
-        factory.addObject( S);
-        factory.addObject( P);
-        factory.addObject( P2);
-        factory.addObject( W);
-        factory.addObject(W.getCustomer());
-        factory.addObject(W.getCustomer().getAccount());
-        factory.addObject(W1.getCustomer());
-        factory.addObject(W1);
-        factory.addObject(W1.getCustomer().getAccount());
+        factory.addObject("123", S);
+        factory.addObject("Bamba", P);
+        factory.addObject("Ramen", P2);
+        factory.addObject("Dani", W);
+        factory.addObject("DaniCustomer", W.getCustomer());
+        factory.addObject("DaniAccount", W.getCustomer().getAccount());
+        factory.addObject("DanaCustomer", W1.getCustomer());
+        factory.addObject("Dana", W1);
+        factory.addObject("DanaAccount", W1.getCustomer().getAccount());
         objectsMap.put("123", "Supplier");
         objectsMap.put("Bamba", "Product");
         objectsMap.put("Ramen", "Product");
@@ -206,12 +207,12 @@ public class Main {
     public static void RemoveWebUser(String Login_id){
         if(usersMap.containsKey(Login_id)) {
             usersMap.remove(Login_id);
-            WebUser toRemove = (WebUser)factory.getObjectType(Login_id);
-            factory.removeObject(toRemove);
+            factory.removeObject(Login_id);
             if(currentLoggedIn.equals(Login_id)){
                 currentLoggedInAccount=null;
                 currentLoggedIn="";
             }
+            System.out.printf(Login_id+ " Deleted Successfully\n");
         }
         else
             System.out.println(Login_id + " not in the system");
@@ -499,7 +500,7 @@ public class Main {
 
     public static void ShowAllObjects(){
         for (Map.Entry object : objectsMap.entrySet()) {
-            System.out.println("The id is: "+ object.getKey() + " ,the Value is: " + object.getValue());
+            System.out.println("The id is: "+ factory.getObjecSystemtId(object.getKey()) + " ,the Value is: " + object.getValue());
         }
 
     }

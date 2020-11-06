@@ -91,6 +91,10 @@ public class Customer  {
     }
 
     public void setWebUser(WebUser webUser) throws InvalidArgumentException {
+        if (webUser == null){ //on delete --> reset the webuser to null
+            this.webUser = null;
+            return;
+        }
         if(this.webUser != null){
             throw new InvalidArgumentException(new String[]{"Can't add web user because customer has one"});
         }
