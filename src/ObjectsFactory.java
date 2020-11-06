@@ -1,11 +1,30 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class ObjectsFactory {
     HashMap<String, Object> objectMap = new HashMap<>();
+    static int id = 0;
 
-    public void addObject(String id, Object o){
-        assert (objectMap.containsKey(id));
-        objectMap.put(id, o);
+    public void addObject(Object o){
+        assert (objectMap.containsKey(Integer.toString(id)));
+        objectMap.put(Integer.toString(id), o);
+        id ++;
+    }
+
+    public void removeObject(Object o1){
+        for (Map.Entry<String,Object>entry: objectMap.entrySet()){
+            if (o1.equals(entry.getValue()))
+                objectMap.remove(entry.getKey());
+        }
+
+    }
+
+    public String getObjectId(Object o1) {
+        for (Map.Entry<String,Object>entry: objectMap.entrySet()){
+            if (o1.equals(entry.getValue()))
+                return entry.getKey();
+        }
+        return null;
     }
 
     public Object getObjectType (String id) {
