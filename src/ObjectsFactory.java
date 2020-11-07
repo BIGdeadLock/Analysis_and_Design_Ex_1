@@ -14,7 +14,6 @@ public class ObjectsFactory {
      */
     public String getNextFreeId(){
         String id_to_return = Integer.toString(id);
-        id++;
         return id_to_return;
     }
 

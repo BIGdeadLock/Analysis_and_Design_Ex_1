@@ -11,20 +11,20 @@ public class LineItem {
     private String id;
 
 
-    public LineItem(int id, int quantity, int price, ShoppingCart shoppingCart, Order order, Product product) throws InvalidArgumentException {
+    public LineItem(String id, int quantity, int price, ShoppingCart shoppingCart, Order order, Product product) throws InvalidArgumentException {
         this.quantity = quantity;
         this.price = price;
         setShoppingCart(shoppingCart);
         setOrder(order);
         setProduct(product);
-        this.id=Integer.toString(id);
+        this.id=id;
     }
 
-    public LineItem(int id,int quantity, int price,Product product) throws InvalidArgumentException {
+    public LineItem(String id,int quantity, int price,Product product) throws InvalidArgumentException {
         this.quantity = quantity;
         this.price = price;
         setProduct(product);
-        this.id=Integer.toString(id);
+        this.id=id;
     }
 
     /**
