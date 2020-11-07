@@ -1,6 +1,7 @@
 import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ObjectsFactory {
@@ -62,6 +63,10 @@ public class ObjectsFactory {
                 this.deleteObj(acc);
                 Customer cust = wb.getCustomer();
                 this.deleteObj(cust);
+
+                List<LineItem> lineItems = shp.getLineItems();
+                for (LineItem item : lineItems)
+                    this.deleteObj(item);
 
                 ((WebUser) o1).Delete();
             } else if (o1 instanceof Account)
