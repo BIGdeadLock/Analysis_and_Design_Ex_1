@@ -96,12 +96,16 @@ public class WebUser {
     }
 
     public void Delete() throws InvalidArgumentException{
-        if(this.customer!=null)
-            this.customer.setWebUser(null);
-        if(this.shoppingCart!=null)
-            this.shoppingCart.Delete();
+        ShoppingCart sh = this.shoppingCart;
+        Customer cust = this.customer;
 
-        this.customer=null;
+        if(this.customer!=null)
+            this.customer = null;
+        if(this.shoppingCart!=null)
+            this.shoppingCart = null;
+
+        sh.Delete();
+        cust.setWebUser(null);
     }
 
     public String toString(){

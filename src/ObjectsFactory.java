@@ -8,6 +8,12 @@ public class ObjectsFactory {
     HashMap<String, String> IdMap = new HashMap<>(); // Key - Object id, Value - System id
     static int id = 0;
 
+    public String getNextFreeId(){
+        String id_to_return = Integer.toString(id);
+        id++;
+        return id_to_return;
+    }
+
     public void addObject(Object o){
         assert (objectMap.containsKey(Integer.toString(id)));
         objectMap.put(Integer.toString(id), o);
