@@ -14,7 +14,8 @@ public class DelayedPayment extends Payment {
 
     public String toString(){
         String print="";
-        print="Payment Date: "+this.paymentDate+"\nconnected to:";
+        print="Payment ID: "+getId()+"\nDate: "+getPaid()+" Total: "+getTotal()+
+                " Details: "+getDetails()+"Payment Date: "+this.paymentDate+"\nconnected to:";
         if(getAccount()!=null)  //should have one the check is for us to know if its not working
             print+="Account";
         if(getOrder()!=null)  //should have one the check is for us to know if its not working
