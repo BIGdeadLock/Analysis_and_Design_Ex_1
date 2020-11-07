@@ -374,7 +374,7 @@ public class Main {
                 }
                 while (!input.equals("N"));
 
-                if (didOrder) {
+                if (didOrder && sum != 0) {
                     while (objectsMap.containsKey(Integer.toString(id))) {
                         id++;
                     }
@@ -407,7 +407,10 @@ public class Main {
                             ans = true;
                         }
                         for(int i = 0; i< Integer.parseInt(howManyPay);i++) {
-                            ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, ans);
+                            while (objectsMap.containsKey(Integer.toString(id))) {
+                                id++;
+                            }
+                            ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum/Integer.parseInt(howManyPay), details, ord, currentLoggedInAccount, ans);
                             objectsMap.put(impay.getId(), "Immediate Payment");
                             factory.addObject(impay);
                         }
@@ -416,7 +419,10 @@ public class Main {
                         String Dat = scanner.nextLine();
                         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(Dat);
                         for(int i = 0; i< Integer.parseInt(howManyPay);i++) {
-                            DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum, details, ord, currentLoggedInAccount, date);
+                            while (objectsMap.containsKey(Integer.toString(id))) {
+                                id++;
+                            }
+                            DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum /Integer.parseInt(howManyPay), details, ord, currentLoggedInAccount, date);
                             objectsMap.put(depay.getId(), "Delayed Payment");
                             factory.addObject(depay);
                         }
