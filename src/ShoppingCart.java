@@ -122,6 +122,12 @@ public class ShoppingCart {
 
         if (acc != null)
             acc.Delete();
+
+        for (LineItem item:
+             this.lineItems) {
+            this.lineItems.remove(item);
+            item.Delete();
+        }
     }
 
     public String toString(){
@@ -140,5 +146,9 @@ public class ShoppingCart {
                 print += ", lineItem";
         }
         return print;
+    }
+    public void removeLineItem(LineItem item){
+        if (item != null || this.lineItems.contains(item))
+            this.lineItems.remove(item);
     }
 }

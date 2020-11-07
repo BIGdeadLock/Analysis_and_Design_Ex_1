@@ -98,4 +98,16 @@ public class LineItem {
     public Product getProduct() { return product; }
 
     public String getId() { return id; }
+
+    public void Delete(){
+        ShoppingCart shoppingCart = this.shoppingCart;
+        this.shoppingCart = null;
+        shoppingCart.removeLineItem(this);
+
+        this.shoppingCart = null;
+        Order ord = this.order;
+        this.order = null;
+        ord.removeLineItem(this);
+
+    }
 }

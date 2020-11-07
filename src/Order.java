@@ -158,4 +158,8 @@ public class Order {
         System.out.println(Print);
     }
 
+    public void removeLineItem(LineItem item){
+        if (item != null || this.lineItems.contains(item))
+            this.lineItems.remove(item);
+    }
 }
