@@ -578,6 +578,13 @@ public class Main {
      * @param id - String | Representing and id of an existing object in the system
      */
     public static void ShowObjectId(String id){
+        Object obj = factory.getObjectType(id);
+        if (obj == null){
+            System.out.println("The system id you have given does not belong to any object in the system");
+            System.out.println("Please try again");
+            return;
+        }
+        System.out.println("System ID: " + id);
         if(factory.getObjectType(id).getClass()==Order.class){
             System.out.println(factory.getObjectType(id));
             ((Order)factory.getObjectType(id)).PrintTheConnection();
