@@ -71,7 +71,13 @@ public class LineItem {
 
     public String toString(){
         String print="";
-        print="LineItem Quantity: "+this.quantity+"\nPrice: "+this.price;
+        print="LineItem Quantity: "+this.quantity+"\nPrice: "+this.price+"\nconnected to:";
+        if(this.shoppingCart!=null) //should have one the check is for us to know if its not working
+            print+="ShoppingCart";
+        if(this.product!=null) //should have one the check is for us to know if its not working
+            print+=", product";
+        if(this.order!=null) //should have one the check is for us to know if its not working
+            print+=", Order";
         return print;
     }
 

@@ -106,7 +106,7 @@ public class Product {
     public String toString(){
         String print="";
         print="Product ID: "+this.id+"\nName: "+this.name+
-                " Premium Account: "+this.premiumAccount;
+                " Premium Account: "+this.premiumAccount+"\nconnected to:";
         return print;
     }
 }
