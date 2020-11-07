@@ -120,8 +120,12 @@ public class Customer  {
         String print="";
         print="Customer ID: "+this.id+"\nAddress: "+this.address+
                 " Phone Number: "+this.phone+" Email: "+this.Email+"\nconnected to:";
-        if(this.account!=null) //should have one the check is for us to know if its not working
-            print+="Account";
+        if(this.account!=null) {//should have one the check is for us to know if its not working
+            if (this.account.getClass() == PremiumAccount.class)
+                print +="PremiumAccount";
+            else
+                print += "Account";
+        }
         if(this.webUser!=null)
             print+=", Webuser";
 

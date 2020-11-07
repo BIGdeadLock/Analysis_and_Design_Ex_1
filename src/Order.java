@@ -137,8 +137,12 @@ public class Order {
     public void PrintTheConnection(){
         String Print="";
         Print+="connected to:";
-        if(this.account!=null) //should have one the check is for us to know if its not working
-            Print+="Account";
+        if(this.account!=null) {//should have one the check is for us to know if its not working
+            if (this.account.getClass() == PremiumAccount.class)
+                Print +="PremiumAccount";
+            else
+                Print += "Account";
+        }
         if(!this.payments.isEmpty()) {
             for (int i = 0; i < this.payments.size(); i++) {
                 if (this.payments.get(i).getClass() == ImmediatePayment.class)

@@ -85,8 +85,12 @@ public abstract class Payment  {
         String print="";
         print="Payment ID: "+this.id+"\nDate: "+this.paid+" Total: "+this.total+
         " Details: "+this.details+"\nconnected to:";
-        if(this.account!=null)  //should have one the check is for us to know if its not working
-            print+="Account";
+        if(this.account!=null){  //should have one the check is for us to know if its not working
+            if (this.account.getClass() == PremiumAccount.class)
+                print +="PremiumAccount";
+            else
+                print += "Account";
+        }
         if(this.order!=null)  //should have one the check is for us to know if its not working
             print+=", Order";
         return print;

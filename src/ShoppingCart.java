@@ -112,8 +112,12 @@ public class ShoppingCart {
     public String toString(){
         String print="";
         print="Shopping Cart Date Created: "+this.created+"\nconnected to:";
-        if(this.account!=null) //should have one the check is for us to know if its not working
-            print+="Account";
+        if(this.account!=null) { //should have one the check is for us to know if its not working
+            if (this.account.getClass() == PremiumAccount.class)
+                print +="PremiumAccount";
+            else
+                print += "Account";
+        }
         if(this.webUser!=null) //should have one the check is for us to know if its not working
             print+="webUser";
         if(!this.lineItems.isEmpty()) {
