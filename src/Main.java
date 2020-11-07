@@ -115,6 +115,10 @@ public class Main {
             switch (function_call) {
                 case "Add WebUser":
                     try {
+                        if (argument.equals("WebUser")){
+                            System.out.println("No login id detected. Please try again with a login id");
+                            break;
+                        }
                         AddWebUser(argument);
                     } catch (InvalidArgumentException e) {
                         e.printStackTrace();
@@ -122,14 +126,26 @@ public class Main {
                     break;
 
                 case "Remove WebUser":
+                    if (argument.equals("WebUser")){
+                        System.out.println("No login id detected. Please try again with a login id");
+                        break;
+                    }
                     RemoveWebUser(argument);
                     break;
 
                 case "Login WebUser":
+                    if (argument.equals("WebUser")){
+                        System.out.println("No login id detected. Please try again with a login id");
+                        break;
+                    }
                     LoginWebUser(argument);
                     break;
 
                 case "Logout WebUser":
+                    if (argument.equals("WebUser")){
+                        System.out.println("No login id detected. Please try again with a login id");
+                        break;
+                    }
                     LogoutWebUser(argument);
                     break;
 
@@ -142,6 +158,10 @@ public class Main {
                     break;
 
                 case "Link Product":
+                    if (argument.equals("Product")){
+                        System.out.println("No product id detected. Please try again with a product id");
+                        break;
+                    }
                     LinkProduct(argument);
                     break;
 
@@ -150,6 +170,10 @@ public class Main {
                     break;
 
                 case "Delete Product":
+                    if (argument.equals("Product")){
+                        System.out.println("No product id detected. Please try again with a product id");
+                        break;
+                    }
                     DeleteProduct(argument);
                     break;
 
@@ -158,6 +182,10 @@ public class Main {
                     break;
 
                 case "ShowObjectId":
+                    if (argument.equals("ShowObjectId")){
+                        System.out.println("No object id detected. Please try again with a object id");
+                        break;
+                    }
                     ShowObjectId(argument);
                     break;
 
@@ -311,6 +339,8 @@ public class Main {
         factory.addObject(new_webUser.getLogin_id(),new_webUser);
         factory.addObject(new_webUser.getCustomer().getAccount().getId(),new_webUser.getCustomer().getAccount());
         factory.addObject(shoppingCartDate.toString(),new_webUser.getShoppingCart());
+
+        System.out.println(Login_id + " You were successfully added to the system");
 
     }
 
