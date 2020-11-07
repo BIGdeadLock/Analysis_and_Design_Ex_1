@@ -213,7 +213,10 @@ public class Main {
      */
     private static void LoginWebUser(String Login_id) {
         Scanner scanner = new Scanner(System.in);
-
+        if (objectsMap.get(Login_id) == null){
+            System.out.printf("No user with that login id exists in the system. Please try again");
+            return;
+        }
         if (currentLoggedIn != "") {
             ((WebUser)factory.getObjectType(Login_id)).setState(UserState.Blocked);
             System.out.println("Another user is currently logged in, please try again later");
@@ -513,8 +516,8 @@ public class Main {
         String product_id = scanner.nextLine();
         while (factory.getObjectType(product_id) != null){
             System.out.println("Product id already exists. Please try again.\n");
-            product_id = scanner.nextLine();
         }
+        product_id = scanner.nextLine();
         System.out.println("Please enter Product name");
         String product_name = scanner.nextLine();
         System.out.println("Please enter Supplier id");
@@ -544,15 +547,20 @@ public class Main {
     public static void DeleteProduct(String Product_name){
         boolean Exist = false;
         //Check if the product is in the system, if it is delete the product
-        if(factory.getObjectType(Product_name) instanceof Product ){
-            String ID = factory.IdMap.get(Product_name);
-            Product to_Delete =  (Product) factory.objectMap.get(ID);
-            to_Delete.Delete();
-            factory.removeObject(Product_name);
-            objectsMap.remove(Product_name);
-            Exist = true;
-            System.out.println("Product was deleted successfully");
+        Product to_Delete = (Product) factory.getObjectType(Product_name);
+        if (to_Delete == null || factory.getObjecSystemtId(Product_name) == null){
+            System.out.println("Product with that name does not exists. Please try again.\n");
+            return;
         }
+//        String ID = factory.IdMap.get(Product_name);
+//        Product to_Delete =  (Product) factory.objectMap.get(ID);
+
+        to_Delete.Delete();
+        factory.removeObject(Product_name);
+        objectsMap.remove(Product_name);
+        Exist = true;
+        System.out.println("Product was deleted successfully");
+
         if(Exist==false){
             System.out.println("Product not in the system");
         }

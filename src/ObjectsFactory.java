@@ -58,23 +58,53 @@ public class ObjectsFactory {
             else if (o1 instanceof WebUser) {
                 WebUser wb = ((WebUser) o1);
                 ShoppingCart shp = wb.getShoppingCart();
-                this.deleteObj(shp);
+                if (shp != null)
+                    this.deleteObj(shp);
                 Account acc = shp.getAccount();
-                this.deleteObj(acc);
+                if (acc != null)
+                    this.deleteObj(acc);
                 Customer cust = wb.getCustomer();
-                this.deleteObj(cust);
+                if(cust != null)
+                    this.deleteObj(cust);
+
+                List<Order> orderList = acc.getOrders();
+                if (orderList != null){
+                    for (Order order : orderList)
+                        this.deleteObj(order);
+                }
 
                 List<LineItem> lineItems = shp.getLineItems();
-                for (LineItem item : lineItems)
-                    this.deleteObj(item);
-
+                if(lineItems != null) {
+                    for (LineItem item : lineItems)
+                        this.deleteObj(item);
+                }
 
                 List<Payment> paymentList = acc.getPayments();
-                for (Payment payment : paymentList)
-                    this.deleteObj(payment);
-
+                if (paymentList != null) {
+                    for (Payment payment : paymentList)
+                        this.deleteObj(payment);
+                }
                 ((WebUser) o1).Delete();
-            } else if (o1 instanceof Account)
+
+            }
+
+            else if (o1 instanceof Product) {
+                Product ord = (Product)o1;
+                Supplier supplier = ord.getSup();
+                List<LineItem> lineItemList = ord.getItems();
+
+                if (lineItemList != null) {
+                    for (LineItem item : lineItemList)
+                        this.deleteObj(item);
+                }
+                if  (supplier != null)
+                    this.deleteObj(supplier);
+
+                this.deleteObj(ord);
+                ord.Delete();
+            }
+
+            else if (o1 instanceof Account)
                 ((Account) o1).Delete();
 
             else if (o1 instanceof ShoppingCart)
@@ -91,9 +121,6 @@ public class ObjectsFactory {
 
         //   else if (o1 instanceof Payment)
         //     ((Payment)o1).Delete();
-
-        //  else if (o1 instanceof Product)
-        //     ((Product)o1).Delete();
 
         //   else if (o1 instanceof Supplier)
         //  ((Supplier)o1).Delete();

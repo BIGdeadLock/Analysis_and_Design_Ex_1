@@ -102,12 +102,14 @@ public class LineItem {
     public void Delete(){
         ShoppingCart shoppingCart = this.shoppingCart;
         this.shoppingCart = null;
-        shoppingCart.removeLineItem(this);
+        if (shoppingCart != null)
+            shoppingCart.removeLineItem(this);
 
         this.shoppingCart = null;
         Order ord = this.order;
         this.order = null;
-        ord.removeLineItem(this);
+        if (ord != null)
+            ord.removeLineItem(this);
 
     }
 }
