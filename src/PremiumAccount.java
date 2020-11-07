@@ -46,7 +46,26 @@ public class PremiumAccount extends Account {
         String print="";
         print="Premium Account ID: "+getId()+"\nBilling Address: "+getBilling_address()+
                 " closed status: "+getIs_closed()+" Date Opened: "+getOpen()+
-                " Date Closed: "+getClosed()+" Balance:"+getBalance()+"\nProducts: "+this.products;
+                " Date Closed: "+getClosed()+" Balance:"+getBalance()+"\nProducts: "+this.products+"\nconnected to:";
+        if(getCustomer()!=null) //should have one the check is for us to know if its not working
+            print+="Customer";
+        if(getShoppingCart()!=null) //should have one the check is for us to know if its not working
+            print+=", ShoppingCart";
+        if(!getPayments().isEmpty()){
+            for (int i = 0; i < getPayments().size() - 1; i++)
+                print += ", Payment, ";
+            print += "Payment";
+        }
+        if(getOrders().isEmpty()){
+            for (int i = 0; i < getOrders().size() - 1; i++)
+                print += ", Order, ";
+            print += "Order";
+        }
+        if(getProducts().isEmpty()){
+            for (int i = 0; i < getProducts().size() - 1; i++)
+                print += ", Product, ";
+            print += "Product";
+        }
         return print;
     }
 

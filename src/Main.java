@@ -550,7 +550,14 @@ public class Main {
      * @param id - String | Representing and id of an existing object in the system
      */
     public static void ShowObjectId(String id){
-        System.out.println(factory.getObjectType(id));
+        if(factory.getObjectType(id).getClass()==Order.class){
+            System.out.println(factory.getObjectType(id));
+            ((Order)factory.getObjectType(id)).PrintTheConnection();
+        }
+        else
+            System.out.println(factory.getObjectType(id));
+
+
     }
 
 

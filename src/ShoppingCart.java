@@ -111,7 +111,16 @@ public class ShoppingCart {
 
     public String toString(){
         String print="";
-        print="Shopping Cart Date Created: "+this.created;
+        print="Shopping Cart Date Created: "+this.created+"\nconnected to:";
+        if(this.account!=null) //should have one the check is for us to know if its not working
+            print+="Account";
+        if(this.webUser!=null) //should have one the check is for us to know if its not working
+            print+="webUser";
+        if(!this.lineItems.isEmpty()) {
+            for (int i = 0; i < this.lineItems.size() - 1; i++)
+                print += ", lineItem, ";
+            print += "lineItem";
+        }
         return print;
     }
 }

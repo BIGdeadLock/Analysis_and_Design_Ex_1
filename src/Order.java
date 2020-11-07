@@ -134,4 +134,22 @@ public class Order {
         return print;
     }
 
+    public void PrintTheConnection(){
+        String Print="";
+        Print+="connected to:";
+        if(this.account!=null) //should have one the check is for us to know if its not working
+            Print+="Account";
+        if(!this.payments.isEmpty()) {
+            for (int i = 0; i < this.payments.size() - 1; i++)
+                Print += ", Payment, ";
+            Print += "Payment";
+        }
+        if(!this.lineItems.isEmpty()){
+            for (int i = 0; i < this.lineItems.size() - 1; i++)
+                Print += ", lineItem, ";
+            Print +="lineItem";
+        }
+        System.out.println(Print);
+    }
+
 }

@@ -190,7 +190,22 @@ public class Account {
         String print="";
         print="Account ID: "+this.id+"\nBilling Address: "+this.billing_address+
                 " closed status: "+this.is_closed+" Date Opened: "+this.open+
-                " Date Closed: "+this.closed+" Balance:"+this.balance;
+                " Date Closed: "+this.closed+" Balance:"+this.balance+"\nconnected to:";
+        if(this.customer!=null) //should have one the check is for us to know if its not working
+            print+="Customer";
+        if(this.shoppingCart!=null) //should have one the check is for us to know if its not working
+            print+=", ShoppingCart";
+        if(!this.payments.isEmpty()){
+            for (int i = 0; i < this.payments.size() - 1; i++)
+                print += ", Payment, ";
+            print += "Payment";
+        }
+        if(!this.orders.isEmpty()){
+            for (int i = 0; i < this.orders.size() - 1; i++)
+                print += ", Order, ";
+            print += "Order";
+        }
         return print;
     }
+
 }

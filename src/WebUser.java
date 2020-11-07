@@ -106,7 +106,12 @@ public class WebUser {
     public String toString(){
         String print="";
         print="WebUser ID: "+this.login_id+"\nPassword: "+this.password+
-                " state: "+this.state;
+                " state: "+this.state+"\nconnected to:";
+        if(this.customer!=null) //should have one the check is for us to know if its not working
+            print+="customer";
+        if(this.shoppingCart!=null){
+            print+=", ShoppingCart";
+        }
         return print;
     }
 }
