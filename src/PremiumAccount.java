@@ -69,5 +69,37 @@ public class PremiumAccount extends Account {
     public List<Product> getProducts() {
         return products;
     }
+
+    public void Delete(){
+
+        ShoppingCart shp = this.shoppingCart;
+        Customer customer = this.customer;
+        List<Product> prs = this.products;
+
+        if(this.customer!=null)
+            this.customer = null;
+        if(this.shoppingCart!=null)
+            this.shoppingCart = null;
+
+        if (shp != null)
+            shp.Delete();
+
+        if (customer != null) {
+            try {
+                customer.Delete();
+            } catch (InvalidArgumentException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Product p:
+             prs) {
+            try {
+                p.setPremiumAccount(null);
+            } catch (InvalidArgumentException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
 

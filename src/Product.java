@@ -74,8 +74,11 @@ public class Product {
      * @param premiumAccount -PremiumAccount
      */
     public void setPremiumAccount(PremiumAccount premiumAccount)throws InvalidArgumentException {
-        if(premiumAccount == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+        if(premiumAccount == null) {
+            this.premiumAccount = null;
+            this.price = 0;
+            this.quantity = 0;
+        }
         //product does not yet have a premiumAccount
         if(this.premiumAccount != null)
             throw new InvalidArgumentException(new String[]{"Can't add more than one premium account"});

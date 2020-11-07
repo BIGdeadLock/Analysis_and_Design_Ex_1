@@ -6,18 +6,18 @@ import java.util.List;
 
 public class Account {
 
-    private String id;
+    protected  String id;
     private String billing_address;
     private boolean is_closed;
     private Date open;
     private Date closed;
     private int balance;
 
-    private Customer customer;
-    private ShoppingCart shoppingCart;
+    protected  Customer customer;
+    protected   ShoppingCart shoppingCart;
 
-    private List<Order> orders;
-    private List<Payment> payments;
+    protected   List<Order> orders;
+    protected   List<Payment> payments;
 
     /**
      * account will be set with customer --> then customer will set its account (by function)
