@@ -450,7 +450,7 @@ public class Main {
                         //lineItem.getProduct().addLineItem(lineItem);
                         objectsMap.put(lineItem.getId(),"Line Item");
                     }
-                    System.out.println("Order added successfully \n");
+                    System.out.println("Order added successfully");
                 }
             }
             else {
@@ -545,9 +545,12 @@ public class Main {
         boolean Exist = false;
         //Check if the product is in the system, if it is delete the product
         if(factory.getObjectType(Product_name) instanceof Product ){
-                factory.objectMap.remove(Product_name);
-                objectsMap.remove(Product_name);
-                Exist = true;
+            String ID = factory.IdMap.get(Product_name);
+            Product to_Delete =  (Product) factory.objectMap.get(ID);
+            to_Delete.Delete();
+            factory.removeObject(Product_name);
+            objectsMap.remove(Product_name);
+            Exist = true;
             System.out.println("Product was deleted successfully");
         }
         if(Exist==false){

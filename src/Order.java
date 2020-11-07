@@ -161,22 +161,28 @@ public class Order {
     public void Delete() {
         List<LineItem> itemList = this.lineItems;
         List<Payment> paymentList = this.payments;
+        Account acc = this.account;
+
+        if(acc!=null)
+            this.account = null;
 
         if (itemList != null) {
-            for (LineItem item :
-                    this.lineItems) {
-                this.removeLineItem(item);
-                item.Delete();
+            while (!(lineItems.isEmpty())) {
+                LineItem temp = lineItems.get(0);
+                this.removeLineItem(lineItems.get(0));
+                temp.Delete();
             }
         }
 
         if(paymentList != null){
-            for (Payment payment :
-                    this.payments) {
-                this.removePayment(payment);
-                payment.Delete();
+            while (!(payments.isEmpty())) {
+                Payment temp = payments.get(0);
+                this.removePayment(payments.get(0));
+                temp.Delete();
             }
         }
+
+
     }
 
 

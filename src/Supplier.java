@@ -47,6 +47,12 @@ public class Supplier {
         product.setSupplier(this);
     }
 
+    public void removeProduct(Product product) {
+        if (product != null || this.products.contains(product))
+            this.products.remove(product);
+
+    }
+
     public String toString(){
         String print="";
         print="Supplier ID: "+this.id+"\nName: "+this.name+"\nconnected to:";

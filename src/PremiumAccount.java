@@ -42,6 +42,12 @@ public class PremiumAccount extends Account {
         }
     }
 
+    public void removeProduct(Product product) {
+        if (product != null || this.products.contains(product))
+            this.products.remove(product);
+
+    }
+
     public String toString(){
         String print="";
         print="Premium Account ID: "+getId()+"\nBilling Address: "+getBilling_address()+
@@ -55,11 +61,11 @@ public class PremiumAccount extends Account {
             for (int i = 0; i < getPayments().size(); i++)
                 print += ", Payment";
         }
-        if(getOrders().isEmpty()){
+        if(!getOrders().isEmpty()){
             for (int i = 0; i < getOrders().size(); i++)
                 print += ", Order";
         }
-        if(getProducts().isEmpty()){
+        if(!getProducts().isEmpty()){
             for (int i = 0; i < getProducts().size(); i++)
                 print += ", Product";
         }

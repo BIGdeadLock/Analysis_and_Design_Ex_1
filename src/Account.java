@@ -204,12 +204,18 @@ public class Account {
         }
 
         if (orderList != null){
-            for (Order order:
-                 orderList) {
-                this.orders.remove(order);
-                order.Delete();
+            while (!(orderList.isEmpty())) {
+                Order temp = orderList.get(0);
+                this.removeOrder(orderList.get(0));
+                temp.Delete();
             }
         }
+    }
+
+    public void removeOrder(Order order) {
+        if (order != null || this.orders.contains(order))
+            this.orders.remove(order);
+
     }
 
     public String toString(){

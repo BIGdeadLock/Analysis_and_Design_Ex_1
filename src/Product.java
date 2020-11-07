@@ -106,6 +106,33 @@ public class Product {
         this.price = price;
     }
 
+    public void removeLineItem(LineItem item){
+        if (item != null || this.items.contains(item))
+            this.items.remove(item);
+    }
+
+    public void Delete(){
+        Supplier sup = this.sup;
+        PremiumAccount pa = this.premiumAccount;
+
+        if(this.sup!=null)
+            this.sup = null;
+        if(this.premiumAccount!=null)
+            this.premiumAccount = null;
+
+        if(sup != null)
+            sup.removeProduct(this);
+        if (pa != null)
+            pa.removeProduct(this);
+        if(items!=null) {
+            while (!(items.isEmpty())) {
+                LineItem temp = items.get(0);
+                this.removeLineItem(items.get(0));
+                temp.Delete();
+            }
+        }
+    }
+
     public String toString(){
         String print="";
         print="Product ID: "+this.id+"\nName: "+this.name+ "\nconnected to:";

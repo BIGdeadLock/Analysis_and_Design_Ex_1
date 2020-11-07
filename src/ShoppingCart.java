@@ -123,11 +123,12 @@ public class ShoppingCart {
         if (acc != null)
             acc.Delete();
 
-        for (LineItem item:
-             this.lineItems) {
-            this.lineItems.remove(item);
-            item.Delete();
+        while (!(lineItems.isEmpty())){
+            LineItem temp = lineItems.get(0);
+            this.lineItems.remove(lineItems.get(0));
+            temp.Delete();
         }
+
     }
 
     public String toString(){

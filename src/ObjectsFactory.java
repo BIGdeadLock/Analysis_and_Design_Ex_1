@@ -128,11 +128,11 @@ public class ObjectsFactory {
         else if (this.IdMap.containsKey(id))
             id = this.IdMap.get(id);
 
-        if (this.objectMap.get(id) instanceof Account)
-            return (Account) this.objectMap.get(id);
-
-        else if (this.objectMap.get(id) instanceof PremiumAccount)
+        if (this.objectMap.get(id) instanceof PremiumAccount)
             return (PremiumAccount) this.objectMap.get(id);
+
+        else if (this.objectMap.get(id) instanceof Account)
+            return (Account) this.objectMap.get(id);
 
         else if (this.objectMap.get(id) instanceof Customer)
             return (Customer) this.objectMap.get(id);
