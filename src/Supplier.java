@@ -51,7 +51,7 @@ public class Supplier {
         String print="";
         print="Supplier ID: "+this.id+"\nName: "+this.name+"\nconnected to:";
         if(!this.products.isEmpty()) {
-            for (int i = 0; i < this.products.size() - 1; i++)
+            for (int i = 0; i < this.products.size()-1; i++)
                 print += "Product, ";
             print += "Product";
         }

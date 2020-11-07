@@ -197,15 +197,13 @@ public class Account {
         if(this.shoppingCart!=null) //should have one the check is for us to know if its not working
             print+=", ShoppingCart";
         if(!this.payments.isEmpty()){
-            for (int i = 0; i < this.payments.size() - 1; i++)
+            for (int i = 0; i < this.payments.size(); i++)
             {
                 if(this.payments.get(i).getClass()==ImmediatePayment.class)
                 print+=", ImmediatePayment";
                 if(this.payments.get(i).getClass()==DelayedPayment.class)
                     print+=", DelayedPayment";
-            }
-
-        }
+            } }
         if(!this.orders.isEmpty()){
             for (int i = 0; i < this.orders.size(); i++)
                 print += ", Order";

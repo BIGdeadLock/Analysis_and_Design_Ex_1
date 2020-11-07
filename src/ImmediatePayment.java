@@ -16,7 +16,7 @@ public class ImmediatePayment extends Payment {
         if(getAccount()!=null)  //should have one the check is for us to know if its not working
             print+="Account";
         if(getOrder()!=null)  //should have one the check is for us to know if its not working
-            print+="Order";
+            print+=", Order";
         return print;
     }
 }

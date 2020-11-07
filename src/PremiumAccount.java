@@ -52,15 +52,15 @@ public class PremiumAccount extends Account {
         if(getShoppingCart()!=null) //should have one the check is for us to know if its not working
             print+=", ShoppingCart";
         if(!getPayments().isEmpty()){
-            for (int i = 0; i < getPayments().size() - 1; i++)
+            for (int i = 0; i < getPayments().size(); i++)
                 print += ", Payment";
         }
         if(getOrders().isEmpty()){
-            for (int i = 0; i < getOrders().size() - 1; i++)
+            for (int i = 0; i < getOrders().size(); i++)
                 print += ", Order";
         }
         if(getProducts().isEmpty()){
-            for (int i = 0; i < getProducts().size() - 1; i++)
+            for (int i = 0; i < getProducts().size(); i++)
                 print += ", Product";
         }
         return print;

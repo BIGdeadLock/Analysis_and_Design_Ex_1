@@ -98,7 +98,6 @@ public class ShoppingCart {
                     lineItem.setShoppingCart(this);
                 }
             }
-            this.lineItems.add(lineItem);
         }
     }
 
@@ -118,9 +117,8 @@ public class ShoppingCart {
         if(this.webUser!=null) //should have one the check is for us to know if its not working
             print+="webUser";
         if(!this.lineItems.isEmpty()) {
-            for (int i = 0; i < this.lineItems.size() - 1; i++)
-                print += ", lineItem, ";
-            print += "lineItem";
+            for (int i = 0; i < this.lineItems.size(); i++)
+                print += ", lineItem";
         }
         return print;
     }

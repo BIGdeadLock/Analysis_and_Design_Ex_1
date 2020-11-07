@@ -111,9 +111,8 @@ public class Product {
         if(this.premiumAccount!=null)
             print+=", PremiumAccount";
         if(!this.items.isEmpty()) {
-            for (int i = 0; i < this.items.size() - 1; i++)
-                print += ", lineItem, ";
-            print += "lineItem";
+            for (int i = 0; i < this.items.size(); i++)
+                print += ", lineItem";
         }
         return print;
     }

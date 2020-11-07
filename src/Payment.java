@@ -88,7 +88,7 @@ public abstract class Payment  {
         if(this.account!=null)  //should have one the check is for us to know if its not working
             print+="Account";
         if(this.order!=null)  //should have one the check is for us to know if its not working
-            print+="Order";
+            print+=", Order";
         return print;
     }
 
