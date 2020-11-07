@@ -140,7 +140,7 @@ public class Account {
                 throw new InvalidArgumentException(new String[]{"Can't add shoping cart because it has account"});
             }
         }
-
+        this.shoppingCart = shoppingCart;
     }
 
     public void addPayment(Payment payment) throws InvalidArgumentException {
@@ -159,8 +159,9 @@ public class Account {
                 payment.setAccount(this);
             }
         }
-
+        this.payments.add(payment);
     }
+
     public void addOrder(Order order) throws InvalidArgumentException {
         if(order == null){
             throw new InvalidArgumentException(new String[]{"Can't add a null"});

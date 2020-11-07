@@ -87,7 +87,7 @@ public class Customer  {
                 throw new InvalidArgumentException(new String[]{"Can't add account because account has customer"});
             }
         }
-
+        this.account = account;
     }
 
     public void setWebUser(WebUser webUser) throws InvalidArgumentException {
@@ -107,6 +107,7 @@ public class Customer  {
                 throw new InvalidArgumentException(new String[]{"Can't add web user because it has another customer"});
             }
         }
+        this.webUser = webUser;
     }
 
     public void Delete() throws InvalidArgumentException {

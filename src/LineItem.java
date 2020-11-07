@@ -8,19 +8,23 @@ public class LineItem {
     private ShoppingCart shoppingCart;
     private Order order;
     private Product product;
+    private String id;
 
-    public LineItem(int quantity, int price,ShoppingCart shoppingCart,Order order, Product product) throws InvalidArgumentException {
+
+    public LineItem(int id, int quantity, int price, ShoppingCart shoppingCart, Order order, Product product) throws InvalidArgumentException {
         this.quantity = quantity;
         this.price = price;
         setShoppingCart(shoppingCart);
         setOrder(order);
         setProduct(product);
+        this.id=Integer.toString(id);
     }
 
-    public LineItem(int quantity, int price,Product product) throws InvalidArgumentException {
+    public LineItem(int id,int quantity, int price,Product product) throws InvalidArgumentException {
         this.quantity = quantity;
         this.price = price;
         setProduct(product);
+        this.id=Integer.toString(id);
     }
 
     /**
@@ -34,6 +38,7 @@ public class LineItem {
         if(this.shoppingCart != null){
             throw new InvalidArgumentException(new String[]{"Can't add shopping cart because LineItem has one"});
         }
+        sp.addLineItem(this);
         this.shoppingCart = sp;
     }
 
@@ -91,4 +96,6 @@ public class LineItem {
     public Order getOrder() { return order; }
 
     public Product getProduct() { return product; }
+
+    public String getId() { return id; }
 }

@@ -14,6 +14,7 @@ public class Main {
     static int id =0;
     static HashMap<String,String> functions_call;
     static ObjectsFactory factory;
+    static int LineItemId = 0;
 
     public static void main(String[] args) throws InvalidArgumentException, ParseException {
         Scanner scanner = new Scanner(System.in);
@@ -34,7 +35,7 @@ public class Main {
 //                "DanAccount", "Tel Mond", true, W);
         WebUser W1 = new WebUser("Dana", "Dana123",
                 "DanaCustomer", "Tel Mond", "054654321", "Dana@gmail.com",
-                "DanAccount", "Tel Mond",500, true);
+                "DanaAccount", "Tel Mond",500, true);
         PremiumAccount PA=(PremiumAccount)(W1.getCustomer().getAccount());
         PA.addProduct(P);
         P.setQuantity(2);
@@ -299,17 +300,17 @@ public class Main {
 
 //        new_customer.setAccount(new_account);
 //        new_customer.setWebUser(new_webUser);
-        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
+        //ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
 
         // Add the objects to the Data structures (id given automatically)
         objectsMap.put(customer_id, "Customer");
         objectsMap.put(Login_id, "WebUser");
         objectsMap.put(account_id, "Account");
         objectsMap.put(shoppingCartDate.toString(), "ShoppingCart");
-        factory.addObject(new_webUser.getCustomer());
-        factory.addObject(new_webUser);
-        factory.addObject(new_webUser.getCustomer().getAccount());
-        factory.addObject(new_shoppingcart);
+        factory.addObject(new_webUser.getCustomer().getId(),new_webUser.getCustomer());
+        factory.addObject(new_webUser.getLogin_id(),new_webUser);
+        factory.addObject(new_webUser.getCustomer().getAccount().getId(),new_webUser.getCustomer().getAccount());
+        factory.addObject(shoppingCartDate.toString(),new_webUser.getShoppingCart());
 
     }
 
@@ -361,7 +362,7 @@ public class Main {
                                     System.out.println("Sorry you don't have enough money");
                                     break;
                                 }
-                                LineItem lineItem= new LineItem(Integer.parseInt(amount),((Product) userProducts.get(i)).getPrice(),(Product) userProducts.get(i));
+                                LineItem lineItem= new LineItem(LineItemId,Integer.parseInt(amount),((Product) userProducts.get(i)).getPrice(),(Product) userProducts.get(i));
                                 lineItemList.add(lineItem);
                                 ((Product) userProducts.get(i)).setQuantity(((Product) userProducts.get(i)).getQuantity() - Integer.parseInt(amount));
 
@@ -387,7 +388,7 @@ public class Main {
                     String address = scanner.nextLine();
                     Order ord = new Order(Integer.toString(id), ordered, shipped, address, sum, currentLoggedInAccount);
                     objectsMap.put(ord.getNumber(), "Order");
-                    factory.addObject(ord);
+                    factory.addObject(ord.getNumber(),ord);
                     currentLoggedInAccount.addOrder(ord);
                     while (objectsMap.containsKey(Integer.toString(id))) {
                         id++;
@@ -412,7 +413,7 @@ public class Main {
                             }
                             ImmediatePayment impay = new ImmediatePayment(Integer.toString(id), ordered, (float) sum/Integer.parseInt(howManyPay), details, ord, currentLoggedInAccount, ans);
                             objectsMap.put(impay.getId(), "Immediate Payment");
-                            factory.addObject(impay);
+                            factory.addObject(impay.getId(),impay);
                         }
                     } else {
                         System.out.println("When do you want to pay?(DD/MM/YYYY)");
@@ -424,13 +425,16 @@ public class Main {
                             }
                             DelayedPayment depay = new DelayedPayment(Integer.toString(id), ordered, (float) sum /Integer.parseInt(howManyPay), details, ord, currentLoggedInAccount, date);
                             objectsMap.put(depay.getId(), "Delayed Payment");
-                            factory.addObject(depay);
+                            factory.addObject(depay.getId(),depay);
                         }
                     }
                     ord.setLineItems(lineItemList);
                     for (LineItem lineItem : lineItemList) {
                         lineItem.setOrder(ord);
                         lineItem.setShoppingCart(currentLoggedInAccount.getShoppingCart());
+                        //lineItem.getProduct().addLineItem(lineItem);
+                        objectsMap.put(lineItem.getId(),"Line Item");
+                        factory.addObject(lineItem.getId(),lineItem);
                     }
                     System.out.println("Order added successfully \n");
                 }

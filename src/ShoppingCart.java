@@ -60,6 +60,7 @@ public class ShoppingCart {
                 throw new InvalidArgumentException(new String[]{"Can't add shopping cart because account has one"});
             }
         }
+        this.account = account;
     }
 
     /**
@@ -82,22 +83,22 @@ public class ShoppingCart {
                 throw new InvalidArgumentException(new String[]{"Can't add shopping cart because web user has one"});
             }
         }
+        this.webUser = webUser;
     }
 
-    public void addLineItem(LineItem lineItem) throws InvalidArgumentException{
-        if(lineItem == null)
+    public void addLineItem(LineItem lineItem) throws InvalidArgumentException {
+        if (lineItem == null)
             throw new InvalidArgumentException(new String[]{"Argument can't be null"});
-        if(this.lineItems.contains(lineItem)){
-            throw new InvalidArgumentException(new String[]{"line item already exist in the list"});
-        }
-        if(lineItem.getShoppingCart() != this) {
-            if (lineItem.getShoppingCart() != null) {
-                throw new InvalidArgumentException(new String[]{"Can't add line item because it has shopping cart "});
+        if (!(lineItems.contains(lineItem))) {
+            if (lineItem.getShoppingCart() != this) {
+                if (lineItem.getShoppingCart() != null) {
+                    throw new InvalidArgumentException(new String[]{"Can't add line item because it has shopping cart "});
+                } else {
+                    this.lineItems.add(lineItem);
+                    lineItem.setShoppingCart(this);
+                }
             }
-            else{
-                this.lineItems.add(lineItem);
-                lineItem.setShoppingCart(this);
-            }
+            this.lineItems.add(lineItem);
         }
     }
 
