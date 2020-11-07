@@ -13,8 +13,8 @@ public class PremiumAccount extends Account {
         this.products = new ArrayList<>();
     }
 
-    public PremiumAccount(String id, String billing_address,int balance, Customer customer) throws InvalidArgumentException {
-        super(id, billing_address,balance, customer);
+    public PremiumAccount(String id, String billing_address,int balance, Customer customer, int cartid) throws InvalidArgumentException {
+        super(id, billing_address,balance, customer,cartid);
         this.products = new ArrayList<>();
     }
 

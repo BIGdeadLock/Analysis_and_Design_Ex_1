@@ -6,11 +6,13 @@ import java.util.List;
 
 public class ShoppingCart {
     private Date created;
+    private int id;
 
     private Account account;
     private WebUser webUser;
 
     private List<LineItem> lineItems;
+
 
     /**
      * account related to shopping cart will be added by function(eliminate deadlock)
@@ -18,9 +20,10 @@ public class ShoppingCart {
      * @param webUser
      * @throws InvalidArgumentException
      */
-    public ShoppingCart(Date created,WebUser webUser) throws InvalidArgumentException {
+    public ShoppingCart(int id,Date created,WebUser webUser) throws InvalidArgumentException {
         this.created = created;
         setWebUser(webUser);
+        this.id = id;
         this.lineItems = new ArrayList<>();
     }
 
@@ -35,6 +38,8 @@ public class ShoppingCart {
     public WebUser getWebUser() {
         return webUser;
     }
+
+    public int getId() { return id; }
 
     public List<LineItem> getLineItems() {
         return lineItems;
@@ -119,7 +124,7 @@ public class ShoppingCart {
                 print += "Account";
         }
         if(this.webUser!=null) //should have one the check is for us to know if its not working
-            print+="webUser";
+            print+=", webUser";
         if(!this.lineItems.isEmpty()) {
             for (int i = 0; i < this.lineItems.size(); i++)
                 print += ", lineItem";

@@ -15,6 +15,7 @@ public class Main {
     static HashMap<String,String> functions_call;
     static ObjectsFactory factory;
     static int LineItemId = 0;
+    static int CartId=0;
 
     public static void main(String[] args) throws InvalidArgumentException, ParseException {
         Scanner scanner = new Scanner(System.in);
@@ -28,14 +29,16 @@ public class Main {
 
         //Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
         WebUser W = new WebUser("Dani", "Dani123",
-                "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond",5, false);
+                "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond",5, false,CartId);
         //C.setWebUser(W);
+        CartId++;
 //
 //        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
 //                "DanAccount", "Tel Mond", true, W);
         WebUser W1 = new WebUser("Dana", "Dana123",
                 "DanaCustomer", "Tel Mond", "054654321", "Dana@gmail.com",
-                "DanaAccount", "Tel Mond",500, true);
+                "DanaAccount", "Tel Mond",500, true,CartId);
+        CartId++;
         PremiumAccount PA=(PremiumAccount)(W1.getCustomer().getAccount());
         PA.addProduct(P);
         P.setQuantity(2);
@@ -56,6 +59,8 @@ public class Main {
         factory.addObject("DanaCustomer", W1.getCustomer());
         factory.addObject("Dana", W1);
         factory.addObject("DanaAccount", W1.getCustomer().getAccount());
+        factory.addObject(Integer.toString(W.getShoppingCart().getId()),W.getShoppingCart());
+        factory.addObject(Integer.toString(W1.getShoppingCart().getId()),W1.getShoppingCart());
         objectsMap.put("123", "Supplier");
         objectsMap.put("Bamba", "Product");
         objectsMap.put("Ramen", "Product");
@@ -65,6 +70,8 @@ public class Main {
         objectsMap.put("DanaCustomer", "Customer");
         objectsMap.put("Dana", "WebUser");
         objectsMap.put("DanaAccount", "Account");
+        objectsMap.put(Integer.toString(W.getShoppingCart().getId()),"ShoppingCart");
+        objectsMap.put(Integer.toString(W1.getShoppingCart().getId()),"ShoppingCart");
         usersMap.put("Dani", "Dani123");
         usersMap.put("Dana", "Dana123");
 
@@ -316,12 +323,14 @@ public class Main {
         if (answer.equals("y")) {
             new_webUser = new WebUser(Login_id, password,
                     customer_id,customer_address,customer_phone_number,customer_email,
-                           account_id, account_billing_address,Integer.parseInt(balance), true);
+                           account_id, account_billing_address,Integer.parseInt(balance), true,CartId);
         }
         else{
             new_webUser = new WebUser(Login_id, password,
                     customer_id,customer_address,customer_phone_number,customer_email,
-                    account_id, account_billing_address,Integer.parseInt(balance), false);        }
+                    account_id, account_billing_address,Integer.parseInt(balance), false,CartId);
+        }
+        CartId++;
 
         // Add the objects to the Data structures (id given automatically)
         objectsMap.put(customer_id, "Customer");

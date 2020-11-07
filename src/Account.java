@@ -36,7 +36,7 @@ public class Account {
         this.payments = new ArrayList<>();
     }
 
-    public Account(String id, String billing_address,int balance, Customer customer) throws InvalidArgumentException {
+    public Account(String id, String billing_address,int balance, Customer customer, int cartid) throws InvalidArgumentException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = false;
@@ -44,7 +44,8 @@ public class Account {
         this.closed = null;
         this.balance = balance;
         setCustomer(customer);
-        this.shoppingCart = new ShoppingCart(new Date(),customer.getWebUser());
+        this.shoppingCart = new ShoppingCart(cartid,new Date(),customer.getWebUser());
+        shoppingCart.setAccount(this);
         this.orders = new ArrayList<>();
         this.payments = new ArrayList<>();
     }
@@ -159,7 +160,6 @@ public class Account {
                 payment.setAccount(this);
             }
         }
-        this.payments.add(payment);
     }
 
     public void addOrder(Order order) throws InvalidArgumentException {
