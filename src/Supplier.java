@@ -49,8 +49,12 @@ public class Supplier {
 
     public String toString(){
         String print="";
-        print="Supplier ID: "+this.id+"\nName: "+this.name+
-                " Products: "+this.products;
+        print="Supplier ID: "+this.id+"\nName: "+this.name+"\nconnected to:";
+        if(!this.products.isEmpty()) {
+            for (int i = 0; i < this.products.size() - 1; i++)
+                print += "Product, ";
+            print += "Product";
+        }
         return print;
     }
 }

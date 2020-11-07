@@ -84,7 +84,11 @@ public abstract class Payment  {
     public String toString(){
         String print="";
         print="Payment ID: "+this.id+"\nDate: "+this.paid+" Total: "+this.total+
-        " Details: "+this.details;
+        " Details: "+this.details+"\nconnected to:";
+        if(this.account!=null)  //should have one the check is for us to know if its not working
+            print+="Account";
+        if(this.order!=null)  //should have one the check is for us to know if its not working
+            print+="Order";
         return print;
     }
 

@@ -105,8 +105,16 @@ public class Product {
 
     public String toString(){
         String print="";
-        print="Product ID: "+this.id+"\nName: "+this.name+
-                " Premium Account: "+this.premiumAccount+"\nconnected to:";
+        print="Product ID: "+this.id+"\nName: "+this.name+ "\nconnected to:";
+        if(this.sup!=null) //should have one the check is for us to know if its not working
+            print+="Supplier";
+        if(this.premiumAccount!=null)
+            print+=", PremiumAccount";
+        if(!this.items.isEmpty()) {
+            for (int i = 0; i < this.items.size() - 1; i++)
+                print += ", lineItem, ";
+            print += "lineItem";
+        }
         return print;
     }
 }
