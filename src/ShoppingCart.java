@@ -119,7 +119,7 @@ public class ShoppingCart {
                 print += "Account";
         }
         if(this.webUser!=null) //should have one the check is for us to know if its not working
-            print+="webUser";
+            print+=", webUser";
         if(!this.lineItems.isEmpty()) {
             for (int i = 0; i < this.lineItems.size(); i++)
                 print += ", lineItem";
