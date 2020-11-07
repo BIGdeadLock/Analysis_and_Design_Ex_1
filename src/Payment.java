@@ -96,5 +96,20 @@ public abstract class Payment  {
         return print;
     }
 
+    public void Delete(){
+        Order ord = this.order;
+        Account acc = this.account;
+        if (ord != null) {
+            this.order = null;
+            ord.removePayment(this);
+        }
+
+        if (acc != null) {
+            this.account = null;
+            acc.removePayment(this);
+        }
+
+    }
+
 }
 

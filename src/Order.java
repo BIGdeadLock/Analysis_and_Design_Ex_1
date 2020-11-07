@@ -158,8 +158,36 @@ public class Order {
         System.out.println(Print);
     }
 
+    public void Delete() {
+        List<LineItem> itemList = this.lineItems;
+        List<Payment> paymentList = this.payments;
+
+        if (itemList != null) {
+            for (LineItem item :
+                    this.lineItems) {
+                this.removeLineItem(item);
+                item.Delete();
+            }
+        }
+
+        if(paymentList != null){
+            for (Payment payment :
+                    this.payments) {
+                this.removePayment(payment);
+                payment.Delete();
+            }
+        }
+    }
+
+
     public void removeLineItem(LineItem item){
         if (item != null || this.lineItems.contains(item))
             this.lineItems.remove(item);
+    }
+
+    public void removePayment(Payment payment) {
+        if (payment != null || this.payments.contains(payment))
+            this.payments.remove(payment);
+
     }
 }

@@ -185,6 +185,7 @@ public class Account {
 
         ShoppingCart shp = this.shoppingCart;
         Customer customer = this.customer;
+        List<Order> orderList = this.orders;
 
         if(this.customer!=null)
             this.customer = null;
@@ -199,6 +200,14 @@ public class Account {
                 customer.Delete();
             } catch (InvalidArgumentException e) {
                 e.printStackTrace();
+            }
+        }
+
+        if (orderList != null){
+            for (Order order:
+                 orderList) {
+                this.orders.remove(order);
+                order.Delete();
             }
         }
     }
@@ -227,4 +236,8 @@ public class Account {
         return print;
     }
 
+    public void removePayment(Payment payment){
+        if (payment != null || this.payments.contains(payment))
+            this.payments.remove(payment);
+    }
 }

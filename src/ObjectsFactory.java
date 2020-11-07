@@ -68,6 +68,11 @@ public class ObjectsFactory {
                 for (LineItem item : lineItems)
                     this.deleteObj(item);
 
+
+                List<Payment> paymentList = acc.getPayments();
+                for (Payment payment : paymentList)
+                    this.deleteObj(payment);
+
                 ((WebUser) o1).Delete();
             } else if (o1 instanceof Account)
                 ((Account) o1).Delete();
