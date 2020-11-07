@@ -8,6 +8,10 @@ public class ObjectsFactory {
     HashMap<String, String> IdMap = new HashMap<>(); // Key - Object id, Value - System id
     static int id = 0;
 
+    /**
+     * The function will return the next free id in the system and will increment the id counter
+     * @return String type of id attribute
+     */
     public String getNextFreeId(){
         String id_to_return = Integer.toString(id);
         id++;
