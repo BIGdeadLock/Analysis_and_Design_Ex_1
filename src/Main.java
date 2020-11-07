@@ -266,6 +266,12 @@ public class Main {
         System.out.println("Building customer profile...");
         System.out.println("Please enter your customer id");
         String customer_id = scanner.nextLine();
+        // Check that the web user login is different from the customer id
+        while (customer_id.equals(Login_id)){
+            System.out.println("The customer id can't be like the login id. Please try again.");
+            System.out.println("Enter Customer id again");
+            customer_id = scanner.nextLine();
+        }
         // Check if the id already exist. If Yes - ask the user's input again
         while (factory.getObjectType(customer_id) != null){
             System.out.println("Customer id already exists. Please try again.");
@@ -283,7 +289,12 @@ public class Main {
         System.out.println("Building customer account...");
         System.out.println("Please enter your account id");
         String account_id = scanner.nextLine();
-        // Check if the id already exist. If Yes - ask the user's input again
+        // Check if the account id is different from the web user login id or customer id
+        while (account_id.equals(Login_id) || account_id.equals(customer_id)){
+            System.out.println("The Account id can't be like the login id or customer id. Please try again.");
+            System.out.println("Enter Customer id again");
+            account_id = scanner.nextLine();
+        }        // Check if the id already exist. If Yes - ask the user's input again
         while (factory.getObjectType(account_id) != null){
             System.out.println("Account id already exists. Please try again.");
             System.out.println("Enter Account id again");
@@ -296,39 +307,21 @@ public class Main {
         System.out.println("what is your balance?");
         String balance = scanner.nextLine();
 
-        //set customer -> set webUser with customer, set account with customer -> set customer's account
-//        Customer new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
-//                account_id, account_billing_address, false
-//                );
-//        WebUser new_webUser = new WebUser(Login_id, password, new_customer);
-
         // Create the account according to the user type
         System.out.println("Do you have a premium account? (Y/N)");
         String answer = scanner.nextLine().toLowerCase();
         WebUser new_webUser;
         Customer new_customer;
-        // The Date is the id of the shopping cart
         Date shoppingCartDate = new Date();
-//        ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
         if (answer.equals("y")) {
-            //new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
-            //        account_id, account_billing_address, true,
-            //);
             new_webUser = new WebUser(Login_id, password,
                     customer_id,customer_address,customer_phone_number,customer_email,
                            account_id, account_billing_address,Integer.parseInt(balance), true);
         }
         else{
-//            new_customer = new Customer(customer_id,customer_address,customer_phone_number,customer_email,
-//                    account_id, account_billing_address, false
-//            );
             new_webUser = new WebUser(Login_id, password,
                     customer_id,customer_address,customer_phone_number,customer_email,
                     account_id, account_billing_address,Integer.parseInt(balance), false);        }
-
-//        new_customer.setAccount(new_account);
-//        new_customer.setWebUser(new_webUser);
-        //ShoppingCart new_shoppingcart = new ShoppingCart(shoppingCartDate, new_webUser);
 
         // Add the objects to the Data structures (id given automatically)
         objectsMap.put(customer_id, "Customer");
