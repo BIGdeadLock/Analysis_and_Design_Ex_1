@@ -111,9 +111,20 @@ public class Customer  {
     }
 
     public void Delete() throws InvalidArgumentException {
+        WebUser wb = this.webUser;
+        Account acc = this.account;
+
         if(this.webUser!=null)
-            this.webUser.Delete();
-        this.account.Delete();
+            this.webUser = null;
+        if(this.account!=null)
+            this.account = null;
+
+        if (wb != null)
+            wb.Delete();
+
+        if (acc != null)
+            acc.Delete();
+
     }
 
     public String toString(){

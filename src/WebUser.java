@@ -104,8 +104,10 @@ public class WebUser {
         if(this.shoppingCart!=null)
             this.shoppingCart = null;
 
-        sh.Delete();
-        cust.setWebUser(null);
+        if(sh != null)
+            sh.Delete();
+        if (cust != null)
+            cust.setWebUser(null);
     }
 
     public String toString(){

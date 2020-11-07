@@ -106,12 +106,22 @@ public class ShoppingCart {
         }
     }
 
+    /**
+     * The Function will be responsible for the deletion of the class
+     * and all the relationships of the class
+     */
     public void Delete(){
-        this.webUser=null;
-     //   for (int i = 0; i < lineItems.size() ; i++) {
-       //     lineItems.get(i).Delete(); //delete each line item (has to have one shopping cart)
-        //}
-   //     this.account.Delete();
+
+        WebUser wb = this.webUser;
+        Account acc = this.account;
+
+        if(this.webUser!=null)
+            this.webUser = null;
+        if(this.account!=null)
+            this.account = null;
+
+        if (acc != null)
+            acc.Delete();
     }
 
     public String toString(){

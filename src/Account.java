@@ -181,10 +181,26 @@ public class Account {
         this.orders.add(order);
     }
 
-    public void Delete() throws InvalidArgumentException {
-      //  this.shoppingCart = null;
-     //   this.shoppingCart.Delete();
-       // this.customer.Delete();
+    public void Delete() {
+
+        ShoppingCart shp = this.shoppingCart;
+        Customer customer = this.customer;
+
+        if(this.customer!=null)
+            this.customer = null;
+        if(this.shoppingCart!=null)
+            this.shoppingCart = null;
+
+        if (shp != null)
+            shp.Delete();
+
+        if (customer != null) {
+            try {
+                customer.Delete();
+            } catch (InvalidArgumentException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public String toString(){
