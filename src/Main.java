@@ -394,6 +394,7 @@ public class Main {
                                 }
                                 LineItem lineItem= new LineItem(LineItemId,Integer.parseInt(amount),((Product) userProducts.get(i)).getPrice(),(Product) userProducts.get(i));
                                 lineItemList.add(lineItem);
+                                LineItemId++;
                                 ((Product) userProducts.get(i)).setQuantity(((Product) userProducts.get(i)).getQuantity() - Integer.parseInt(amount));
 
                             }
