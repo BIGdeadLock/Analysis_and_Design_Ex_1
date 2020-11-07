@@ -197,13 +197,17 @@ public class Account {
             print+=", ShoppingCart";
         if(!this.payments.isEmpty()){
             for (int i = 0; i < this.payments.size() - 1; i++)
-                print += ", Payment, ";
-            print += "Payment";
+            {
+                if(this.payments.get(i).getClass()==ImmediatePayment.class)
+                print+=", ImmediatePayment";
+                if(this.payments.get(i).getClass()==DelayedPayment.class)
+                    print+=", DelayedPayment";
+            }
+
         }
         if(!this.orders.isEmpty()){
-            for (int i = 0; i < this.orders.size() - 1; i++)
-                print += ", Order, ";
-            print += "Order";
+            for (int i = 0; i < this.orders.size(); i++)
+                print += ", Order";
         }
         return print;
     }

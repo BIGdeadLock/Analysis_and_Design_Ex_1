@@ -140,14 +140,16 @@ public class Order {
         if(this.account!=null) //should have one the check is for us to know if its not working
             Print+="Account";
         if(!this.payments.isEmpty()) {
-            for (int i = 0; i < this.payments.size() - 1; i++)
-                Print += ", Payment, ";
-            Print += "Payment";
+            for (int i = 0; i < this.payments.size() - 1; i++) {
+                if (this.payments.get(i).getClass() == ImmediatePayment.class)
+                    Print += ", ImmediatePayment";
+                if (this.payments.get(i).getClass() == DelayedPayment.class)
+                    Print += ", DelayedPayment";
+            }
         }
         if(!this.lineItems.isEmpty()){
             for (int i = 0; i < this.lineItems.size() - 1; i++)
-                Print += ", lineItem, ";
-            Print +="lineItem";
+                Print += ", lineItem";
         }
         System.out.println(Print);
     }
