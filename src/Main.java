@@ -374,6 +374,7 @@ public class Main {
                     input = scanner.nextLine();
                     if (input.equals("Y")) {
                         didOrder = true;
+                        System.out.println("Please write the name of the item you want to buy");
                         String orderName = scanner.nextLine();
                         found = false;
                         for (int i = 0; i < userProducts.size(); i++) {
