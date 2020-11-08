@@ -464,8 +464,9 @@ public class Main {
     }
 
     public static void Displayorder(){
-        if(currentLoggedIn!=null) {
+        if(!currentLoggedIn.equals("")) {
             List<Order> ord = currentLoggedInAccount.getOrders();
+            /* If the user does not have any orders -> inform him */
             int size = currentLoggedInAccount.getOrderSize();
             if (ord.isEmpty())
                 System.out.println("There are no orders");
