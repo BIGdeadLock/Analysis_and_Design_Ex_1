@@ -181,12 +181,19 @@ public class Account {
         this.orders.add(order);
     }
 
+    /**
+     * The function will start the deletion operation.
+     * Each connection will be set to null and it will
+     * remove it self from all one-to-many connections
+     */
     public void Delete() {
-
         ShoppingCart shp = this.shoppingCart;
         Customer customer = this.customer;
         List<Order> orderList = this.orders;
-
+        /* Need to check if the delete was not activated twice
+         * If this is the second time the Delete() was called -
+         *  all class attributes will be set to null
+         * */
         if(this.customer!=null)
             this.customer = null;
         if(this.shoppingCart!=null)
@@ -212,10 +219,21 @@ public class Account {
         }
     }
 
+    /**
+     * The function will delete an order from the list of orders
+     */
     public void removeOrder(Order order) {
         if (order != null || this.orders.contains(order))
             this.orders.remove(order);
 
+    }
+
+    /**
+     * The function will delete an payment from the list of payments
+     */
+    public void removePayment(Payment payment){
+        if (payment != null || this.payments.contains(payment))
+            this.payments.remove(payment);
     }
 
     public String toString(){
@@ -240,10 +258,5 @@ public class Account {
                 print += ", Order";
         }
         return print;
-    }
-
-    public void removePayment(Payment payment){
-        if (payment != null || this.payments.contains(payment))
-            this.payments.remove(payment);
     }
 }

@@ -110,10 +110,18 @@ public class Customer  {
         this.webUser = webUser;
     }
 
+    /**
+     * The function will start the deletion operation.
+     * Each connection will be set to null and it will
+     * remove it self from all one-to-many connections
+     */
     public void Delete() throws InvalidArgumentException {
         WebUser wb = this.webUser;
         Account acc = this.account;
-
+        /* Need to check if the delete was not activated twice
+         * If this is the second time the Delete() was called -
+         *  all class attributes will be set to null
+         * */
         if(this.webUser!=null)
             this.webUser = null;
         if(this.account!=null)

@@ -47,6 +47,10 @@ public class Supplier {
         product.setSupplier(this);
     }
 
+
+    /**
+     * The function will delete a product from the list of products
+     */
     public void removeProduct(Product product) {
         if (product != null || this.products.contains(product))
             this.products.remove(product);

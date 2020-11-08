@@ -10,15 +10,21 @@ public class ObjectsFactory {
     static int id = 0;
 
     /**
-     * The function will return the next free id in the system and will increment the id counter
+     * The function will return the next free id in the system
      *
      * @return String type of id attribute
      */
     public String getNextFreeId() {
-        String id_to_return = Integer.toString(id);
-        return id_to_return;
+        return Integer.toString(id);
     }
 
+    /**
+     * The function will add the object to all the class's data structures.
+     * The object o will be given an id, and the id will be incremented to point to the next free id
+     * in the system
+     * @param o - Can be any object
+     * Assert: If the o already exists in the system -> an assertion error will be thrown
+     */
     public void addObject(Object o) {
         assert (objectMap.containsKey(Integer.toString(id)));
         objectMap.put(Integer.toString(id), o);
@@ -36,6 +42,14 @@ public class ObjectsFactory {
         id++;
     }
 
+    /**
+     * The function will get an object and will delete it from the system.
+     * If the o1 is a string - meaning it is an id for another object, the function will search
+     * for the object that corresponds to that id.
+     * The function will delete it from all the class's data structure, from the Main and will activate
+     * the objects Delete() function resulting in that function being remove from the system
+     * @param o1 - Object to delete or a String representing an Id of some object in the hashmap
+     */
     public void removeObject(Object o1) {
         String object_id;
         if (o1 instanceof String) {
@@ -44,18 +58,15 @@ public class ObjectsFactory {
             objectMap.remove(IdMap.get(object_id));
             IdMap.remove(object_id);
             Main.objectsMap.remove(object_id);
-        } else {
-            for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
-                if (o1.equals(entry.getValue()))
-                    objectMap.remove(entry.getKey());
-            }
         }
+        else
+            this.deleteObj(o1);
+
         // Switch case to use the Delete function of every class that implements it
         try {
-            if (o1 instanceof Customer)
-                ((Customer) o1).Delete();
-
-            else if (o1 instanceof WebUser) {
+            /* When web user is deleted: Account, Customer, ShoppingCart, Lineitems, Orders, Payments
+            * Are all deleted with the webuser*/
+            if (o1 instanceof WebUser) {
                 WebUser wb = ((WebUser) o1);
                 ShoppingCart shp = wb.getShoppingCart();
                 if (shp != null)
@@ -64,17 +75,17 @@ public class ObjectsFactory {
                 if (acc != null)
                     this.deleteObj(acc);
                 Customer cust = wb.getCustomer();
-                if(cust != null)
+                if (cust != null)
                     this.deleteObj(cust);
 
                 List<Order> orderList = acc.getOrders();
-                if (orderList != null){
+                if (orderList != null) {
                     for (Order order : orderList)
                         this.deleteObj(order);
                 }
 
                 List<LineItem> lineItems = shp.getLineItems();
-                if(lineItems != null) {
+                if (lineItems != null) {
                     for (LineItem item : lineItems)
                         this.deleteObj(item);
                 }
@@ -87,9 +98,10 @@ public class ObjectsFactory {
                 ((WebUser) o1).Delete();
 
             }
-
+            /* When a product is deleted: Supplier, Line Items
+            * Are deleted with the product */
             else if (o1 instanceof Product) {
-                Product ord = (Product)o1;
+                Product ord = (Product) o1;
                 Supplier supplier = ord.getSup();
                 List<LineItem> lineItemList = ord.getItems();
 
@@ -97,35 +109,23 @@ public class ObjectsFactory {
                     for (LineItem item : lineItemList)
                         this.deleteObj(item);
                 }
-                if  (supplier != null)
+                if (supplier != null)
                     this.deleteObj(supplier);
 
                 this.deleteObj(ord);
                 ord.Delete();
             }
-
-            else if (o1 instanceof Account)
-                ((Account) o1).Delete();
-
-            else if (o1 instanceof ShoppingCart)
-                ((ShoppingCart) o1).Delete();
         } catch (InvalidArgumentException e) {
             e.printStackTrace();
         }
-
-        //  else if (o1 instanceof LineItem)
-        //       ((LineItem)o1).Delete();
-
-        //  else if (o1 instanceof Order)
-        //     ((Order)o1).Delete();
-
-        //   else if (o1 instanceof Payment)
-        //     ((Payment)o1).Delete();
-
-        //   else if (o1 instanceof Supplier)
-        //  ((Supplier)o1).Delete();
     }
 
+    /**
+     * The function will get an object, search for it in the data structures and
+     * return the object's system id
+     * @param o1 - The object to search for and return its id
+     * @return - String | The system id that corresponds to that object
+     */
     public String getObjecSystemtId(Object o1) {
 
         // If o1 is String - the user intentions were get the system id
@@ -142,6 +142,13 @@ public class ObjectsFactory {
         return null;
     }
 
+    /**
+     * The function will get an id, that can be a system id or an object id (for example the login id of a webuser),
+     * and will search for the object that corresponds to that id.
+     * It will cast the object so that it will be return as an concrete object (for example WebUser).
+     * @param id - Object id or System id that belongs to an object
+     * @return - Null if the object does not exists in the system | Concrete object (WebUser, Product etc)
+     */
     public Object getObjectType(String id) {
 
         /* The are two options:

@@ -107,14 +107,18 @@ public class ShoppingCart {
     }
 
     /**
-     * The Function will be responsible for the deletion of the class
-     * and all the relationships of the class
+     * The function will start the deletion operation.
+     * Each connection will be set to null and it will
+     * remove it self from all one-to-many connections
      */
     public void Delete(){
-
         WebUser wb = this.webUser;
         Account acc = this.account;
 
+        /* Need to check if the delete was not activated twice
+         * If this is the second time the Delete() was called -
+         *  all class attributes will be set to null
+         * */
         if(this.webUser!=null)
             this.webUser = null;
         if(this.account!=null)
@@ -128,7 +132,14 @@ public class ShoppingCart {
             this.lineItems.remove(lineItems.get(0));
             temp.Delete();
         }
+    }
 
+    /**
+     * The function will delete a line item from the list of items
+     */
+    public void removeLineItem(LineItem item){
+        if (item != null || this.lineItems.contains(item))
+            this.lineItems.remove(item);
     }
 
     public String toString(){
@@ -148,8 +159,5 @@ public class ShoppingCart {
         }
         return print;
     }
-    public void removeLineItem(LineItem item){
-        if (item != null || this.lineItems.contains(item))
-            this.lineItems.remove(item);
-    }
+
 }

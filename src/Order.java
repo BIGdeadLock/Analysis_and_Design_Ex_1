@@ -158,11 +158,19 @@ public class Order {
         System.out.println(Print);
     }
 
+    /**
+     * The function will start the deletion operation.
+     * Each connection will be set to null and it will
+     * remove it self from all one-to-many connections
+     */
     public void Delete() {
         List<LineItem> itemList = this.lineItems;
         List<Payment> paymentList = this.payments;
         Account acc = this.account;
-
+        /* Need to check if the delete was not activated twice
+         * If this is the second time the Delete() was called -
+         *  all class attributes will be set to null
+         * */
         if(acc!=null)
             this.account = null;
 
@@ -185,12 +193,17 @@ public class Order {
 
     }
 
-
+    /**
+     * The function will delete a line item from the list of items
+     */
     public void removeLineItem(LineItem item){
         if (item != null || this.lineItems.contains(item))
             this.lineItems.remove(item);
     }
 
+    /**
+     * The function will delete a payment from the list of payments
+     */
     public void removePayment(Payment payment) {
         if (payment != null || this.payments.contains(payment))
             this.payments.remove(payment);
