@@ -362,7 +362,7 @@ public class Main {
                 System.out.println("these are the products you can choose from:");
                 for (int i = 0; i < userProducts.size(); i++) {
                     Product temp = (Product)userProducts.get(i);
-                    System.out.println(temp.getName()+" Price: "+temp.getPrice()+" Quantity: "+temp.getQuantity());
+                    System.out.println(temp.getName()+" Price: "+temp.getPrice()+" Quantity: "+temp.getQuantity() + "\n");
                 }
                 String input;
                 boolean didOrder = false;
