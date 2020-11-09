@@ -229,6 +229,7 @@ public class Main {
         if(currentLoggedIn.equals(Login_id)) {
             currentLoggedInAccount = null;
             currentLoggedIn = "";
+            System.out.println("Successfully logged out");
         }
     }
 
@@ -512,14 +513,11 @@ public class Main {
         Product pro = null;
         Scanner scanner = new Scanner(System.in);
         //check if the product exist in the system
-        if (factory.getObjectType(product_name) instanceof Product){
-            String product_id = factory.IdMap.get(product_name);
-            pro = (Product) factory.objectMap.get(product_id);
-        }
+        pro = SearchForName(product_name);
         if (pro!=null) {
             //check if the account logged in is premium, if it is premium link the product to this account
             WebUser user = (WebUser)factory.getObjectType(currentLoggedIn);
-            if ( user.getCustomer().getAccount() instanceof PremiumAccount) {
+            if ( currentLoggedInAccount != null && user.getCustomer().getAccount() instanceof PremiumAccount) {
                 PremiumAccount Pre = (PremiumAccount)user.getCustomer().getAccount();
                 System.out.println("How much from this product you want to add?");
                 String quantity = scanner.nextLine();
@@ -530,7 +528,7 @@ public class Main {
                 Pre.addProduct(pro);
                 System.out.println("Product added successfully");
             } else {
-                System.out.println("User not Premium");
+                System.out.println("You can't link product without be logged in and have Premium account");
             }
         }
         else{
@@ -543,14 +541,15 @@ public class Main {
         System.out.println("Please enter Product id");
         String product_id = scanner.nextLine();
         while (factory.getObjectType(product_id) != null){
-            System.out.println("Product id already exists. Please try again.\n");
+            System.out.println("Product id already exists. Please try again.");
+            product_id = scanner.nextLine();
         }
         System.out.println("Please enter Product name");
         String product_name = scanner.nextLine();
         System.out.println("Please enter Supplier id");
         String supplier_id = scanner.nextLine();
-        while (factory.getObjectType(supplier_id) != null){
-            System.out.println("Supplier id already exists. Please try again.\n");
+        while (factory.getObjectType(supplier_id) != null && !(factory.getObjectType(supplier_id) instanceof Supplier)){
+            System.out.println("Supplier id already exists. Please try again.");
             supplier_id = scanner.nextLine();
         }
         System.out.println("Please enter Supplier name");
@@ -572,23 +571,17 @@ public class Main {
     }
 
     public static void DeleteProduct(String Product_name){
-        boolean Exist = false;
         //Check if the product is in the system, if it is delete the product
-        Product to_Delete = (Product) factory.getObjectType(Product_name);
-        if (to_Delete == null || factory.getObjecSystemtId(Product_name) == null){
-            System.out.println("Product with that name does not exists. Please try again.\n");
+        Product to_Delete = SearchForName(Product_name);
+        if (to_Delete == null){
+            System.out.println("Product with that name does not exists. Please try again.");
             return;
         }
-
         to_Delete.Delete();
-        factory.removeObject(Product_name);
-        objectsMap.remove(Product_name);
-        Exist = true;
+        factory.removeObject(to_Delete.getId());
+        objectsMap.remove(to_Delete.getId());
         System.out.println("Product was deleted successfully");
 
-        if(Exist==false){
-            System.out.println("Product not in the system");
-        }
     }
 
     public static void ShowAllObjects(){
@@ -619,6 +612,17 @@ public class Main {
             System.out.println(factory.getObjectType(id));
 
 
+    }
+
+    public static Product SearchForName (String name) {
+        for (Map.Entry object : factory.objectMap.entrySet()) {
+            if (factory.getObjectType((String) object.getKey()) instanceof Product) {
+                if (((Product) object.getValue()).getName().equals(name)) {
+                    return ((Product) object.getValue());
+                }
+            }
+        }
+        return null;
     }
 
 
