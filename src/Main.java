@@ -521,6 +521,11 @@ public class Main {
         //check if the product exist in the system
         pro = SearchForName(product_name);
         if (pro!=null) {
+            //check if the product is link to another user
+            if(pro.getPremiumAccount()!=null){
+                System.out.println("The product already belongs to another user. Please try again");
+                return;
+            }
             //check if the account logged in is premium, if it is premium link the product to this account
             WebUser user = (WebUser)factory.getObjectType(currentLoggedIn);
             if ( currentLoggedInAccount != null && user.getCustomer().getAccount() instanceof PremiumAccount) {
