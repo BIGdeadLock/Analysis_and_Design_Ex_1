@@ -106,8 +106,9 @@ public class Main {
             // needs to have arguments or not
             for (String function : functions_call.keySet()) {
                 if (userChoice.contains(function)) {
-                    if (functions_call.get(function).equals("*"))
-                        argument = userChoice_split[userChoice_split.length - 1];
+                    //if (functions_call.get(function).equals("*"))
+                    argument = userChoice_split[userChoice_split.length - 1];
+
 
                     function_call = function;
                     break;
@@ -152,12 +153,25 @@ public class Main {
                     break;
 
                 case "Make order":
-                    Makeorder();
+                    if (function_call.contains(argument) )
+                        Makeorder();
+
+                    else
+                        System.out.println("No arguments needed for this function");
+
                     break;
 
+
                 case "Display order":
-                    Displayorder();
+                    if (function_call.contains(argument) )
+                        Displayorder();
+
+                    else
+                        System.out.println("No arguments needed for this function");
+
+
                     break;
+
 
                 case "Link Product":
                     if (argument.equals("Product")){
@@ -168,8 +182,15 @@ public class Main {
                     break;
 
                 case "Add Product":
-                    AddProduct();
+                    if (function_call.contains(argument) )
+                        AddProduct();
+
+                    else
+                        System.out.println("No arguments needed for this function");
+
                     break;
+
+
 
                 case "Delete Product":
                     if (argument.equals("Product")){
@@ -180,7 +201,12 @@ public class Main {
                     break;
 
                 case "ShowAllObjects":
-                    ShowAllObjects();
+                    if (function_call.contains(argument) )
+                        ShowAllObjects();
+
+                    else
+                        System.out.println("No arguments needed for this function");
+
                     break;
 
                 case "ShowObjectId":
@@ -519,7 +545,6 @@ public class Main {
         while (factory.getObjectType(product_id) != null){
             System.out.println("Product id already exists. Please try again.\n");
         }
-        product_id = scanner.nextLine();
         System.out.println("Please enter Product name");
         String product_name = scanner.nextLine();
         System.out.println("Please enter Supplier id");
@@ -554,8 +579,6 @@ public class Main {
             System.out.println("Product with that name does not exists. Please try again.\n");
             return;
         }
-//        String ID = factory.IdMap.get(Product_name);
-//        Product to_Delete =  (Product) factory.objectMap.get(ID);
 
         to_Delete.Delete();
         factory.removeObject(Product_name);
@@ -582,7 +605,7 @@ public class Main {
      */
     public static void ShowObjectId(String id){
         Object obj = factory.getObjectType(id);
-        if (obj == null){
+        if (obj == null || objectsMap.containsKey(id)){
             System.out.println("The system id you have given does not belong to any object in the system");
             System.out.println("Please try again");
             return;
