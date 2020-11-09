@@ -102,15 +102,15 @@ public class ObjectsFactory {
             * Are deleted with the product */
             else if (o1 instanceof Product) {
                 Product ord = (Product) o1;
-                Supplier supplier = ord.getSup();
+                //Supplier supplier = ord.getSup();
                 List<LineItem> lineItemList = ord.getItems();
 
                 if (lineItemList != null) {
                     for (LineItem item : lineItemList)
                         this.deleteObj(item);
                 }
-                if (supplier != null)
-                    this.deleteObj(supplier);
+                //if (supplier != null)
+                  //  this.deleteObj(supplier);
 
                 this.deleteObj(ord);
                 ord.Delete();

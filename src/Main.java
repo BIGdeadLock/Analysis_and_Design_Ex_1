@@ -31,10 +31,11 @@ public class Main {
         WebUser W = new WebUser("Dani", "Dani123",
                 "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond",5, false,Integer.parseInt(factory.getNextFreeId()));
         //C.setWebUser(W);
+        factory.addObject(Integer.toString(W.getShoppingCart().getId()),W.getShoppingCart());
         factory.addObject("Dani", W);
         factory.addObject("DaniCustomer", W.getCustomer());
         factory.addObject("DaniAccount", W.getCustomer().getAccount());
-        factory.addObject(Integer.toString(W.getShoppingCart().getId()),W.getShoppingCart());
+
 //
 //        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
 //                "DanAccount", "Tel Mond", true, W);
@@ -52,10 +53,11 @@ public class Main {
         //A1.addProduct(P);
 
         //there is no shopping cart in the factory
+        factory.addObject(Integer.toString(W1.getShoppingCart().getId()),W1.getShoppingCart());
         factory.addObject("DanaCustomer", W1.getCustomer());
         factory.addObject("Dana", W1);
         factory.addObject("DanaAccount", W1.getCustomer().getAccount());
-        factory.addObject(Integer.toString(W1.getShoppingCart().getId()),W1.getShoppingCart());
+
         objectsMap.put("123", "Supplier");
         objectsMap.put("Bamba", "Product");
         objectsMap.put("Ramen", "Product");
@@ -241,7 +243,7 @@ public class Main {
     private static void LoginWebUser(String Login_id) {
         Scanner scanner = new Scanner(System.in);
         if (objectsMap.get(Login_id) == null){
-            System.out.printf("No user with that login id exists in the system. Please try again");
+            System.out.println("No user with that login id exists in the system. Please try again");
             return;
         }
         if (currentLoggedIn != "") {
@@ -359,12 +361,16 @@ public class Main {
         // Add the objects to the Data structures (id given automatically)
         objectsMap.put(customer_id, "Customer");
         objectsMap.put(Login_id, "WebUser");
-        objectsMap.put(account_id, "Account");
+        if(new_webUser.getCustomer().getAccount().getClass()==PremiumAccount.class)
+            objectsMap.put(account_id, "PremiumAccount");
+        else
+            objectsMap.put(account_id, "Account");
         objectsMap.put(shoppingCartDate.toString(), "ShoppingCart");
+        factory.addObject(shoppingCartDate.toString(),new_webUser.getShoppingCart());
         factory.addObject(new_webUser.getCustomer().getId(),new_webUser.getCustomer());
         factory.addObject(new_webUser.getLogin_id(),new_webUser);
         factory.addObject(new_webUser.getCustomer().getAccount().getId(),new_webUser.getCustomer().getAccount());
-        factory.addObject(shoppingCartDate.toString(),new_webUser.getShoppingCart());
+
 
         System.out.println(Login_id + " You were successfully added to the system");
 
@@ -577,7 +583,7 @@ public class Main {
             System.out.println("Product with that name does not exists. Please try again.");
             return;
         }
-        to_Delete.Delete();
+        //to_Delete.Delete();
         factory.removeObject(to_Delete.getId());
         objectsMap.remove(to_Delete.getId());
         System.out.println("Product was deleted successfully");
