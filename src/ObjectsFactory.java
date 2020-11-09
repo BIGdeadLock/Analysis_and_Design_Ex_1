@@ -217,4 +217,15 @@ public class ObjectsFactory {
             }
         }
     }
+
+    /**
+     * The function will return if the id exists in a valid key
+     * in the objectsMap
+     * @param id - the system id that corresponds to an object
+     * @return True if the id exists in the system
+     */
+    public boolean isSystemIdExists(String id){
+        return this.objectMap.containsKey(id);
+    }
+
 }
