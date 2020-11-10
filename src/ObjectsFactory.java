@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -115,8 +114,10 @@ public class ObjectsFactory {
                 this.deleteObj(ord);
                 ord.Delete();
             }
-        } catch (InvalidArgumentException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
+        } catch (UnknownError u){
+            u.printStackTrace();
         }
     }
 

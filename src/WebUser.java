@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 public class WebUser {
     private String login_id;
@@ -7,7 +6,8 @@ public class WebUser {
     private Customer customer;
     private ShoppingCart shoppingCart;
 
-    public WebUser(String login_id, String password,Customer customer) throws InvalidArgumentException {
+    public WebUser(String login_id, String password,Customer customer) throws
+            NullPointerException, UnknownError{
         this.login_id = login_id;
         this.password = password;
         this.state = UserState.New;
@@ -15,7 +15,8 @@ public class WebUser {
     }
 
     public WebUser(String login_id, String password, String id , String address, String phone, String email, String idAccount,
-                   String billing_address,int balance, boolean isPremium, int cardid) throws InvalidArgumentException {
+                   String billing_address,int balance, boolean isPremium, int cardid) throws
+            NullPointerException, UnknownError{
         this.login_id = login_id;
         this.password = password;
         this.state = UserState.New;
@@ -46,20 +47,20 @@ public class WebUser {
     /**
      * WebUser has to have exactly one customer.
      * @param customer-ShoppingCart
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setCustomer(Customer customer) throws InvalidArgumentException {
+    public void setCustomer(Customer customer) throws NumberFormatException, UnknownError {
         if(customer == null)
-            throw new InvalidArgumentException(new String[]{"WebUser must be related to one customer"});
+            throw new NullPointerException("WebUser must be related to one customer");
         if(this.customer != null){
-            throw new InvalidArgumentException(new String[]{"Can't add costumer because web user has one"});
+            throw new UnknownError("Can't add costumer because web user has one");
         }
         if(customer.getWebUser() != this ){
             if(customer.getWebUser() == null){
                 customer.setWebUser(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add web user because customer has one"});
+                throw new UnknownError("Can't add web user because customer has one");
             }
         }
         this.customer = customer;
@@ -68,11 +69,12 @@ public class WebUser {
     /**
      * WebUser has to have exactly one shoppingCart.
      * @param shoppingCart-ShoppingCart
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setShoppingCart(ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public void setShoppingCart(ShoppingCart shoppingCart) throws
+            NullPointerException, UnknownError{
         if(this.shoppingCart != null){
-            throw new InvalidArgumentException(new String[]{"Can't add shopping cart because web user has one"});
+            throw new NullPointerException("Can't add shopping cart because web user has one");
         }
         if(shoppingCart.getWebUser() != this ){
             if(shoppingCart.getWebUser() == null){
@@ -80,7 +82,7 @@ public class WebUser {
                 shoppingCart.setWebUser(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add shopping cart because it has web user"});
+                throw new UnknownError("Can't add shopping cart because it has web user");
             }
         }
         this.shoppingCart = shoppingCart;
@@ -100,7 +102,7 @@ public class WebUser {
      * Each connection will be set to null and it will
      * remove it self from all one-to-many connections
      */
-    public void Delete() throws InvalidArgumentException{
+    public void Delete() throws NullPointerException, UnknownError{
         ShoppingCart sh = this.shoppingCart;
         Customer cust = this.customer;
         /* Need to check if the delete was not activated twice

@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,9 +19,10 @@ public abstract class Payment  {
      * @param details - string
      * @param order - Order
      * @param account - Account
-     * @throws InvalidArgumentException
+     * @throws NullPointerException, UnknownError
      */
-    public Payment(String id, Date paid, float total, String details, Order order, Account account) throws InvalidArgumentException {
+    public Payment(String id, Date paid, float total, String details, Order order, Account account) throws
+            NullPointerException, UnknownError {
         this.id = id;
         this.paid = paid;
         this.total = total;
@@ -48,13 +48,13 @@ public abstract class Payment  {
     /**
      * order set -> payment has to have exactly one order.
      * @param ord-Order
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setOrder(Order ord) throws InvalidArgumentException {
+    public void setOrder(Order ord) throws NullPointerException, UnknownError {
         if(ord == null)
-            throw new InvalidArgumentException(new String[]{"payment must be related to one order"});
+            throw new NullPointerException("payment must be related to one order");
         if(this.order != null){
-            throw new InvalidArgumentException(new String[]{"Can't add Order because Payment has one"});
+            throw new UnknownError("Can't add Order because Payment has one");
         }
         if(!ord.getPayments().contains(this))
             ord.addPayment(this);
@@ -66,13 +66,13 @@ public abstract class Payment  {
     /**
      * account set -> payment has to have exactly one account.
      * @param acc-Account
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setAccount(Account acc) throws InvalidArgumentException {
+    public void setAccount(Account acc) throws NullPointerException, UnknownError {
         if(acc == null)
-            throw new InvalidArgumentException(new String[]{"payment must be related to one account"});
+            throw new NullPointerException("payment must be related to one account");
         if(this.account != null){
-            throw new InvalidArgumentException(new String[]{"Can't add Account because Payment has one"});
+            throw new UnknownError("Can't add Account because Payment has one");
         }
         if(!acc.getPayments().contains(this))
             acc.addPayment(this);

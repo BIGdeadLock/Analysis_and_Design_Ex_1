@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +16,10 @@ public class Product {
      * @param id - string
      * @param name - string
      * @param sup - supplier
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public Product(String id, String name, Supplier sup) throws InvalidArgumentException{
+    public Product(String id, String name, Supplier sup) throws
+            NullPointerException, UnknownError{
         this.id = id;
         this.name = name;
         setSupplier(sup);
@@ -57,13 +57,13 @@ public class Product {
     /**
      * supplier set -> product has to have exactly one supplier.
      * @param supplier-Supplier
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setSupplier(Supplier supplier) throws InvalidArgumentException {
+    public void setSupplier(Supplier supplier) throws NullPointerException {
         if(supplier == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         if(this.sup != null)
-            throw new InvalidArgumentException(new String[]{"Can't add more than one supplier"});
+            throw new UnknownError("Can't add more than one supplier");
         if(!supplier.getProducts().contains(this) )
             supplier.addProduct(this);
         this.sup = supplier;
@@ -73,7 +73,7 @@ public class Product {
      * product can have one premium account or none
      * @param premiumAccount -PremiumAccount
      */
-    public void setPremiumAccount(PremiumAccount premiumAccount)throws InvalidArgumentException {
+    public void setPremiumAccount(PremiumAccount premiumAccount)throws UnknownError {
         if(premiumAccount == null) {
             this.premiumAccount = null;
             this.price = 0;
@@ -81,7 +81,7 @@ public class Product {
         }
         //product does not yet have a premiumAccount
         if(this.premiumAccount != null)
-            throw new InvalidArgumentException(new String[]{"Can't add more than one premium account"});
+            throw new UnknownError("Can't add more than one premium account");
         this.premiumAccount = premiumAccount;
     }
 
@@ -89,11 +89,11 @@ public class Product {
      * add items to the LineItem list (initiated int the constructor)
      * @param item - LineItem
      */
-    public void addLineItem(LineItem item) throws InvalidArgumentException {
+    public void addLineItem(LineItem item) throws NullPointerException,UnknownError {
         if(item == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         if(items.contains(item))
-            throw new InvalidArgumentException(new String[]{"Can't contain the same item more than once"});
+            throw new UnknownError("Can't contain the same item more than once");
         this.items.add(item);
         item.setProduct(this);
     }

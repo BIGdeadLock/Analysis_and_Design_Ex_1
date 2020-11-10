@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +20,10 @@ public class Account {
 
     /**
      * account will be set with customer --> then customer will set its account (by function)
-     * @throws InvalidArgumentException
+     * @throws NullPointerException, ConnectException
      */
-    public Account(String id, String billing_address,int balance, Customer customer,ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public Account(String id, String billing_address,int balance, Customer customer,ShoppingCart shoppingCart) throws
+            NullPointerException, UnknownError {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = false;
@@ -36,7 +36,8 @@ public class Account {
         this.payments = new ArrayList<>();
     }
 
-    public Account(String id, String billing_address,int balance, Customer customer, int cartid) throws InvalidArgumentException {
+    public Account(String id, String billing_address,int balance, Customer customer, int cartid) throws
+            UnknownError, NullPointerException {
         this.id = id;
         this.billing_address = billing_address;
         this.is_closed = false;
@@ -97,13 +98,13 @@ public class Account {
     /**
      * Account has to have exactly one custumer.
      * @param customer
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setCustomer(Customer customer) throws InvalidArgumentException {
+    public void setCustomer(Customer customer) throws NullPointerException, UnknownError {
         if(customer == null)
-            throw new InvalidArgumentException(new String[]{"Account must be related to one custumer"});
+            throw new NullPointerException("Account must be related to one custumer");
         if(this.customer != null){
-            throw new InvalidArgumentException(new String[]{"Can't add customer because account has one"});
+            throw new UnknownError("Can't add customer because account has one");
         }
         if(customer.getAccount() != this ){
             if(customer.getAccount() == null){
@@ -111,7 +112,7 @@ public class Account {
                 customer.setAccount(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add customer because account has customer"});
+                throw new UnknownError("Can't add customer because account has customer");
             }
         }
 
@@ -124,13 +125,13 @@ public class Account {
     /**
      * Account has to have exactly one shoppingCart.
      * @param shoppingCart - ShoppingCart
-     * @throws InvalidArgumentException
+     * @throws NullPointerException, UnknownError
      */
-    public void setShoppingCart(ShoppingCart shoppingCart) throws InvalidArgumentException {
+    public void setShoppingCart(ShoppingCart shoppingCart) throws NullPointerException, UnknownError {
         if(shoppingCart == null)
-            throw new InvalidArgumentException(new String[]{"Account must be related to one shoppingCart"});
+            throw new NullPointerException("Account must be related to one shoppingCart");
         if(this.shoppingCart != null){
-            throw new InvalidArgumentException(new String[]{"Can't add shopping cart because it has one"});
+            throw new UnknownError("Can't add shopping cart because it has one");
         }
         if(shoppingCart.getAccount() != this ){
             if(shoppingCart.getAccount() == null){
@@ -138,22 +139,22 @@ public class Account {
                 shoppingCart.setAccount(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add shoping cart because it has account"});
+                throw new UnknownError("Can't add shoping cart because it has account");
             }
         }
         this.shoppingCart = shoppingCart;
     }
 
-    public void addPayment(Payment payment) throws InvalidArgumentException {
+    public void addPayment(Payment payment) throws NullPointerException, UnknownError {
         if(payment == null){
-            throw new InvalidArgumentException(new String[]{"Can't add a null"});
+            throw new NullPointerException("Can't add a null");
         }
         if(this.payments.contains(payment)){
-            throw new InvalidArgumentException(new String[]{"already has this payment"});
+            throw new UnknownError("already has this payment");
         }
         if(payment.getAccount() != this) {
             if (payment.getAccount() != null) {
-                throw new InvalidArgumentException(new String[]{"Can't add payment because it has account "});
+                throw new UnknownError("Can't add payment because it has account ");
             }
             else{
                 this.payments.add(payment);
@@ -162,16 +163,16 @@ public class Account {
         }
     }
 
-    public void addOrder(Order order) throws InvalidArgumentException {
+    public void addOrder(Order order) throws NullPointerException, UnknownError {
         if(order == null){
-            throw new InvalidArgumentException(new String[]{"Can't add a null"});
+            throw new NullPointerException("Can't add a null");
         }
         if(this.orders.contains(order)){
-            throw new InvalidArgumentException(new String[]{"already has this order"});
+            throw new UnknownError("already has this order");
         }
         if(order.getAccount() != this) {
             if (order.getAccount() != null) {
-                throw new InvalidArgumentException(new String[]{"Can't add order because it has account "});
+                throw new UnknownError("Can't add order because it has account ");
             }
             else{
                 this.orders.add(order);
@@ -205,9 +206,12 @@ public class Account {
         if (customer != null) {
             try {
                 customer.Delete();
-            } catch (InvalidArgumentException e) {
+            } catch (NullPointerException e) {
                 e.printStackTrace();
+            } catch (UnknownError c){
+                c.printStackTrace();
             }
+
         }
 
         if (orderList != null){

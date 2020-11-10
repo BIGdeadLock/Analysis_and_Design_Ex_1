@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import sun.rmi.runtime.Log;
 
 import java.text.ParseException;
@@ -14,7 +13,7 @@ public class Main {
     static HashMap<String,String> functions_call;
     static ObjectsFactory factory;
 
-    public static void main(String[] args) throws InvalidArgumentException, ParseException {
+    public static void main(String[] args) throws NullPointerException, UnknownError,ParseException {
         Scanner scanner = new Scanner(System.in);
         usersMap = new HashMap<>();
         objectsMap = new HashMap<>();
@@ -27,18 +26,13 @@ public class Main {
         factory.addObject("Bamba", P);
         factory.addObject("Ramen", P2);
 
-        //Customer C=new Customer("DaniCustomer","Tel Mond","054123456","Dani@gmail.com", "DaniAccount","Tel Mond", false);
         WebUser W = new WebUser("Dani", "Dani123",
                 "DaniCustomer", "Tel Mond", "054123456", "Dani@gmail.com", "DaniAccount", "Tel Mond",5, false,Integer.parseInt(factory.getNextFreeId()));
-        //C.setWebUser(W);
         factory.addObject(Integer.toString(W.getShoppingCart().getId()),W.getShoppingCart());
         factory.addObject("Dani", W);
         factory.addObject("DaniCustomer", W.getCustomer());
         factory.addObject("DaniAccount", W.getCustomer().getAccount());
 
-//
-//        Customer C1=new Customer("DanaCustomer","Tel Mond","054654321","Dana@gmail.com",
-//                "DanAccount", "Tel Mond", true, W);
         WebUser W1 = new WebUser("Dana", "Dana123",
                 "DanaCustomer", "Tel Mond", "054654321", "Dana@gmail.com",
                 "DanaAccount", "Tel Mond",500, true,Integer.parseInt(factory.getNextFreeId()));
@@ -46,13 +40,7 @@ public class Main {
         PA.addProduct(P);
         P.setQuantity(2);
         P.setPrice(5);
-        //C1.setWebUser(W1);
-        //ShoppingCart SC1=new ShoppingCart(new Date(),W1);
-        //PremiumAccount A1=new PremiumAccount("DanaAccount","Tel Mond",C1,SC1);
-        // C1.setAccount(A1);
-        //A1.addProduct(P);
 
-        //there is no shopping cart in the factory
         factory.addObject(Integer.toString(W1.getShoppingCart().getId()),W1.getShoppingCart());
         factory.addObject("DanaCustomer", W1.getCustomer());
         factory.addObject("Dana", W1);
@@ -125,8 +113,10 @@ public class Main {
                             break;
                         }
                         AddWebUser(argument);
-                    } catch (InvalidArgumentException e) {
+                    } catch (UnknownError e) {
                         e.printStackTrace();
+                    } catch (NullPointerException n){
+                        n.printStackTrace();
                     }
                     break;
 
@@ -282,7 +272,7 @@ public class Main {
     }
 
 
-    public static void AddWebUser(String Login_id)throws InvalidArgumentException {
+    public static void AddWebUser(String Login_id)throws UnknownError, NullPointerException {
         Scanner scanner = new Scanner(System.in);
         //create the user
         System.out.println("Enter password");
@@ -376,7 +366,7 @@ public class Main {
 
     }
 
-    public static void Makeorder() throws InvalidArgumentException, ParseException {
+    public static void Makeorder() throws NullPointerException, UnknownError, ParseException {
         if(currentLoggedInAccount == null)
             System.out.println("You can't make an order without be logged in");
         else {
@@ -515,7 +505,7 @@ public class Main {
 
     }
 
-    public static void LinkProduct(String product_name) throws InvalidArgumentException {
+    public static void LinkProduct(String product_name) throws NullPointerException,UnknownError {
         Product pro = null;
         Scanner scanner = new Scanner(System.in);
         //check if the product exist in the system
@@ -547,7 +537,7 @@ public class Main {
         }
     }
 
-    public static void AddProduct() throws InvalidArgumentException {
+    public static void AddProduct() throws NullPointerException,UnknownError {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter Product id");
         String product_id = scanner.nextLine();

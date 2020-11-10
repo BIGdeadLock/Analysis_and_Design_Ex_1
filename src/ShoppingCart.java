@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,9 +17,10 @@ public class ShoppingCart {
      * account related to shopping cart will be added by function(eliminate deadlock)
      * @param created
      * @param webUser
-     * @throws InvalidArgumentException
+     * @throws UnknownError
      */
-    public ShoppingCart(int id,Date created,WebUser webUser) throws InvalidArgumentException {
+    public ShoppingCart(int id,Date created,WebUser webUser) throws
+            NullPointerException, UnknownError {
         this.created = created;
         setWebUser(webUser);
         this.id = id;
@@ -48,13 +48,13 @@ public class ShoppingCart {
     /**
      * Shopping cart has to have exactly one account.
      * @param account
-     * @throws InvalidArgumentException
+     * @throws UnknownError
      */
-    public void setAccount(Account account) throws InvalidArgumentException {
+    public void setAccount(Account account) throws UnknownError {
         if(account == null)
-            throw new InvalidArgumentException(new String[]{"shopping cart must be related to one account"});
+            throw new NullPointerException("shopping cart must be related to one account");
         if(this.account != null){
-            throw new InvalidArgumentException(new String[]{"Can't add account because shopping cart has one"});
+            throw new UnknownError("Can't add account because shopping cart has one");
         }
         if(account.getShoppingCart() != this ){
             if(account.getShoppingCart() == null){
@@ -62,7 +62,7 @@ public class ShoppingCart {
                 account.setShoppingCart(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add shopping cart because account has one"});
+                throw new UnknownError("Can't add shopping cart because account has one");
             }
         }
         this.account = account;
@@ -71,13 +71,13 @@ public class ShoppingCart {
     /**
      * Shopping has to have exactly one webUser.
      * @param webUser
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setWebUser(WebUser webUser) throws InvalidArgumentException {
+    public void setWebUser(WebUser webUser) throws NullPointerException {
         if(webUser == null)
-            throw new InvalidArgumentException(new String[]{"shopping cart must be related to one web user"});
+            throw new NullPointerException("shopping cart must be related to one web user");
         if(this.webUser != null){
-            throw new InvalidArgumentException(new String[]{"Can't add web user because shopping cart has one"});
+            throw new UnknownError("Can't add web user because shopping cart has one");
         }
         if(webUser.getShoppingCart() != this ){
             if(webUser.getShoppingCart() == null){
@@ -85,19 +85,19 @@ public class ShoppingCart {
                 webUser.setShoppingCart(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add shopping cart because web user has one"});
+                throw new UnknownError("Can't add shopping cart because web user has one");
             }
         }
         this.webUser = webUser;
     }
 
-    public void addLineItem(LineItem lineItem) throws InvalidArgumentException {
+    public void addLineItem(LineItem lineItem) throws NullPointerException, UnknownError {
         if (lineItem == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         if (!(lineItems.contains(lineItem))) {
             if (lineItem.getShoppingCart() != this) {
                 if (lineItem.getShoppingCart() != null) {
-                    throw new InvalidArgumentException(new String[]{"Can't add line item because it has shopping cart "});
+                    throw new UnknownError("Can't add line item because it has shopping cart");
                 } else {
                     this.lineItems.add(lineItem);
                     lineItem.setShoppingCart(this);

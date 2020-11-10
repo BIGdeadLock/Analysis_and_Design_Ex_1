@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.List;
 
@@ -11,7 +10,8 @@ public class LineItem {
     private String id;
 
 
-    public LineItem(String id, int quantity, int price, ShoppingCart shoppingCart, Order order, Product product) throws InvalidArgumentException {
+    public LineItem(String id, int quantity, int price, ShoppingCart shoppingCart, Order order, Product product) throws
+            NullPointerException, UnknownError{
         this.quantity = quantity;
         this.price = price;
         setShoppingCart(shoppingCart);
@@ -20,7 +20,7 @@ public class LineItem {
         this.id=id;
     }
 
-    public LineItem(String id,int quantity, int price,Product product) throws InvalidArgumentException {
+    public LineItem(String id,int quantity, int price,Product product) throws NullPointerException, UnknownError {
         this.quantity = quantity;
         this.price = price;
         setProduct(product);
@@ -30,13 +30,13 @@ public class LineItem {
     /**
      * LineItem has to have exactly one ShoppingCart.
      * @param sp-ShoppingCart
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setShoppingCart(ShoppingCart sp) throws InvalidArgumentException {
+    public void setShoppingCart(ShoppingCart sp) throws NullPointerException, UnknownError {
         if(sp == null)
-            throw new InvalidArgumentException(new String[]{"LineItem must be related to one shopping cart"});
+            throw new NullPointerException("LineItem must be related to one shopping cart");
         if(this.shoppingCart != null){
-            throw new InvalidArgumentException(new String[]{"Can't add shopping cart because LineItem has one"});
+            throw new UnknownError("Can't add shopping cart because LineItem has one");
         }
         sp.addLineItem(this);
         this.shoppingCart = sp;
@@ -45,13 +45,13 @@ public class LineItem {
     /**
      * LineItem has to have exactly one Order.
      * @param order-ShoppingCart
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setOrder(Order order) throws InvalidArgumentException {
+    public void setOrder(Order order) throws NullPointerException, UnknownError {
         if(order == null)
-            throw new InvalidArgumentException(new String[]{"LineItem must be related to one order"});
+            throw new NullPointerException("LineItem must be related to one order");
         if(this.order!=null){
-            throw new InvalidArgumentException(new String[]{"Can't add order because LineItem has one"});
+            throw new UnknownError("Can't add order because LineItem has one");
         }
         if(!order.getLineItems().contains(this))
             order.addLineItem(this);
@@ -61,13 +61,13 @@ public class LineItem {
     /**
      * LineItem has to have exactly one Product.
      * @param product-ShoppingCart
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setProduct(Product product) throws InvalidArgumentException {
+    public void setProduct(Product product) throws NullPointerException, UnknownError {
         if(product == null)
-            throw new InvalidArgumentException(new String[]{"LineItem must be related to one product"});
+            throw new NullPointerException("LineItem must be related to one product");
         if(this.product!=null)
-            throw new InvalidArgumentException(new String[]{"Can't add product because LineItem has one"});
+            throw new UnknownError("Can't add product because LineItem has one");
         if(!product.getItems().contains(this))
             product.addLineItem(this);
         this.product = product;

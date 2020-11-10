@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 public class Customer  {
     private String id;
@@ -12,7 +11,8 @@ public class Customer  {
     /**
      * create customer first and then add its account (avoid BIGDEADLOCK)
      */
-    public Customer(String id, String address, String phone, String email,Account account, WebUser webuser) throws InvalidArgumentException {
+    public Customer(String id, String address, String phone, String email,Account account, WebUser webuser) throws
+            NullPointerException, UnknownError{
         this.id = id;
         this.address = address;
         this.phone = phone;
@@ -23,7 +23,8 @@ public class Customer  {
 
 
     public Customer(String id, String address, String phone, String email,String idAccount, String billing_address
-    ,int balance, boolean isPremium, WebUser webuser,int cartid) throws InvalidArgumentException {
+    ,int balance, boolean isPremium, WebUser webuser,int cartid) throws
+            NullPointerException, UnknownError{
         this.id = id;
         this.address = address;
         this.phone = phone;
@@ -70,13 +71,13 @@ public class Customer  {
     /**
      * Customer has to have exactly one account (will be set after account is created).
      * @param account
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setAccount(Account account) throws InvalidArgumentException {
+    public void setAccount(Account account) throws NullPointerException,UnknownError {
         if(account == null)
-            throw new InvalidArgumentException(new String[]{"Customer must be related to one account"});
+            throw new NullPointerException("Customer must be related to one account");
         if(this.account != null){
-            throw new InvalidArgumentException(new String[]{"Can't add account because customer has one"});
+            throw new UnknownError("Can't add account because customer has one");
         }
         if(account.getCustomer() != this ){
             if(account.getCustomer() == null){
@@ -84,19 +85,19 @@ public class Customer  {
                 account.setCustomer(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add account because account has customer"});
+                throw new UnknownError("Can't add account because account has customer");
             }
         }
         this.account = account;
     }
 
-    public void setWebUser(WebUser webUser) throws InvalidArgumentException {
+    public void setWebUser(WebUser webUser) throws UnknownError {
         if (webUser == null){ //on delete --> reset the webuser to null
             this.webUser = null;
             return;
         }
         if(this.webUser != null){
-            throw new InvalidArgumentException(new String[]{"Can't add web user because customer has one"});
+            throw new UnknownError("Can't add web user because customer has one");
         }
         if(webUser.getCustomer() != this ){
             if(webUser.getCustomer() == null){
@@ -104,7 +105,7 @@ public class Customer  {
                 webUser.setCustomer(this);
             }
             else{
-                throw new InvalidArgumentException(new String[]{"Can't add web user because it has another customer"});
+                throw new UnknownError("Can't add web user because it has another customer");
             }
         }
         this.webUser = webUser;
@@ -115,7 +116,7 @@ public class Customer  {
      * Each connection will be set to null and it will
      * remove it self from all one-to-many connections
      */
-    public void Delete() throws InvalidArgumentException {
+    public void Delete()  {
         WebUser wb = this.webUser;
         Account acc = this.account;
         /* Need to check if the delete was not activated twice

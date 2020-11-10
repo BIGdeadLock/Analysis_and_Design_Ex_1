@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +35,13 @@ public class Supplier {
      * add a product to the Products list (optional *)
      * @param product - Product
      */
-    public void addProduct(Product product)throws InvalidArgumentException{
+    public void addProduct(Product product)throws NullPointerException, UnknownError{
         if(product == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         if(product.getSup()!=null)
-            throw new InvalidArgumentException(new String[]{"product can only have one supplier"});
+            throw new UnknownError("product can only have one supplier");
         if(products.contains(product))
-            throw new InvalidArgumentException(new String[]{"Can't add the same product more than once "});
+            throw new UnknownError("Can't add the same product more than once ");
         this.products.add(product);
         product.setSupplier(this);
     }

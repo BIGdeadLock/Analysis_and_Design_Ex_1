@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,11 +71,11 @@ public class Order {
     /**
      * account set -> order has to have exactly one account.
      * @param acc-Account
-     * @throws InvalidArgumentException
+     * @throws NullPointerException
      */
-    public void setAccount(Account acc) throws InvalidArgumentException {
+    public void setAccount(Account acc) throws NullPointerException {
         if(acc == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
 
         // Before assigment need to check that the order is not related to any account
         // (composition relation)
@@ -84,9 +83,9 @@ public class Order {
         this.account = acc;
     }
 
-    public void setLineItems(List<LineItem> lineItems) throws InvalidArgumentException {
+    public void setLineItems(List<LineItem> lineItems) throws NullPointerException {
         if(lineItems == null){
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         }
         this.lineItems = lineItems;
     }
@@ -95,9 +94,9 @@ public class Order {
      * add items to the LineItem list (initiated int the constructor)
      * @param item - LineItem
      */
-    public void addLineItem(LineItem item) throws InvalidArgumentException {
+    public void addLineItem(LineItem item) throws NullPointerException {
         if(item == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         // Instances assertions - each order instance can't
         // be related to the same Lineitem instance twice
         assert(!this.lineItems.contains(item));
@@ -109,9 +108,9 @@ public class Order {
      * add payment to the payment list (initiated int the constructor)
      * @param pay - Payment
      */
-    public void addPayment(Payment pay) throws InvalidArgumentException {
+    public void addPayment(Payment pay) throws NullPointerException {
         if(pay == null)
-            throw new InvalidArgumentException(new String[]{"Argument can't be null"});
+            throw new NullPointerException("Argument can't be null");
         // Instances assertions - each order instance can't
         // Instances assertions - each order instance can't
         // be related to the same pay instance twice
