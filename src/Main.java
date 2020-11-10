@@ -177,7 +177,7 @@ public class Main {
 
                 case "Link Product":
                     if (argument.equals("Product")){
-                        System.out.println("No product id detected. Please try again with a product id");
+                        System.out.println("No product name detected. Please try again with a product name");
                         break;
                     }
                     LinkProduct(argument);
@@ -196,7 +196,7 @@ public class Main {
 
                 case "Delete Product":
                     if (argument.equals("Product")){
-                        System.out.println("No product id detected. Please try again with a product id");
+                        System.out.println("No product name detected. Please try again with a product name");
                         break;
                     }
                     DeleteProduct(argument);
@@ -380,12 +380,12 @@ public class Main {
         if(currentLoggedInAccount == null)
             System.out.println("You can't make an order without be logged in");
         else {
-            System.out.println("Please enter the id of the user you want to buy from:");
+            System.out.println("Please enter the name of the user you want to buy from:");
             Scanner scanner = new Scanner(System.in);
             String idTobuyFrom = scanner.nextLine();
             //check if that user exists
             while (usersMap.get(idTobuyFrom) == null) {
-                System.out.println("User doesn't exists , please write another id");
+                System.out.println("User doesn't exists , please write another name");
                 idTobuyFrom = scanner.nextLine();
             }
             List userProducts;
@@ -411,7 +411,7 @@ public class Main {
                         String orderName = scanner.nextLine();
                         found = false;
                         for (int i = 0; i < userProducts.size(); i++) {
-                            if (((Product) userProducts.get(i)).getId().equals(orderName)) {
+                            if (((Product) userProducts.get(i)).getName().equals(orderName)) {
                                 found = true;
                                 System.out.println("How many?");
                                 String amount = scanner.nextLine();
@@ -563,18 +563,19 @@ public class Main {
             System.out.println("Supplier id already exists. Please try again.");
             supplier_id = scanner.nextLine();
         }
-        System.out.println("Please enter Supplier name");
-        String supplier_name = scanner.nextLine();
         Supplier new_supplier = null;
         String supplier_Sysid = factory.IdMap.get(supplier_id);
         if(factory.objectMap.get(supplier_Sysid)!=null){
             new_supplier = (Supplier)factory.objectMap.get(supplier_Sysid);
         }
         else {
+            System.out.println("Please enter Supplier name");
+            String supplier_name = scanner.nextLine();
             new_supplier = new Supplier(supplier_id,supplier_name);
             factory.addObject(supplier_id,new_supplier);
             objectsMap.put(supplier_id,"Supplier");
         }
+
         Product new_product = new Product(product_id,product_name,new_supplier);
         factory.addObject(product_id,new_product);
         objectsMap.put(product_id,"Product");
