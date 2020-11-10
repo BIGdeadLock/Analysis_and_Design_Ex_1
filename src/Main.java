@@ -559,7 +559,7 @@ public class Main {
         String product_name = scanner.nextLine();
         System.out.println("Please enter Supplier id");
         String supplier_id = scanner.nextLine();
-        while (factory.getObjectType(supplier_id) != null && !(factory.getObjectType(supplier_id) instanceof Supplier)){
+        while (factory.getObjectType(supplier_id) != null && !(factory.getObjectType(supplier_id) instanceof Supplier) || (supplier_id.equals(product_id))){
             System.out.println("Supplier id already exists. Please try again.");
             supplier_id = scanner.nextLine();
         }
