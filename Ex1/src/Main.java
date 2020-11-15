@@ -77,17 +77,18 @@ public class Main {
         functions_call.put("ShowObjectId", "*");
 
         do {
-            System.out.println("1. Add WebUser");
-            System.out.println("2. Remove WebUser");
-            System.out.println("3. Login WebUser");
-            System.out.println("4. Logout WebUser");
+            System.out.println("1. Add WebUser *Login id*");
+            System.out.println("2. Remove WebUser *Login id*");
+            System.out.println("3. Login WebUser *Login id*");
+            System.out.println("4. Logout WebUser *Login id*");
             System.out.println("5. Make order");
             System.out.println("6. Display order");
-            System.out.println("7. Link Product");
+            System.out.println("7. Link Product *Product name*");
             System.out.println("8. Add Product");
-            System.out.println("9. Delete Product");
+            System.out.println("9. Delete Product *Product name*");
             System.out.println("10. ShowAllObjects");
-            System.out.println("11. ShowObjectId");
+            System.out.println("11. ShowObjectId *id*");
+            System.out.println("\nPlease enter a command (For example Login WebUser Dani)\n");
             String userChoice = scanner.nextLine();
             String[] userChoice_split = userChoice.split(" ");
             String argument = "", function_call = "";
