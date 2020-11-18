@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 public class Hotel implements  ITestable{
     private String name;
@@ -59,6 +62,47 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        if(this.city.equals("LAS VEGAS")){
+            for (HashMap.Entry client : allReservation.entrySet()) {
+                if (((Client)client.getKey()).getAge() < 21) {
+                    return false;
+                }
+            }
+        }
+
+        if(services.size() != 0){
+            HashMap<Integer,Integer> incomes = new HashMap<>();
+            for (HashMap.Entry service : services.entrySet()) {
+                HotelService specifficServices = (HotelService)service.getValue();
+                int price = specifficServices.getPrice();
+                Iterator<Booking> bookings = specifficServices.getGivenServices().iterator();
+                Booking booking;
+                while(bookings.hasNext()){
+                    booking = bookings.next();
+                    int year = booking.getDate().getYear();
+                    if(incomes.containsKey(year)){
+                        incomes.replace(year,incomes.get(year) + price);
+                    }
+                    else{
+                        incomes.put(year,price);
+                    }
+                }
+            }
+
+            if(incomes.size() != 0){
+                Iterator<Integer> year = incomes.keySet().iterator();
+                Integer currYear;
+                while(year.hasNext()){
+                    currYear = year.next();
+                    if(incomes.containsKey(currYear-1)){
+                        if(incomes.get(currYear)<incomes.get(currYear-1)){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
         return true;
     }
 
