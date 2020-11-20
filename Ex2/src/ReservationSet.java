@@ -36,7 +36,18 @@ public class ReservationSet implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        boolean result = true;
+        if (this.reservations.size() != 0){
+            for(Reservation r: this.reservations){
+                for(HotelService s: r.getBookings().getServices()){
+                    if(s.getService() instanceof VipService){
+                        result = r.getBookings().getReview() != null;
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
