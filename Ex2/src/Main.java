@@ -1,0 +1,79 @@
+public class Main {
+    public static void main(String[] args) {
+        constraint9();
+    }
+
+    public static void constraint4(){
+        Model model = new Model();
+        Group g = new Group(1);
+        Hotel h1 = new Hotel("a", "Dan",4);
+        Hotel h2 = new Hotel("b", "Gan",10);
+        HotelService hs1 = new HotelService(10, 20);
+        HotelService hs2 = new HotelService(10, 20);
+        Service s1 = new VipService("clean");
+//        Service s2 = new VipService("clean");
+        model.addObjectToModel(g);
+        model.addObjectToModel(h1);
+        model.addObjectToModel(h2);
+        model.addObjectToModel(hs1);
+        model.addObjectToModel(hs2);
+        model.addObjectToModel(s1);
+//        model.addObjectToModel(s2);
+        model.create_link_group_hotel(h1,g);
+        model.create_link_group_hotel(h2,g);
+        model.create_link_hotel_service_hotelService(h1, s1, hs1);
+        model.create_link_hotel_service_hotelService(h2, s1, hs2);
+        System.out.println(model.checkModelConstraints());
+    }
+
+    public static void constraint9(){
+        Model model = new Model();
+        Client client1 = new Client(1, 27, "Eden","B");
+        Client client2 = new Client(2, 27, "A","B");
+        Hotel h1 = new Hotel("a", "Dan",4);
+        HotelService hs1 = new HotelService(10, 20);
+        HotelService hs2 = new HotelService(10, 20);
+        Service s1 = new VipService("clean");
+        Service s2 = new RegularService("clean");
+        ReservationSet set1 = new ReservationSet();
+        ReservationSet set2 = new ReservationSet();
+        Reservation r1 = new Reservation(Model.getDateFromString("01-02-2010"),
+                Model.getDateFromString("01-02-2010"), 1);
+        Reservation r2 = new Reservation(Model.getDateFromString("01-02-2010"),
+                Model.getDateFromString("01-02-2010"), 2);
+        Room room1 = new Room(1);
+        Room room2 = new Room(2);
+        Booking b1 = new Booking(Model.getDateFromString("01-02-2010"),room1);
+        Booking b2 = new Booking(Model.getDateFromString("01-02-2010"),room2);
+        Review rev1 = new Review(10, "a",Model.getDateFromString("01-02-2010"));
+        model.addObjectToModel(set1);
+        model.addObjectToModel(set2);
+        model.addObjectToModel(r1);
+        model.addObjectToModel(r2);
+        model.addObjectToModel(b1);
+        model.addObjectToModel(b2);
+        model.addObjectToModel(room1);
+        model.addObjectToModel(room2);
+        model.addObjectToModel(h1);
+        model.addObjectToModel(hs1);
+        model.addObjectToModel(hs2);
+        model.addObjectToModel(s1);
+        model.addObjectToModel(s2);
+        model.addObjectToModel(client1);
+        model.addObjectToModel(client2);
+        model.addObjectToModel(rev1);
+
+        model.create_link_client_hotel_reservationSet(client1,h1, set1);
+        model.create_link_client_hotel_reservationSet(client2,h1, set2);
+        model.create_link_reservationSet_reservation(set1,r1);
+        model.create_link_reservationSet_reservation(set2,r2);
+        model.create_link_hotel_service_hotelService(h1, s1, hs1);
+        model.create_link_hotel_service_hotelService(h1, s2, hs2);
+        model.create_link_hotelService_booking(hs1, b1);
+        model.create_link_hotelService_booking(hs2, b2);
+        model.create_link_reservation_booking(b1, r1);
+        model.create_link_reservation_booking(b2, r2);
+        model.create_link_booking_review(b1, rev1);
+        System.out.println(model.checkModelConstraints());
+    }
+}
