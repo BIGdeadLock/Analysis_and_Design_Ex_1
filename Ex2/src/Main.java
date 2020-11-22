@@ -3,7 +3,7 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        constraint9();
+        constraint4();
     }
 
     public static void constraint4() {
@@ -14,7 +14,7 @@ public class Main {
         HotelService hs1 = new HotelService(10, 20);
         HotelService hs2 = new HotelService(10, 20);
         Service s1 = new VipService("clean");
-//        Service s2 = new VipService("clean");
+        Service s2 = new VipService("clean");
         model.addObjectToModel(g);
         model.addObjectToModel(h1);
         model.addObjectToModel(h2);

@@ -29,15 +29,24 @@ public class Group implements  ITestable{
     public boolean checkConstraints() {
         // TODO: Check with the team if the constraint is for type or
         // instance
-        for (Hotel h1: this.hotels) {
-            for (Hotel h2: this.hotels) {
-                if (!h1.getServices().keySet().containsAll(h2.getServices().keySet()))
-                    return false;
-            }  
+        if (this.hotels.size() != 0){
+            for (Hotel h1: this.hotels) {
+                for (Hotel h2: this.hotels) {
+                    if (h1.getServices().size()!= 0 && h2.getServices().size() != 0){
+                        if (!h1.getServices().keySet().containsAll(h2.getServices().keySet()))
+                            return false;
+                    }
+                }
+            }
         };
         return true;
     }
     public static boolean checkAllIntancesConstraints(Model model){
-        return true;
-    }
+        for (Group g: model.GroupAllInstances()){
+            if (g == null)
+                return true;
+            if(!g.checkConstraints())
+                return false;
+        }
+        return true;    }
 }
