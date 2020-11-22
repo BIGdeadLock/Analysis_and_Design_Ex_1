@@ -46,21 +46,23 @@ public class Client implements  ITestable {
 
     @Override
     public boolean checkConstraints() {
+        //constraint 2
         for (HashMap.Entry hotel: reservationsHistory.entrySet()) {
-            boolean flag = false;
             int size = ((ReservationSet) hotel.getValue()).getReservations().size();
             if (size >= 5) {
+                boolean flag = false;
                 List<Reservation> Reservations = ((ReservationSet) hotel.getValue()).getReservations();
                 for (int i = 0; i < size; i++) {
-                    if (Reservations.get(i).getRoomCategory().equals("VIP")) {
+                    if (Reservations.get(i).getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
                         flag = true;
                         break;
                     }
                 }
+                if (!flag) {
+                    return flag;
+                }
             }
-            if (!flag) {
-                return flag;
-            }
+
         }
         return true;
     }

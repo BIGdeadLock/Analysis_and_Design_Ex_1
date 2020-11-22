@@ -62,14 +62,15 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        if(this.city.equals("LAS VEGAS")){
+        //constraint 7
+        if(this.city.equals("LAS VEGAS") || this.city.equals("las vegas") || this.city.equals("Las Vegas")){
             for (HashMap.Entry client : allReservation.entrySet()) {
                 if (((Client)client.getKey()).getAge() < 21) {
                     return false;
                 }
             }
         }
-
+        //constraint 12,14
         if(services.size() != 0){
             HashMap<Integer,Integer> incomes = new HashMap<>();
             for (HashMap.Entry service : services.entrySet()) {
@@ -102,7 +103,6 @@ public class Hotel implements  ITestable{
                 }
             }
         }
-
         return true;
     }
 
