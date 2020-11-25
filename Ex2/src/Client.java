@@ -69,7 +69,6 @@ public class Client implements  ITestable {
             }
 
         }
-        System.out.println("inClien I am true");
         return true;
     }
 
