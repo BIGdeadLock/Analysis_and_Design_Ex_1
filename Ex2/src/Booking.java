@@ -60,6 +60,15 @@ public class Booking implements  ITestable{
             if(this.services.get(i).getHotel()!=this.reservation.getReservationSet().getHotel())
                 return false;
 
+
+        boolean result = true;
+        for (HotelService s : this.services) {
+            if (s.getService() instanceof VipService) {
+                if(this.review == null)
+                    return false;
+            }
+        }
+
         return true;
 
     }
