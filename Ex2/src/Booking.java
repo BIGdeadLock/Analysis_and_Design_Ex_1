@@ -56,10 +56,21 @@ public class Booking implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        for(int i=0; i<this.services.size();i++)
+            if(this.services.get(i).getHotel()!=this.reservation.getReservationSet().getHotel())
+                return false;
+
         return true;
+
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
+        for (Booking b: model.BookingAllInstances()){
+            if (b == null)
+                return true;
+            if(!b.checkConstraints())
+                return false;
+        }
         return true;
     }
 }

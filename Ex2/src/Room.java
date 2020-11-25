@@ -39,6 +39,17 @@ public class Room implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        if(this.roomCategory.getType().toString() == "VIP")
+            for(Booking booking: this.bookings.values())
+            {
+                for(HotelService Hservice: booking.getServices())
+                {
+                    if(Hservice.getService().getClass() == CommunityService.class ||
+                            Hservice.getService().getClass() == RegularService.class )
+                        return false;
+                }
+            }
+
         return true;
     }
 

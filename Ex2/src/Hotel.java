@@ -13,7 +13,26 @@ public class Hotel implements  ITestable{
     private Group group;
     private int rate;
 
+    public boolean Constraint6(){
+        int sumVIP=0;
+        for (Room room:rooms.values()) {
+            if (room.getRoomCategory().getType() == RoomCategory.RoomType.VIP)
+                sumVIP++;
+        }
+        if(sumVIP>(rooms.size()/10))
+            return false;
+        return true;
+    }
 
+    public boolean Constraint11(){
+        HashSet<String> service = new HashSet<>();
+        for (Service ser:services.keySet()) {
+            if(service.contains(ser.getServiceName()))
+                return false;
+            service.add(ser.getServiceName());
+        }
+        return true;
+    }
 
     public Hotel(String city, String name,int rate){
         this.city = city;
@@ -103,10 +122,44 @@ public class Hotel implements  ITestable{
                 }
             }
         }
+
+        if(!Constraint6())
+            return false;
+        if(!Constraint11())
+            return false;
+
+        int sum_ranks_reviews = 0;
+        int number_of_reviews = 0;
+        //for each hotel if its total rank is 5 --> check all the reservations and for all the clients who
+        //wrote a review check the avg is larger than 7.5
+        if(this.getRate()==5){
+            for(ReservationSet reservationSet: this.getAllReservation().values()){
+                for (Reservation reservation: reservationSet.getReservations()){
+                    //if a client with reservation made a booking and a wrote a review(can be none)
+                    if(reservation.getBookings()!=null && reservation.getBookings().getReview()!=null){
+                        number_of_reviews+=1;
+                        sum_ranks_reviews+=reservation.getBookings().getReview().getRank();
+                    }
+                }
+            }
+            if (number_of_reviews>0 && sum_ranks_reviews/number_of_reviews<=7.5)
+                return false;
+            number_of_reviews = 0;
+            sum_ranks_reviews =0;
+        }
+
+
         return true;
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
+        for (Hotel hotel: model.HotelAllInstances() ) {
+            if(hotel != null)
+                return false;
+            if(!(hotel.checkConstraints()))
+                return false;
+        }
         return true;
     }
+
 }

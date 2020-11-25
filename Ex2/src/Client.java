@@ -68,6 +68,14 @@ public class Client implements  ITestable {
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
+
+        for (Client c: model.ClientAllInstances()){
+            if (c == null)
+                return true;
+            if(!c.checkConstraints())
+                return false;
+        }
+
         return true;
     }
 }

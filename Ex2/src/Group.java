@@ -9,7 +9,15 @@ public class Group implements  ITestable{
         groupId = id;
     }
 
-
+    public boolean Constraint1() {
+        HashSet<String> City = new HashSet<>();
+        for (Hotel hotel : hotels) {
+            if (City.contains(hotel.getCity()))
+                return false;
+            City.add(hotel.getCity());
+        }
+        return true;
+    }
 
     public void addHotelToGroup(Hotel hotel){
         hotels.add(hotel);
@@ -39,6 +47,10 @@ public class Group implements  ITestable{
                 }
             }
         };
+
+        if(!Constraint1())
+            return false;
+
         return true;
     }
     public static boolean checkAllIntancesConstraints(Model model){
@@ -48,5 +60,6 @@ public class Group implements  ITestable{
             if(!g.checkConstraints())
                 return false;
         }
-        return true;    }
+        return true;
+    }
 }
