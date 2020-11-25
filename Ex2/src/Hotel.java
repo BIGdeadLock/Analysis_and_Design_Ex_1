@@ -154,12 +154,6 @@ public class Hotel implements  ITestable{
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
-        for (Hotel hotel: model.HotelAllInstances() ) {
-            if(hotel != null)
-                return false;
-            if(!(hotel.checkConstraints()))
-                return false;
-        }
         return true;
     }
 

@@ -53,12 +53,6 @@ public class Group implements  ITestable{
         return true;
     }
     public static boolean checkAllIntancesConstraints(Model model){
-        for (Group g: model.GroupAllInstances()){
-            if (g == null)
-                return true;
-            if(!g.checkConstraints())
-                return false;
-        }
         return true;
     }
 }
