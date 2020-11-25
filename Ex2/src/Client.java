@@ -44,6 +44,7 @@ public class Client implements  ITestable {
         return name;
     }
 
+
     @Override
     public boolean checkConstraints() {
         //constraint 2
@@ -53,9 +54,13 @@ public class Client implements  ITestable {
                 boolean flag = false;
                 List<Reservation> Reservations = ((ReservationSet) hotel.getValue()).getReservations();
                 for (int i = 0; i < size; i++) {
-                    if (Reservations.get(i).getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
-                        flag = true;
-                        break;
+                    if (Reservations.get(i).getBookings() !=null) {
+                        if (Reservations.get(i).getBookings().getRoom() != null) {
+                            if (Reservations.get(i).getBookings().getRoom().getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
+                                flag = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 if (!flag) {
@@ -64,6 +69,7 @@ public class Client implements  ITestable {
             }
 
         }
+        System.out.println("inClien I am true");
         return true;
     }
 
