@@ -35,8 +35,7 @@ public class Group implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        // TODO: Check with the team if the constraint is for type or
-        // instance
+        // Constraint 4
         if (this.hotels.size() != 0){
             for (Hotel h1: this.hotels) {
                 for (Hotel h2: this.hotels) {

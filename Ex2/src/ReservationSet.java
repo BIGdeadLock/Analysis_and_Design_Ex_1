@@ -36,6 +36,7 @@ public class ReservationSet implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        // Constaint 9
         boolean result = true;
         if (this.reservations.size() != 0){
             for(Reservation r: this.reservations){
