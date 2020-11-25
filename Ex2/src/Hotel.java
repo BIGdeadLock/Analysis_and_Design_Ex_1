@@ -128,6 +128,7 @@ public class Hotel implements  ITestable{
         if(!Constraint11())
             return false;
 
+        // Constraint10
         int sum_ranks_reviews = 0;
         int number_of_reviews = 0;
         //for each hotel if its total rank is 5 --> check all the reservations and for all the clients who
