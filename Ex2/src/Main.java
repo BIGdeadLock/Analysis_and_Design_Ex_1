@@ -3,10 +3,10 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        constraint4();
+        constraint5();
     }
 
-    public static void constraint4() {
+    public static void constraint() {
         Model model = new Model();
         Group g = new Group(1);
         Hotel h1 = new Hotel("a", "Dan", 4);
@@ -77,6 +77,7 @@ public class Main {
         model.create_link_reservation_booking(b1, r1);
         model.create_link_reservation_booking(b2, r2);
         model.create_link_booking_review(b1, rev1);
+        model.create_link_room_Booking(room1, b1);
         System.out.println(model.checkModelConstraints());
     }
 
@@ -132,5 +133,44 @@ public class Main {
         m.create_link_hotel_room(r1,hotel1);
         m.create_link_room_roomCategory(r1,rc1);
         System.out.println(m.checkModelConstraints());
+    }
+
+    public static void constraint5(){
+
+        Model m = new Model();
+        Hotel h1 = new Hotel("a", "Dan", 4);
+        HotelService hs1 = new HotelService(10, 20);
+        HotelService hs2 = new HotelService(10, 20);
+        RoomCategory rc1 = new RoomCategory(10, RoomCategory.RoomType.VIP);
+        Service s1 = new VipService("clean");
+        Service s2 = new RegularService("clean");
+        ReservationSet set1 = new ReservationSet();
+        Reservation r1 = new Reservation(Model.getDateFromString("01-02-2010"),
+                Model.getDateFromString("01-02-2010"), 1);
+        Room room1 = new Room(1);
+        Booking b1 = new Booking(Model.getDateFromString("01-02-2010"), room1);
+        m.addObjectToModel(room1);
+        m.addObjectToModel(h1);
+        m.addObjectToModel(hs1);
+        m.addObjectToModel(hs2);
+        m.addObjectToModel(s1);
+        m.addObjectToModel(s2);
+        m.addObjectToModel(r1);
+        m.addObjectToModel(b1);
+        m.addObjectToModel(hs1);
+        m.addObjectToModel(set1);
+        m.create_link_hotel_service_hotelService(h1,s1,hs1);
+        m.create_link_hotel_service_hotelService(h1,s2,hs2);
+        m.create_link_hotelService_booking(hs1,b1);
+        m.create_link_hotelService_booking(hs2,b1);
+        m.create_link_hotel_room(room1,h1);
+        m.create_link_hotelService_booking(hs1,b1);
+        m.create_link_room_roomCategory(room1,rc1);
+        m.create_link_reservation_roomCategory(r1,rc1);
+        m.create_link_reservationSet_reservation(set1,r1);
+        m.create_link_reservation_booking(b1,r1);
+        m.create_link_room_Booking(room1,b1);
+        System.out.println(m.checkModelConstraints());
+
     }
 }
