@@ -46,18 +46,10 @@ public class Device {
 
 
     public void addEBracelet(EBracelet eBracelet){
-        if (eBracelet == null)
+        if (eBracelet == null || eBracelets.contains(eBracelet))
             return;
-        if (!(eBracelets.contains(eBracelet))) {
-            if (eTicket.getDevice() != this) {
-                if (ebracelet.getSystem() != null) {
-                    return;
-                } else {
-                    this.eBracelets.add(ebracelet);
-                    ebracelet.setSystem(this);
-                }
-            }
-        }
+        this.eBracelets.add(eBracelet);
+        eBracelet.addDevice(this);
     }
 
     public boolean isOpen() {
