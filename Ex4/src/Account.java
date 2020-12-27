@@ -32,4 +32,8 @@ public class Account {
                 guardian.setAccount(this);
             }
     }
+
+    public void Delete(){
+
+    }
 }
