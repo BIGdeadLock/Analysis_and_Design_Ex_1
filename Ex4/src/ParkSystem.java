@@ -6,10 +6,10 @@ public class ParkSystem {
     HashMap<String, Child> childUsers = new HashMap<String, Child>();
     HashMap<String, String> ID_Password = new HashMap<String, String>();
     ArrayList<Guardian> guardians = new ArrayList<>();
-    ArrayList<EBracelet> eBracelets = new ArrayList<>();
+    ArrayList<EBracelet> eBracelets = new ArrayList<>(); // TODO: check if to join as child: ticket, bracelet
     HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
     Map map;
-
+    CreditCardCompany creditCardCompany = new CreditCardCompany();
     public ParkSystem(Map map) {
         this.map = map;
     }
@@ -45,9 +45,9 @@ public class ParkSystem {
             return;
         if (!(eBracelets.contains(ebracelet))) {
             if (ebracelet.getparkSystem() != this) {
-                if (ebracelet.getparkSystem() != null) {
+                if (ebracelet.getparkSystem() != null)
                     return;
-                } else {
+                else {
                     this.eBracelets.add(ebracelet);
                     ebracelet.setSystem(this);
                 }
@@ -80,6 +80,10 @@ public class ParkSystem {
     public void CancelRegistration(Guardian guardian, Child child){
         if(child == null || guardian == null)
             return;
+        String child_id = child.getID();
+        if(!childUsers.containsKey(child_id))
+            return;
+        childUsers.remove(child_id);
         guardian.DeleteChild(child);
     }
 
@@ -88,12 +92,24 @@ public class ParkSystem {
 
     }
 
-    private void CalculatePayment(Guardian guardian, Child child){
+    private Double CalculatePayment(Child child){
         ETicket eticket = childID_eTicket.get(child.getID());
-
-
+        Double child_total_payment = eticket.getPaymentByEntries();
+        eticket.Delete();
+        return child_total_payment;
     }
 
+    public void MakePayment(Guardian guardian, Child child){
+        if(!guardians.contains(guardian))
+            return;
+        Double payment = CalculatePayment(child);
+        CreditCard creditCard = guardian.getCreditCard();
+        creditCardCompany.ChargeCard(creditCard, payment);
+        if(guardian.GetChildrenSize() == 0) {
+            guardians.remove(guardian);
+            guardian.Delete();
+        }
+    }
     private boolean checkUserAccountLimit(Double priceToAdd){
         return true;
     }

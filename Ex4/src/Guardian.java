@@ -57,6 +57,9 @@ public class Guardian {
         }
     }
 
+    public int GetChildrenSize(){
+        return this.children.size();
+    }
     public EBracelet ReturnBracelet(Child child) {
         return child.geteBracelet();
     }
@@ -68,5 +71,17 @@ public class Guardian {
             this.children.remove(child);
             child.Delete();
         }
+    }
+
+    private void CloseAccount() {
+        this.account.Delete();
+    }
+
+    public void Delete() {
+        CloseAccount();
+        ID_Password = null;
+        children = null;
+        account = null;
+        parkSystem = null;
     }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class EBracelet {
     String currentLocation;
 
@@ -5,7 +7,7 @@ public class EBracelet {
     Child child;
     ParkSystem parkSystem;
     ETicket eTicket;
-
+    ArrayList<Device> Devices = new ArrayList<Device>();
     public EBracelet(String currentLocation, Child child, ParkSystem parkSystem, ETicket eTicket) {
         this.currentLocation = currentLocation;
         setChild(child);
@@ -53,7 +55,10 @@ public class EBracelet {
 
     }
 
-    //TODO: finish the f****n function
     public void addDevice(Device device) {
+        if(device == null || Devices.contains(device))
+            return;
+        this.Devices.add(device);
+        device.addEBracelet(this);
     }
 }

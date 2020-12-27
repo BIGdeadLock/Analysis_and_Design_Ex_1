@@ -8,7 +8,7 @@ public class CreditCardCompany {
         this.creditCards = new HashMap<String, Integer>();
     }
 
-    public void ChargeCard(double amount){
+    public void ChargeCard(CreditCard creditCard, double payment){
 
     }
 }

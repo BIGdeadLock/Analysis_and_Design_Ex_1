@@ -69,11 +69,12 @@ public class ETicket {
         this.eBracelet = eBracelet;
     }
 
-    public void getPaymentByEntries(){
+    public Double getPaymentByEntries(){
+        Double total_price =0.0;
         for(Device device: devicesAllowed){
-            device.Delete();
+            total_price+=device.Delete();
         }
-
+        return total_price;
     }
 
     public ParkSystem getparkSystem() {
@@ -84,5 +85,12 @@ public class ETicket {
         if(parkSystem == null)
             return;
         this.parkSystem = parkSystem;
+    }
+
+    public void Delete() {
+        //Devices were deleted during payment calculation
+        this.extremeDevicesPermitted = null;
+        this.eBracelet = null;
+        this.parkSystem = null;
     }
 }
