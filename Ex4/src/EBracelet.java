@@ -28,6 +28,19 @@ public class EBracelet {
                 child.seteBracelet(this);
             }
     }
-    public void setSystem(System system) { this.system = system; }
-    public void seteTicket(ETicket eTicket) { this.eTicket = eTicket; }
+    public void setSystem(System system) {
+        if (system==null || this.system!=null)
+            return;
+        system.AddeBracelet(this);
+        this.system = system;
+    }
+    public void seteTicket(ETicket eTicket) {
+        if (eTicket==null || this.eTicket!=null)
+            return;
+        if (eTicket.geteBracelet()!=this)
+            if (eTicket.geteBracelet() == null) {
+                this.eTicket= eTicket;
+                eTicket.seteBracelet(this);
+            }
+    }
 }

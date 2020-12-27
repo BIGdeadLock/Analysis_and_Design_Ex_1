@@ -18,8 +18,6 @@ public class Account {
     public Guardian getGuardian() { return guardian; }
 
     //SET
-    public void setOrders(ArrayList<Device> orders) { Orders = orders; }
-    public void setRefunds(ArrayList<Device> refunds) { Refunds = refunds; }
     public void setMaxAmount(double maxAmount) { MaxAmount = maxAmount; }
     public void setGuardian(Guardian guardian) {
         if (guardian==null || this.guardian!=null)
