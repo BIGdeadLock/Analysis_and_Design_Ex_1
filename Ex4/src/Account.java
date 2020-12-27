@@ -4,6 +4,7 @@ public class Account {
     ArrayList<Device> Orders = new ArrayList<Device>();
     ArrayList<Device> Refunds = new ArrayList<Device>();
     double MaxAmount;
+    double totalAmount;
     Guardian guardian;
 
     public Account(Guardian guardian,double maxamount) {
@@ -16,6 +17,9 @@ public class Account {
     public ArrayList<Device> getRefunds() { return Refunds; }
     public double getMaxAmount() { return MaxAmount; }
     public Guardian getGuardian() { return guardian; }
+    public double getTotalAmount() {
+        return totalAmount;
+    }
 
     //SET
     public void setMaxAmount(double maxAmount) { MaxAmount = maxAmount; }
