@@ -1,20 +1,22 @@
 public class EBracelet {
     String currentLocation;
+
+    //Links
     Child child;
-    System system;
+    ParkSystem parkSystem;
     ETicket eTicket;
 
-    public EBracelet(String currentLocation, Child child, System system, ETicket eTicket) {
+    public EBracelet(String currentLocation, Child child, ParkSystem parkSystem, ETicket eTicket) {
         this.currentLocation = currentLocation;
         setChild(child);
-        setSystem(system);
+        setSystem(parkSystem);
         seteTicket(eTicket);
     }
 
     //GET
     public String getCurrentLocation() { return currentLocation; }
     public Child getChild() { return child; }
-    public System getSystem() { return system; }
+    public ParkSystem getparkSystem() { return parkSystem; }
     public ETicket geteTicket() { return eTicket; }
 
     //SET
@@ -28,11 +30,11 @@ public class EBracelet {
                 child.seteBracelet(this);
             }
     }
-    public void setSystem(System system) {
-        if (system==null || this.system!=null)
+    public void setSystem(ParkSystem parkSystem) {
+        if (parkSystem ==null || this.parkSystem !=null)
             return;
-        system.AddeBracelet(this);
-        this.system = system;
+        parkSystem.addeBracelets(this);
+        this.parkSystem = parkSystem;
     }
     public void seteTicket(ETicket eTicket) {
         if (eTicket==null || this.eTicket!=null)
@@ -42,5 +44,16 @@ public class EBracelet {
                 this.eTicket= eTicket;
                 eTicket.seteBracelet(this);
             }
+    }
+
+    public void Delete() {
+        this.child = null;
+        if(this.eTicket != null)
+            eTicket= null;
+
+    }
+
+    //TODO: finish the f****n function
+    public void addDevice(Device device) {
     }
 }

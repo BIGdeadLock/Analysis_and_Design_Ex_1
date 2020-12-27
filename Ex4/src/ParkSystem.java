@@ -1,18 +1,16 @@
-import com.sun.jndi.toolkit.url.GenericURLDirContext;
-import sun.applet.resources.MsgAppletViewer;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
-public class System {
+public class ParkSystem {
     HashMap<String, Child> childUsers = new HashMap<String, Child>();
     HashMap<String, String> ID_Password = new HashMap<String, String>();
     ArrayList<Guardian> guardians = new ArrayList<>();
     ArrayList<EBracelet> eBracelets = new ArrayList<>();
-    ArrayList<ETicket> eTickets = new ArrayList<>();
+    HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
     Map map;
 
-    public System(Map map) {
+    public ParkSystem(Map map) {
         this.map = map;
     }
 
@@ -21,7 +19,7 @@ public class System {
     public HashMap<String, String> getID_Password() {return ID_Password; }
     public ArrayList<Guardian> getGuardians() { return guardians; }
     public ArrayList<EBracelet> geteBracelets() { return eBracelets; }
-    public ArrayList<ETicket> geteTickets() { return eTickets; }
+    public Collection<ETicket> geteTickets() { return childID_eTicket.values(); }
     public Map getMap() { return map; }
 
     //set
@@ -32,12 +30,12 @@ public class System {
         if (guardian == null)
             return;
         if (!(guardians.contains(guardian))) {
-            if (guardian.getSystem() != this) {
-                if (guardian.getSystem() != null) {
+            if (guardian.getParkSystem() != this) {
+                if (guardian.getParkSystem() != null) {
                     return;
                 } else {
                     this.guardians.add(guardian);
-                    guardian.setSystem(this);
+                    guardian.setParkSystem(this);
                 }
             }
         }
@@ -46,8 +44,8 @@ public class System {
         if (ebracelet == null)
             return;
         if (!(eBracelets.contains(ebracelet))) {
-            if (ebracelet.getSystem() != this) {
-                if (ebracelet.getSystem() != null) {
+            if (ebracelet.getparkSystem() != this) {
+                if (ebracelet.getparkSystem() != null) {
                     return;
                 } else {
                     this.eBracelets.add(ebracelet);
@@ -56,34 +54,47 @@ public class System {
             }
         }
     }
-    public void addeTickets(ETicket eTicket) {
+    public void addeTickets(String childID, ETicket eTicket) {
         if (eTicket == null)
             return;
-        if (!(eTickets.contains(eTicket))) {
-            if (eTicket.getSystem() != this) {
-                if (eTicket.getSystem() != null) {
+        if (!(childID_eTicket.containsValue(eTicket))) {
+            if (eTicket.getparkSystem() != this) {
+                if (eTicket.getparkSystem() != null) {
                     return;
                 } else {
-                    this.eTickets.add(eTicket);
-                    eTicket.setSystem(this);
+                    this.childID_eTicket.put(childID, eTicket);
+                    eTicket.setparkSystem(this);
                 }
             }
         }
     }
 
 
-    public void addToTicket(String rideName){
+    public void addDeviceToTicket(String rideName){
         Double ridePrice = 0.0;
-        for(ETicket eticket: eTickets){
-            for(Device device: eticket.getDevicesAllowed())
+        for(ETicket eticket: childID_eTicket.values()){
+            for(Device device: eticket.getDevicesAllowed()){}
         }
     }
 
-    public void removeToTicket(String rideName){
+    public void CancelRegistration(Guardian guardian, Child child){
+        if(child == null || guardian == null)
+            return;
+        guardian.DeleteChild(child);
+    }
+
+
+    public void removeDeviceFromTicket(String rideName){
+
+    }
+
+    private void CalculatePayment(Guardian guardian, Child child){
+        ETicket eticket = childID_eTicket.get(child.getID());
+
 
     }
 
     private boolean checkUserAccountLimit(Double priceToAdd){
-
+        return true;
     }
 }

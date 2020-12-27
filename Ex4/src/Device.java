@@ -7,6 +7,8 @@ public class Device {
     Double minWeight;
     boolean open;
     Double price;
+
+    //Links
     ArrayList<EBracelet> eBracelets = new ArrayList<EBracelet>();
 
     public Device(String name,Double minAge,Double minHeight,Double minWight,Double price, boolean open){
@@ -17,6 +19,7 @@ public class Device {
         this.open = open;
         this.price=price;
     }
+
     public Device(String name){
         this.name = name;
     }
@@ -54,5 +57,10 @@ public class Device {
 
     public boolean isOpen() {
         return open;
+    }
+
+    public Double Delete(){
+
+        return this.price;
     }
 }

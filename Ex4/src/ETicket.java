@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ETicket {
-    Date Entrace;
+    Date Entrance;
     Double timeLeft;
     ArrayList<Device> devicesAllowed = new ArrayList<Device>();
     String Status;
@@ -10,9 +10,12 @@ public class ETicket {
     ArrayList<Device> extremeDevicesPermitted = new ArrayList<Device>();
     Double childWeight;
 
+    //Links
+    EBracelet eBracelet;
+    ParkSystem parkSystem;
 
-    public Date getEntrace() {
-        return Entrace;
+    public Date getEntrance() {
+        return Entrance;
     }
 
     public Double getTimeLeft() {
@@ -54,5 +57,32 @@ public class ETicket {
             }
         }
 
+    }
+
+    public EBracelet geteBracelet() {
+        return eBracelet;
+    }
+
+    public void seteBracelet(EBracelet eBracelet) {
+        if(eBracelet == null)
+            return;;
+        this.eBracelet = eBracelet;
+    }
+
+    public void getPaymentByEntries(){
+        for(Device device: devicesAllowed){
+            device.Delete();
+        }
+
+    }
+
+    public ParkSystem getparkSystem() {
+        return parkSystem;
+    }
+
+    public void setparkSystem(ParkSystem parkSystem) {
+        if(parkSystem == null)
+            return;
+        this.parkSystem = parkSystem;
     }
 }

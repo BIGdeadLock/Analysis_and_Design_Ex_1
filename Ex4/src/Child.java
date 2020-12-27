@@ -38,10 +38,16 @@ public class Child {
     public void setGuardian(Guardian guardian) {
         if (guardian==null || this.guardian!=null)
             return;
-        guardian.AddChild(this);
+        guardian.addChild(this);
         this.guardian = guardian;
 
     }
 
+
+    public void Delete() {
+        this.eBracelet.Delete();
+        this.eBracelet = null;
+        this.guardian = null;
+    }
 }
 

@@ -4,20 +4,22 @@ import java.util.HashMap;
 public class Guardian {
     CreditCard creditCard;
     HashMap<String, String> ID_Password = new HashMap<String, String>();
+    int Weight;
+    int Age;
+    ArrayList<Child>children = new ArrayList<Child>();
     Account account;
-    System system;
-    ArrayList<Child> children = new ArrayList<>();
+    ParkSystem parkSystem;
 
-    public Guardian(CreditCard creditCard, System system) {
+    public Guardian(CreditCard creditCard, ParkSystem parkSystem) {
         this.creditCard = creditCard;
-        setSystem(system);
+        setParkSystem(parkSystem);
     }
 
     //get
     public CreditCard getCreditCard() { return creditCard; }
     public HashMap<String, String> getID_Password() { return ID_Password;}
     public Account getAccount() { return account; }
-    public System getSystem() { return system; }
+    public ParkSystem getParkSystem() { return parkSystem; }
     public ArrayList<Child> getChildren() { return children;}
 
     //set
@@ -31,14 +33,15 @@ public class Guardian {
                 account.setGuardian(this);
             }
     }
-    public void setSystem(System system) {
-        if (system==null || this.system!=null)
+    public void setParkSystem(ParkSystem parkSystem) {
+        if (parkSystem==null || this.parkSystem!=null)
             return;
-        if (!system.getGuardians().contains(this)){
-            this.system = system;
-            system.addGuardians(this);
+        if (!parkSystem.getGuardians().contains(this)){
+            this.parkSystem = parkSystem;
+            parkSystem.addGuardians(this);
         }
     }
+
     public void addChild(Child child) {
         if (child == null)
             return;
@@ -51,6 +54,19 @@ public class Guardian {
                     child.setGuardian(this);
                 }
             }
+        }
+    }
+
+    public EBracelet ReturnBracelet(Child child) {
+        return child.geteBracelet();
+    }
+
+    public void DeleteChild(Child child) {
+        if(child == null)
+            return;
+        if(this.children.contains(child)) {
+            this.children.remove(child);
+            child.Delete();
         }
     }
 }

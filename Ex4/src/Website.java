@@ -1,2 +1,5 @@
-public class Website extends System{
+public class Website extends ParkSystem {
+    public Website(Map map) {
+        super(map);
+    }
 }
