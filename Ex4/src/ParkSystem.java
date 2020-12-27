@@ -12,6 +12,7 @@ public class ParkSystem {
     CreditCardCompany creditCardCompany = new CreditCardCompany();
     public ParkSystem(Map map) {
         this.map = map;
+        this.creditCardCompany = new CreditCardCompany();
     }
 
     //get
@@ -26,6 +27,8 @@ public class ParkSystem {
     public void setChildUsers(HashMap<String, Child> childUsers) { this.childUsers = childUsers;}
     public void setID_Password(HashMap<String, String> ID_Password) { this.ID_Password = ID_Password; }
     public void setMap(Map map) { this.map = map;}
+
+
     public void addGuardians(Guardian guardian) {
         if (guardian == null)
             return;
@@ -45,9 +48,9 @@ public class ParkSystem {
             return;
         if (!(eBracelets.contains(ebracelet))) {
             if (ebracelet.getparkSystem() != this) {
-                if (ebracelet.getparkSystem() != null)
+                if (ebracelet.getparkSystem() != null) {
                     return;
-                else {
+                } else {
                     this.eBracelets.add(ebracelet);
                     ebracelet.setSystem(this);
                 }
@@ -69,11 +72,31 @@ public class ParkSystem {
         }
     }
 
+    // Use Case 4
 
-    public void addDeviceToTicket(String rideName){
+    /**
+     * The function is used by Use 4.
+     * Action 1 in Use Case 4.
+     * @param user - Guardian | The guardian that requested to add the ride
+     * @param ticket - ETicket | the ticket to add the new ride to
+     * @param rideName - String | The name of the device
+     */
+    public void addDeviceToTicket(Guardian user, ETicket ticket, String rideName){
         Double ridePrice = 0.0;
-        for(ETicket eticket: childID_eTicket.values()){
-            for(Device device: eticket.getDevicesAllowed()){}
+        /**
+         * Find the ride from the list of allowed rides for the child.
+         * Get the price of the ride.
+         * Validate that the user can pay for it (MaxAmount).
+         * If yes add the new ride to the list of rides.
+         */
+
+        // TODO: Check what it means to add an entrance: add a new device or add to the
+        // status in the guardian
+        for (Device ride :ticket.getDevicesAllowed()) {
+            if (ride.getName() == rideName){
+
+            }
+
         }
     }
 
@@ -94,9 +117,18 @@ public class ParkSystem {
 
     private Double CalculatePayment(Child child){
         ETicket eticket = childID_eTicket.get(child.getID());
-        Double child_total_payment = eticket.getPaymentByEntries();
+        double child_total_payment = eticket.getPaymentByEntries();
         eticket.Delete();
         return child_total_payment;
+    }
+
+    private boolean checkUserAccountLimit(Guardian user, double priceToAdd) {
+        Account userAccount = user.getAccount();
+        double newAmount = userAccount.getTotalAmount() + priceToAdd;
+        if (newAmount > userAccount.getMaxAmount())
+            return false;
+
+        return true;
     }
 
     public void MakePayment(Guardian guardian, Child child){
