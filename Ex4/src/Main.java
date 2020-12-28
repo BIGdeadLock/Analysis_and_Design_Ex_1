@@ -15,7 +15,7 @@ public class Main {
     static HashMap<String,String> functions_call;
     static List<Object>  systemObjects;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         Scanner scanner = new Scanner(System.in);
         ParkMap parkMap = new ParkMap();
@@ -64,8 +64,8 @@ public class Main {
 
             switch (function_call) {
                 case "Register child":
-                    Guardian guardian = new Guardian(parkSystem);
-                    systemObjects.add(guardian);
+                    Guardian guardian1 = new Guardian(parkSystem);
+                    systemObjects.add(guardian1);
                     String ChildID;
                     String ChildAge;
                     do {
@@ -75,13 +75,28 @@ public class Main {
                         ChildAge = scanner.nextLine();
                     }
                     while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
-                    guardian.CreateChild(ChildID,Integer.parseInt(ChildAge));
-                    systemObjects.add(guardian.childID_Child.get(ChildID));
-                    systemObjects.add(parkSystem.CreateETicket(guardian.childID_Child.get(ChildID)));
+                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge));
+                    Child child1 = guardian1.childID_Child.get(ChildID);
+                    systemObjects.add(child1);
+                    systemObjects.add(parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID)));
                     System.out.println("Please enter Credit Card Number");
                     String CardNumber = scanner.nextLine();
-                    System.out.println("Please enter Credit Card Expiration Date");
-                    String CardDate
+                    System.out.println("Please enter Credit Card Expiration Date in format DD/MM/YYYY");
+                    String CardDate = scanner.nextLine();
+                    System.out.println("Please enter Credit Card cvv");
+                    String CardCVV = scanner.nextLine();
+                    System.out.println("Please enter Maximum Amount");
+                    String maxAmount = scanner.nextLine();
+                    Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(CardDate);
+                    CreditCard card = new CreditCard(CardNumber, date1,CardCVV);
+                    if (!parkSystem.companyApproval(card))
+                        break;
+                    systemObjects.add(parkSystem.CreateAccount(guardian1,Double.parseDouble(maxAmount)));
+                    parkSystem.AddChildUser(child1);
+                    systemObjects.add(parkSystem.CreateEBracelet(child1));
+                    int childHeight = calculateHeight();
+                    int childWeight = calculateWeight();
+                    guardian1.UpdateHeightAndWeight(child1.ID,childHeight,childWeight);
                     break;
 
                 case "Manage Ticket":
@@ -234,5 +249,15 @@ public class Main {
             }
 
         } while (true);
+    }
+    public static int calculateHeight(){
+        Random rand = new Random();
+        int Height= rand.nextInt(1000);
+        return Height;
+    }
+    public static int calculateWeight(){
+        Random rand = new Random();
+        int Weight= rand.nextInt(1000);
+        return Weight;
     }
 }

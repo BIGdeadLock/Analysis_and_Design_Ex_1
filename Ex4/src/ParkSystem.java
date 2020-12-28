@@ -120,6 +120,16 @@ public class ParkSystem {
     }
         return true;
     }
+    /**
+     * The function is used by Use 1.
+     * Action 6 in Use Case 1.
+     * @param card - CreditCard | card to check for approve
+     */
+    public boolean companyApproval(CreditCard card){
+        if(card==null)
+            return false;
+        return creditCardCompany.ApproveCard(card);
+    }
 
     // Use Case 4
 

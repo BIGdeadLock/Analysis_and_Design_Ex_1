@@ -11,4 +11,10 @@ public class CreditCardCompany {
     public void ChargeCard(CreditCard creditCard, double payment){
 
     }
+
+    public boolean ApproveCard(CreditCard card){
+        if (card==null)
+            return false;
+        return true;
+    }
 }
