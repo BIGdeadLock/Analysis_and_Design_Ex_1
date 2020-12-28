@@ -6,7 +6,8 @@ public class Guardian {
     HashMap<String, String> ID_Password = new HashMap<String, String>();
     int Weight;
     int Age;
-    ArrayList<Child>children = new ArrayList<Child>();
+    //ArrayList<Child>children = new ArrayList<Child>();
+    HashMap<String, Child> childID_Child = new HashMap<String, Child>();
     Account account;
     ParkSystem parkSystem;
 
@@ -20,7 +21,6 @@ public class Guardian {
     public HashMap<String, String> getID_Password() { return ID_Password;}
     public Account getAccount() { return account; }
     public ParkSystem getParkSystem() { return parkSystem; }
-    public ArrayList<Child> getChildren() { return children;}
 
     //set
     public void setCreditCard(CreditCard creditCard) { this.creditCard = creditCard; }
@@ -42,15 +42,24 @@ public class Guardian {
         }
     }
 
+    public Child getChildByID(String childID){
+        if(childID == null)
+            return null;
+        if(this.childID_Child.containsKey(childID))
+            return this.childID_Child.get(childID);
+        return null;
+
+    }
     public void addChild(Child child) {
         if (child == null)
             return;
-        if (!(children.contains(child))) {
+        String childID = child.getID();
+        if (!(childID_Child.containsKey(childID))) {
             if (child.getGuardian() != this) {
                 if (child.getGuardian() != null) {
                     return;
                 } else {
-                    this.children.add(child);
+                    this.childID_Child.put(childID, child);
                     child.setGuardian(this);
                 }
             }
@@ -58,7 +67,7 @@ public class Guardian {
     }
 
     public int GetChildrenSize(){
-        return this.children.size();
+        return this.childID_Child.size();
     }
     public EBracelet ReturnBracelet(Child child) {
         return child.geteBracelet();
@@ -67,20 +76,31 @@ public class Guardian {
     public void DeleteChild(Child child) {
         if(child == null)
             return;
-        if(this.children.contains(child)) {
-            this.children.remove(child);
+        String childID= child.getID();
+        if(this.childID_Child.containsKey(childID)) {
+            this.childID_Child.remove(childID);
             child.Delete();
         }
     }
 
-    public void CloseAccount() {
+    public void Delete() {
         this.account.Delete();
+        account = null;
+        ID_Password = null;
+        childID_Child = null;
+        parkSystem = null;
+    }
+    public void CreateChild(String ID,int Age){
+        Child child=new Child(ID,Age,this);
+        this.addChild(child);
     }
 
-    public void Delete() {
-        ID_Password = null;
-        children = null;
-        account = null;
-        parkSystem = null;
+    public void UpdateHeightAndWeight(String ID,int Height, int Weight){
+        for (String childID: childID_Child.keySet())
+            if (childID.equals(ID)) {
+                Child childTOUpdate = childID_Child.get(childID);
+                childTOUpdate.setHeight(Height);
+                childTOUpdate.setWeight(Weight);
+            }
     }
 }

@@ -19,7 +19,7 @@ public class ParkSystem {
     //get
     public HashMap<String, Child> getChildUsers() { return childUsers; }
     public HashMap<String, String> getID_Password() {return ID_Password; }
-    public ArrayList<Guardian> getGuardians() { return guardians; }
+    public ArrayList<Guardian> getGuardians() { return this.guardians; }
     public ArrayList<EBracelet> geteBracelets() { return eBracelets; }
     public Collection<ETicket> geteTickets() { return childID_eTicket.values(); }
     public ParkMap getMap() { return parkMap; }
@@ -39,7 +39,7 @@ public class ParkSystem {
     public void addGuardians(Guardian guardian) {
         if (guardian == null)
             return;
-        if (!(guardians.contains(guardian))) {
+        if (!(this.guardians.contains(guardian))) {
             if (guardian.getParkSystem() != this) {
                 if (guardian.getParkSystem() != null) {
                     return;
@@ -88,6 +88,10 @@ public class ParkSystem {
                 return true;
         }
         return false;
+    }
+
+    public Guardian getGuardianBYChildID(String ChildID){
+
     }
 
     public void ExitPark(Guardian guardian, Child child){
