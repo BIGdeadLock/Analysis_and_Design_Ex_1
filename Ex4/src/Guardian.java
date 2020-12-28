@@ -16,6 +16,10 @@ public class Guardian {
         setParkSystem(parkSystem);
     }
 
+    public Guardian(ParkSystem parkSystem) {
+        setParkSystem(parkSystem);
+    }
+
     //get
     public CreditCard getCreditCard() { return creditCard; }
     public HashMap<String, String> getID_Password() { return ID_Password;}

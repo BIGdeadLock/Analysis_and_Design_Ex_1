@@ -1,5 +1,6 @@
 public class Child {
     String ID;
+    int SystemID;
     int Height;
     int Weight;
     int Age;
@@ -21,12 +22,14 @@ public class Child {
     public EBracelet geteBracelet() { return eBracelet; }
     public Guardian getGuardian() { return guardian; }
     public ETicket geteTicket() { return eTicket; }
+    public int getSystemID() { return SystemID; }
 
     //SET
     public void setHeight(int height) { Height = height; }
     public void setWeight(int weight) { Weight = weight; }
     public void setID(String ID) { this.ID = ID; }
     public void setAge(int age) { Age = age; }
+    public void setSystemID(int systemID) { SystemID = systemID;}
     public void seteBracelet(EBracelet eBracelet) {
         if (eBracelet==null || this.eBracelet!=null)
             return;

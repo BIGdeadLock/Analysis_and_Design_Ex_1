@@ -13,12 +13,26 @@ public class Main {
     static HashMap<String, Child> childrenMap;
     static HashMap<String, Device> devicesMap;
     static HashMap<String,String> functions_call;
+    static List<Object>  systemObjects;
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
         ParkMap parkMap = new ParkMap();
+        systemObjects.add(parkMap);
         ParkSystem parkSystem = new ParkSystem(parkMap);
+        systemObjects.add(parkSystem);
+
+        Device MambaRide = new Device("Mamba Ride", 12.0, 1.4, null, 20.0, true);
+        Device GiantWheel = new Device("Giant Wheel", null, null, null, 15.0, true);
+        Device Carrousel = new Device("Carrousel", 8.0, null, null, 10.0, true);
+        systemObjects.add(MambaRide);
+        systemObjects.add(GiantWheel);
+        systemObjects.add(Carrousel);
+        devicesMap.put("Mamba Ride",MambaRide);
+        devicesMap.put("Giant Wheel",GiantWheel);
+        devicesMap.put("Carrousel",Carrousel);
+
 
         functions_call = new HashMap();
         functions_call.put("Register child", "");
@@ -50,17 +64,20 @@ public class Main {
 
             switch (function_call) {
                 case "Register child":
-                    /*try {
-                        if (argument.equals("WebUser")){
-                            System.out.println("No login id detected. Please try again with a login id");
-                            break;
-                        }
-                        AddWebUser(argument);
-                    } catch (UnknownError e) {
-                        e.printStackTrace();
-                    } catch (NullPointerException n){
-                        n.printStackTrace();
-                    }*/
+                    Guardian guardian = new Guardian(parkSystem);
+                    systemObjects.add(guardian);
+                    String ChildID;
+                    String ChildAge;
+                    do {
+                        System.out.println("Please enter child ID");
+                        ChildID = scanner.nextLine();
+                        System.out.println("Please enter child age");
+                        ChildAge = scanner.nextLine();
+                    }
+                    while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
+                    guardian.CreateChild(ChildID,Integer.parseInt(ChildAge));
+                    systemObjects.add(guardian.childID_Child.get(ChildID));
+
                     break;
 
                 case "Manage Ticket":

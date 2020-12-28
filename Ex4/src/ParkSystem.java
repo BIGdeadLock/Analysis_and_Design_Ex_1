@@ -104,6 +104,24 @@ public class ParkSystem {
         MakePayment(guardian, child);
 
     }
+    //Use Case 1
+    /**
+     * The function is used by Use 1.
+     * Action 3 in Use Case 1.
+     * @param ID - String | childs ID
+     * @param age - int | childs age
+     */
+    public boolean checkIfDetailsValid(String ID, String age){
+        if (childID_eTicket.containsKey(ID))
+            return false;
+        try {
+            double d = Double.parseDouble(age);
+        }
+        catch (NumberFormatException nfe) {
+        return false;
+    }
+        return true;
+    }
 
     // Use Case 4
 
