@@ -31,6 +31,8 @@ public class Account {
                 this.guardian = guardian;
                 guardian.setAccount(this);
             }
+        else
+            this.guardian=guardian;
     }
 
     public void Delete(){

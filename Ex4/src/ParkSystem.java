@@ -40,6 +40,8 @@ public class ParkSystem {
                 this.parkMap = parkMap;
                 parkMap.setParkSystem(this);
             }
+        else
+            this.parkMap=parkMap;
     }
     public void addGuardians(Guardian guardian) {
         if (guardian == null)

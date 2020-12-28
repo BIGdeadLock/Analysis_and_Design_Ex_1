@@ -46,6 +46,8 @@ public class EBracelet {
                 this.eTicket= eTicket;
                 eTicket.seteBracelet(this);
             }
+        else
+            this.eTicket=eTicket;
     }
 
     public void Delete() {

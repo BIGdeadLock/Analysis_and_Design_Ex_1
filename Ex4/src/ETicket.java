@@ -60,6 +60,8 @@ public class ETicket {
                 this.eBracelet= eBracelet;
                 eBracelet.seteTicket(this);
             }
+        else
+            this.eBracelet=eBracelet;
     }
     public void setChild(Child child) {
         if (child==null || this.child!=null)
@@ -69,6 +71,8 @@ public class ETicket {
                 this.child= child;
                 child.seteTicket(this);
             }
+        else
+            this.child=child;
     }
 
     public void removeRide(String name){

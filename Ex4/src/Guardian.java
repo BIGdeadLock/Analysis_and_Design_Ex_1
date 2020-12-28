@@ -35,6 +35,8 @@ public class Guardian {
                 this.account = account;
                 account.setGuardian(this);
             }
+        else
+            this.account=account;
     }
     public void setParkSystem(ParkSystem parkSystem) {
         if (parkSystem==null || this.parkSystem!=null)
