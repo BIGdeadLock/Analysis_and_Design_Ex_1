@@ -89,7 +89,6 @@ public class ParkSystem {
      * @param rideName - String | The name of the device
      */
     public void addDeviceToTicket(Guardian user, ETicket ticket, String rideName){
-        Double ridePrice = 0.0;
         /**
          * Find the ride from the list of allowed rides for the child.
          * Get the price of the ride.
@@ -101,9 +100,42 @@ public class ParkSystem {
         // status in the guardian
         for (Device ride :ticket.getDevicesAllowed()) {
             if (ride.getName() == rideName){
-
+                // Action 2 in UC4
+                if (checkUserAccountLimit(user, ride.getPrice())){
+                    // TODO: Change Status to a list of devices
+                    // Actions 3,4 in UC4
+                    ticket.getStatus().add(ride);
+                    user.account.Orders.add(ride);
+                    user.account.totalAmount+=ride.getPrice();
+                }
             }
+        }
+    }
 
+    /**
+     * The function is used by Use 4.
+     * Action 1 in Use Case 4.
+     * @param user - Guardian | The guardian that requested to add the ride
+     * @param ticket - ETicket | the ticket to add the new ride to
+     * @param rideName - String | The name of the device
+     */
+    public void removeDeviceFromTicket(Guardian user, ETicket ticket, String rideName){
+        /**
+         * Find the ride from the list of allowed rides for the child.
+         * Get the price of the ride.
+         * remove the device from the account and update the total amount
+         */
+        for (Device ride :ticket.getDevicesAllowed()) {
+            if (ride.getName() == rideName){
+                // Action 2 in UC4
+                if (checkUserAccountLimit(user, ride.getPrice())){
+                    // TODO: Change Status to a list of devices
+                    // Actions 3,4 in UC4
+                    ticket.getStatus().delete(ride);
+                    user.account.Orders.remove(ride);
+                    user.account.totalAmount-=ride.getPrice();
+                }
+            }
         }
     }
 
@@ -115,11 +147,6 @@ public class ParkSystem {
             return;
         childUsers.remove(child_id);
         guardian.DeleteChild(child);
-    }
-
-
-    public void removeDeviceFromTicket(String rideName){
-
     }
 
     private Double CalculatePayment(Child child){
@@ -149,7 +176,5 @@ public class ParkSystem {
             guardian.Delete();
         }
     }
-    private boolean checkUserAccountLimit(Double priceToAdd){
-        return true;
-    }
+
 }
