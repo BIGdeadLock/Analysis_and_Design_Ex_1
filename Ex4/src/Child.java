@@ -42,6 +42,7 @@ public class Child {
         guardian.addChild(this);
         this.guardian = guardian;
     }
+
     public void seteTicket(ETicket eTicket) {
         if (eTicket==null || this.eTicket!=null)
             return;
