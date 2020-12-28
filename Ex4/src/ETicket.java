@@ -53,8 +53,10 @@ public class ETicket {
                 devicesAllowed.remove(dev);
                 flag = 1;
                 System.out.println("the " + name.toLowerCase() + " device was removed successfully");
-
             }
+        }
+        if (flag == 0){
+            System.out.println("the " + name.toLowerCase() + " device is not on the list");
         }
 
     }
