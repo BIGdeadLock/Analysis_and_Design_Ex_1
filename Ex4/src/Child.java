@@ -4,13 +4,15 @@ public class Child {
     double Height;
     double Weight;
     int Age;
+    String name;
     EBracelet eBracelet;
     Guardian guardian;
     ETicket eTicket;
 
-    public Child(String ID, int age, Guardian guardian) {
+    public Child(String ID, int age,String name, Guardian guardian) {
         this.ID = ID;
         Age = age;
+        this.name = name;
         setGuardian(guardian);
     }
 
@@ -23,6 +25,10 @@ public class Child {
     public Guardian getGuardian() { return guardian; }
     public ETicket geteTicket() { return eTicket; }
     public int getSystemID() { return SystemID; }
+
+    public String getName() {
+        return name;
+    }
 
     //SET
     public void setHeight(double height) { Height = height; }
@@ -38,6 +44,8 @@ public class Child {
                 this.eBracelet = eBracelet;
                 eBracelet.setChild(this);
             }
+        else
+            this.eTicket = eTicket;
     }
     public void setGuardian(Guardian guardian) {
         if (guardian==null || this.guardian!=null)

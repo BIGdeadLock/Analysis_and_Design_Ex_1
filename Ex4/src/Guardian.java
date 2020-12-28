@@ -101,9 +101,8 @@ public class Guardian {
         Main.systemObjects.remove(this);
         Main.systemObjects.remove(this.creditCard);
     }
-
-    public void CreateChild(String ID,int Age){
-        Child child=new Child(ID,Age,this);
+    public void CreateChild(String ID,int Age,String name){
+        Child child=new Child(ID,Age,name,this);
         this.addChild(child);
     }
 

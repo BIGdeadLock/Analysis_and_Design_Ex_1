@@ -100,7 +100,6 @@ public class ETicket {
         this.eBracelet = null;
         this.parkSystem = null;
         Main.systemObjects.remove(this);
-
     }
 
     public String toString(){

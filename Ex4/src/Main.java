@@ -1,5 +1,6 @@
 import sun.rmi.runtime.Log;
 
+import java.lang.management.GarbageCollectorMXBean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -35,6 +36,7 @@ public class Main {
         devicesMap.put("Carrousel",Carrousel);
 
 
+
         functions_call = new HashMap<>();
         functions_call.put("register", "");
         functions_call.put("manageticket", "*");
@@ -53,11 +55,13 @@ public class Main {
             String argument = "", function_call = "";
 
             for (String function : functions_call.keySet()) {
-                if (userChoice.toLowerCase().equals(function.toLowerCase())) {
+                if (userChoice_split[0].toLowerCase().equals(function.toLowerCase())) {
                     //if (functions_call.get(function).equals("*"))
                     argument = userChoice_split[userChoice_split.length - 1];
+                    //System.out.println(argument);
 
                     function_call = function;
+                    //System.out.println(function_call);
                     break;
                 }
             }
@@ -76,9 +80,10 @@ public class Main {
                         ChildAge = scanner.nextLine();
                     }
                     while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
-                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge));
+                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge),"Yossi"); // TODO: change to name
                     Child child1 = guardian1.childID_Child.get(ChildID);
                     systemObjects.add(child1);
+                    childrenMap.put("Yossi",child1);
                     systemObjects.add(parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID)));
                     System.out.println("Please enter Credit Card Number");
                     String CardNumber = scanner.nextLine();
@@ -109,12 +114,14 @@ public class Main {
                     break;
 
                 case "manageticket":
+                    System.out.println(argument);
                     int flag = 0;
                     ETicket et = null;
                     for (Map.Entry name : childrenMap.entrySet()) {
                         if (argument.equals(name.getKey())){
                             Child chosenChild = (Child)(name.getValue());
-                            et = chosenChild.geteBracelet().geteTicket();
+                            //et = chosenChild.geteBracelet().geteTicket();
+                            et = chosenChild.geteTicket();
                             flag = 1;
                             System.out.println(et);
                             ArrayList<Device> suitableForChild = new ArrayList<>();
@@ -137,7 +144,7 @@ public class Main {
                         }
                     }
                     if (flag == 0){
-                        System.out.println("the child" + argument + " does not exists");
+                        System.out.println("the child " + argument + " does not exists");
                     }
                     else{
                         String input;
