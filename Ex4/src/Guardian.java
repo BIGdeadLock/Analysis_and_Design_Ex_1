@@ -73,12 +73,11 @@ public class Guardian {
         }
     }
 
-    private void CloseAccount() {
+    public void CloseAccount() {
         this.account.Delete();
     }
 
     public void Delete() {
-        CloseAccount();
         ID_Password = null;
         children = null;
         account = null;

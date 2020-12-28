@@ -1,9 +1,5 @@
-public class Map {
+public class ParkMap {
     ParkSystem parkSystem;
-
-    public Map(ParkSystem parkSystem) {
-        this.setParkSystem(parkSystem);
-    }
 
     //GET
     public ParkSystem getParkSystem() { return parkSystem; }

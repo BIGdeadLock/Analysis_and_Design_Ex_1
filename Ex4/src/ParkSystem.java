@@ -8,11 +8,11 @@ public class ParkSystem {
     ArrayList<Guardian> guardians = new ArrayList<>();
     ArrayList<EBracelet> eBracelets = new ArrayList<>(); // TODO: check if to join as child: ticket, bracelet
     HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
-    Map map;
+    ParkMap parkMap;
     CreditCardCompany creditCardCompany = new CreditCardCompany();
 
-    public ParkSystem(Map map) {
-        this.map = map;
+    public ParkSystem(ParkMap parkMap) {
+        this.parkMap = parkMap;
         this.creditCardCompany = new CreditCardCompany();
     }
 
@@ -22,18 +22,18 @@ public class ParkSystem {
     public ArrayList<Guardian> getGuardians() { return guardians; }
     public ArrayList<EBracelet> geteBracelets() { return eBracelets; }
     public Collection<ETicket> geteTickets() { return childID_eTicket.values(); }
-    public Map getMap() { return map; }
+    public ParkMap getMap() { return parkMap; }
 
     //set
     public void setChildUsers(HashMap<String, Child> childUsers) { this.childUsers = childUsers;}
     public void setID_Password(HashMap<String, String> ID_Password) { this.ID_Password = ID_Password; }
-    public void setMap(Map map) {
-        if (map==null || this.map!=null)
+    public void setMap(ParkMap parkMap) {
+        if (parkMap ==null || this.parkMap !=null)
             return;
-        if (map.getParkSystem()!=this)
-            if (map.getParkSystem() == null) {
-                this.map= map;
-                map.setParkSystem(this);
+        if (parkMap.getParkSystem()!=this)
+            if (parkMap.getParkSystem() == null) {
+                this.parkMap = parkMap;
+                parkMap.setParkSystem(this);
             }
     }
     public void addGuardians(Guardian guardian) {
@@ -77,6 +77,26 @@ public class ParkSystem {
                 }
             }
         }
+    }
+
+    public boolean validateGuardian(String childID, String childPASS){
+        if(childID == null || childPASS == null)
+            return false;
+        // check if password is correct
+        if (ID_Password.containsKey(childID)){
+            if(ID_Password.get(childID).equals(childPASS))
+                return true;
+        }
+        return false;
+    }
+
+    public void ExitPark(Guardian guardian, Child child){
+        if(guardian == null || child == null)
+            return;
+        EBracelet eBracelet = guardian.ReturnBracelet(child);
+        CancelRegistration(guardian, child);
+        MakePayment(guardian, child);
+
     }
 
     // Use Case 4
@@ -131,7 +151,7 @@ public class ParkSystem {
                 if (checkUserAccountLimit(user, ride.getPrice())){
                     // TODO: Change Status to a list of devices
                     // Actions 3,4 in UC4
-                    ticket.getStatus().delete(ride);
+                    ticket.getStatus().remove(ride);
                     user.account.Orders.remove(ride);
                     user.account.totalAmount-=ride.getPrice();
                 }
@@ -143,9 +163,9 @@ public class ParkSystem {
         if(child == null || guardian == null)
             return;
         String child_id = child.getID();
-        if(!childUsers.containsKey(child_id))
+        if(!ID_Password.containsKey(child_id))
             return;
-        childUsers.remove(child_id);
+        ID_Password.remove(child_id);
         guardian.DeleteChild(child);
     }
 
@@ -173,6 +193,7 @@ public class ParkSystem {
         creditCardCompany.ChargeCard(creditCard, payment);
         if(guardian.GetChildrenSize() == 0) {
             guardians.remove(guardian);
+            guardian.CloseAccount();
             guardian.Delete();
         }
     }

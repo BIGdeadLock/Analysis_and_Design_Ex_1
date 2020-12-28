@@ -17,6 +17,8 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        ParkMap parkMap = new ParkMap();
+        ParkSystem parkSystem = new ParkSystem(parkMap);
 
         functions_call = new HashMap();
         functions_call.put("Register child", "");
@@ -128,12 +130,15 @@ public class Main {
                     break;
 
                 case "Exit park":
-                    /*
-                    if (argument.equals("WebUser")){
-                        System.out.println("No login id detected. Please try again with a login id");
-                        break;
+                    System.out.println("please state your exiting child's id");
+                    String childID = scanner.nextLine();
+                    System.out.println("please state your exiting child's password");
+                    String childPASS = scanner.nextLine();
+                    if(parkSystem.validateGuardian(childID,childPASS)){
+
                     }
-                    LoginWebUser(argument);*/
+                    else
+                        System.out.println("wrong input, please try again");
                     break;
 
                 case "Exit":
