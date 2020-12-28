@@ -34,7 +34,7 @@ public class Main {
         devicesMap.put("Carrousel",Carrousel);
 
 
-        functions_call = new HashMap();
+        functions_call = new HashMap<>();
         functions_call.put("Register child", "");
         functions_call.put("Manage Ticket", "*");
         functions_call.put("Add ride", "*");
@@ -94,8 +94,8 @@ public class Main {
                     systemObjects.add(parkSystem.CreateAccount(guardian1,Double.parseDouble(maxAmount)));
                     parkSystem.AddChildUser(child1);
                     systemObjects.add(parkSystem.CreateEBracelet(child1));
-                    int childHeight = calculateHeight();
-                    int childWeight = calculateWeight();
+                    double childHeight = calculateHeight();
+                    double childWeight = calculateWeight();
                     guardian1.UpdateHeightAndWeight(child1.ID,childHeight,childWeight);
                     break;
 
@@ -250,14 +250,14 @@ public class Main {
 
         } while (true);
     }
-    public static int calculateHeight(){
+    public static double calculateHeight(){
         Random rand = new Random();
-        int Height= rand.nextInt(1000);
+        double Height= 0.5+rand.nextDouble()*(2.0-0.5);
         return Height;
     }
-    public static int calculateWeight(){
+    public static double calculateWeight(){
         Random rand = new Random();
-        int Weight= rand.nextInt(1000);
+        double Weight= 10+rand.nextDouble()*(100-10);
         return Weight;
     }
 }

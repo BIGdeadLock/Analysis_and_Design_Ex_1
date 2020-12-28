@@ -1,8 +1,8 @@
 public class Child {
     String ID;
     int SystemID;
-    int Height;
-    int Weight;
+    double Height;
+    double Weight;
     int Age;
     EBracelet eBracelet;
     Guardian guardian;
@@ -15,8 +15,8 @@ public class Child {
     }
 
     //GET
-    public int getHeight() { return Height; }
-    public int getWeight() { return Weight; }
+    public double getHeight() { return Height; }
+    public double getWeight() { return Weight; }
     public String getID() { return ID; }
     public int getAge() { return Age; }
     public EBracelet geteBracelet() { return eBracelet; }
@@ -25,8 +25,8 @@ public class Child {
     public int getSystemID() { return SystemID; }
 
     //SET
-    public void setHeight(int height) { Height = height; }
-    public void setWeight(int weight) { Weight = weight; }
+    public void setHeight(double height) { Height = height; }
+    public void setWeight(double weight) { Weight = weight; }
     public void setID(String ID) { this.ID = ID; }
     public void setAge(int age) { Age = age; }
     public void setSystemID(int systemID) { SystemID = systemID;}

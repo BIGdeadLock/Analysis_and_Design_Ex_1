@@ -102,12 +102,15 @@ public class Guardian {
         this.addChild(child);
     }
 
-    public void UpdateHeightAndWeight(String ID,int Height, int Weight){
+    public void UpdateHeightAndWeight(String ID,double Height, double Weight){
         for (String childID: childID_Child.keySet())
             if (childID.equals(ID)) {
                 Child childTOUpdate = childID_Child.get(childID);
                 childTOUpdate.setHeight(Height);
                 childTOUpdate.setWeight(Weight);
+                ETicket eTicket=childTOUpdate.geteTicket();
+                eTicket.setChildHeight(Height);
+                eTicket.setChildWeight(Weight);
             }
     }
 }
