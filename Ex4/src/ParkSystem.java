@@ -86,9 +86,12 @@ public class ParkSystem {
     public boolean validateGuardian(String childID, String childPASS){
         if(childID == null || childPASS == null)
             return false;
+        int SystemId = Integer.parseInt(childID);
+        int SystemPass = Integer.parseInt(childPASS);
+
         // check if password is correct
-        if (ID_Password.containsKey(childID)){
-            if(ID_Password.get(childID).equals(childPASS))
+        if (ID_Password.containsKey(SystemId)){
+            if(ID_Password.get(SystemId) == SystemPass)
                 return true;
         }
         return false;
@@ -148,8 +151,6 @@ public class ParkSystem {
          * If yes add the new ride to the list of rides.
          */
 
-        // TODO: Check what it means to add an entrance: add a new device or add to the
-        // status in the guardian
         for (Device ride :ticket.getDevicesAllowed()) {
             if (ride.getName() == rideName){
                 // Action 2 in UC4
@@ -254,9 +255,15 @@ public class ParkSystem {
             return;
         this.childUsers.put(ChildID,child);
         child.getGuardian().addUserAndPassword(this.ChildID, this.Passwords);
+        child.setSystemID(this.ChildID);
         this.ID_Password.put(this.ChildID,this.Passwords);
         this.ChildID++;
         this.Passwords++;
     }
+
+    public int getChildPassword(int childID){
+        return this.ID_Password.get(childID);
+    }
+
 
 }

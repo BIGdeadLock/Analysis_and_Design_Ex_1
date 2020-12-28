@@ -17,6 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 
+        Guardian guardian1 = null;
         Scanner scanner = new Scanner(System.in);
         ParkMap parkMap = new ParkMap();
         systemObjects.add(parkMap);
@@ -44,7 +45,7 @@ public class Main {
 
         do {
             System.out.println("1. Register child");
-            System.out.println("2. Manage Ticket *child_name*");
+            System.out.println("2. Manage Ticket");
             System.out.println("3. Exit park");
             System.out.println("4. Exit");
             String userChoice = scanner.nextLine();
@@ -52,16 +53,15 @@ public class Main {
             String argument = "", function_call = "";
 
             for (String function : functions_call.keySet()) {
-                if (userChoice.contains(function.toLowerCase())) {
+                if (userChoice.toLowerCase().equals(function.toLowerCase())) {
                     //if (functions_call.get(function).equals("*"))
                     argument = userChoice_split[userChoice_split.length - 1];
-
 
                     function_call = function;
                     break;
                 }
             }
-            Guardian guardian1 = null;
+
             switch (function_call) {
                 case "register":
                     guardian1 = new Guardian(parkSystem);
@@ -97,6 +97,12 @@ public class Main {
                     double childHeight = calculateHeight();
                     double childWeight = calculateWeight();
                     guardian1.UpdateHeightAndWeight(child1.ID,childHeight,childWeight);
+
+                    int childId = guardian1.getChildByID(ChildID).getSystemId();
+                    int password = parkSystem.getChildPassword(childId);
+
+                    System.out.println("The child system id created: " + childId);
+                    System.out.println("The child password created: " + password);
                     break;
 
                 case "manageticket":
@@ -194,17 +200,12 @@ public class Main {
                         }while(!input.equals("N"));
 
                     }
-                    /*if (argument.equals("WebUser")){
-                        System.out.println("No login id detected. Please try again with a login id");
-                        break;
-                    }
-                    RemoveWebUser(argument);*/
                     break;
 
                 case "exitpark":
-                    System.out.println("please state your exiting child's id");
+                    System.out.println("please state your exiting child's given system id");
                     String childID = scanner.nextLine();
-                    System.out.println("please state your exiting child's password");
+                    System.out.println("please state your exiting child's given system password");
                     String childPASS = scanner.nextLine();
                     if(parkSystem.validateGuardian(childID,childPASS)){
                         if (guardian1 == null){
@@ -214,8 +215,10 @@ public class Main {
                         Child child = guardian1.getChildByID(childID);
                         parkSystem.ExitPark(guardian1, child);
                     }
-                    else
+                    else{
                         System.out.println("wrong input, please try again");
+                        break;
+                    }
 
                     System.out.println("Successfully exited the park");
                     break;

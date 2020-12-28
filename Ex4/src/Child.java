@@ -66,5 +66,9 @@ public class Child {
         this.eBracelet = null;
         this.guardian = null;
     }
+
+    public int getSystemId() {
+        return this.SystemID;
+    }
 }
 

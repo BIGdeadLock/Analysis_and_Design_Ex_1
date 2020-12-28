@@ -52,8 +52,9 @@ public class Guardian {
     public Child getChildByID(String childID){
         if(childID == null)
             return null;
-        if(this.childID_Child.containsKey(childID))
-            return this.childID_Child.get(childID);
+        int SystemId = Integer.parseInt(childID);
+        if(this.childID_Child.containsKey(SystemId))
+            return this.childID_Child.get(SystemId);
         return null;
 
     }
