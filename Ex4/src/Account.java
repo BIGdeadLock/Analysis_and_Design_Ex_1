@@ -37,5 +37,6 @@ public class Account {
         this.Orders = null;
         this.Refunds = null;
         this.guardian = null;
+        Main.systemObjects.remove(this);
     }
 }

@@ -228,6 +228,8 @@ public class Main {
 
 
                 case "exit":
+                    Main.systemObjects.remove(parkSystem);
+                    System.out.println("Successfully exited the system. Goodbye!");
                     break;
 
                 default:

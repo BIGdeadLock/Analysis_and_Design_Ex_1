@@ -45,16 +45,13 @@ public class ParkSystem {
         if (guardian == null)
             return;
         if (!(this.guardians.contains(guardian))) {
-            if (guardian.getParkSystem() != this) {
-                if (guardian.getParkSystem() != null) {
-                    return;
-                } else {
-                    this.guardians.add(guardian);
-                    guardian.setParkSystem(this);
-                }
+            if (guardian.getParkSystem() == this) {
+                this.guardians.add(guardian);
+                guardian.setParkSystem(this);
             }
         }
     }
+
     public void addeBracelets(EBracelet ebracelet) {
         if (ebracelet == null)
             return;

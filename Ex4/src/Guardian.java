@@ -91,12 +91,17 @@ public class Guardian {
     }
 
     public void Delete() {
-        this.account.Delete();
-        account = null;
+        if(this.account != null) {
+            this.account.Delete();
+            account = null;
+        }
         ID_Password = null;
         childID_Child = null;
         parkSystem = null;
+        Main.systemObjects.remove(this);
+        Main.systemObjects.remove(this.creditCard);
     }
+
     public void CreateChild(String ID,int Age){
         Child child=new Child(ID,Age,this);
         this.addChild(child);

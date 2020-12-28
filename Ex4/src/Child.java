@@ -67,6 +67,7 @@ public class Child {
             this.eBracelet = null;
         }
         this.guardian = null;
+        Main.systemObjects.remove(this);
     }
 
     public int getSystemId() {
