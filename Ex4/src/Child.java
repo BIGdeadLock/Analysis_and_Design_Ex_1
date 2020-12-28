@@ -62,8 +62,10 @@ public class Child {
 
 
     public void Delete() {
-        this.eBracelet.Delete();
-        this.eBracelet = null;
+        if(this.eBracelet != null) {
+            this.eBracelet.Delete();
+            this.eBracelet = null;
+        }
         this.guardian = null;
     }
 

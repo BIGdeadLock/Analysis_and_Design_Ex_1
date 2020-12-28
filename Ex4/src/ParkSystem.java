@@ -4,10 +4,11 @@ import java.util.HashMap;
 import java.util.Date;
 
 public class ParkSystem {
-    int ChildID=1;
+    int ChildSystemID =1;
     int Passwords = 1;
     HashMap<Integer, Child> childUsers = new HashMap<Integer, Child>();
     HashMap<Integer, Integer> ID_Password = new HashMap<Integer, Integer>();
+    HashMap<String, Integer> childID_systemID = new HashMap<String, Integer>();
     ArrayList<Guardian> guardians = new ArrayList<>();
     ArrayList<EBracelet> eBracelets = new ArrayList<>(); // TODO: check if to join as child: ticket, bracelet
     HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
@@ -86,7 +87,7 @@ public class ParkSystem {
     public boolean validateGuardian(String childID, String childPASS){
         if(childID == null || childPASS == null)
             return false;
-        int SystemId = Integer.parseInt(childID);
+        int SystemId = childID_systemID.get(childID);
         int SystemPass = Integer.parseInt(childPASS);
 
         // check if password is correct
@@ -253,11 +254,12 @@ public class ParkSystem {
     public void AddChildUser(Child child){
         if(child==null)
             return;
-        this.childUsers.put(ChildID,child);
-        child.getGuardian().addUserAndPassword(this.ChildID, this.Passwords);
-        child.setSystemID(this.ChildID);
-        this.ID_Password.put(this.ChildID,this.Passwords);
-        this.ChildID++;
+        this.childUsers.put(ChildSystemID,child);
+        child.getGuardian().addUserAndPassword(this.ChildSystemID, this.Passwords);
+        child.setSystemID(this.ChildSystemID);
+        this.childID_systemID.put(child.getID(),this.ChildSystemID);
+        this.ID_Password.put(this.ChildSystemID,this.Passwords);
+        this.ChildSystemID++;
         this.Passwords++;
     }
 

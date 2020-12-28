@@ -66,6 +66,7 @@ public class Main {
                 case "register":
                     guardian1 = new Guardian(parkSystem);
                     systemObjects.add(guardian1);
+                    parkSystem.addGuardians(guardian1);
                     String ChildID;
                     String ChildAge;
                     do {
@@ -98,11 +99,13 @@ public class Main {
                     double childWeight = calculateWeight();
                     guardian1.UpdateHeightAndWeight(child1.ID,childHeight,childWeight);
 
-                    int childId = guardian1.getChildByID(ChildID).getSystemId();
-                    int password = parkSystem.getChildPassword(childId);
+                    int childSystemID = guardian1.getChildByID(ChildID).getSystemId();
+                    int password = parkSystem.getChildPassword(childSystemID);
 
-                    System.out.println("The child system id created: " + childId);
+                    System.out.println("The following account was created for child: " + ChildID);
+                    System.out.println("The child system id created: " + childSystemID);
                     System.out.println("The child password created: " + password);
+                    System.out.println("\n");
                     break;
 
                 case "manageticket":
@@ -203,7 +206,7 @@ public class Main {
                     break;
 
                 case "exitpark":
-                    System.out.println("please state your exiting child's given system id");
+                    System.out.println("please state your exiting child's id");
                     String childID = scanner.nextLine();
                     System.out.println("please state your exiting child's given system password");
                     String childPASS = scanner.nextLine();
