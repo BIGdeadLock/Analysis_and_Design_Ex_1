@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Date;
 
 public class ParkSystem {
-    HashMap<String, Child> childUsers = new HashMap<String, Child>();
+    int ChildID=1;
+    HashMap<Integer, Child> childUsers = new HashMap<Integer, Child>();
     HashMap<String, String> ID_Password = new HashMap<String, String>();
     ArrayList<Guardian> guardians = new ArrayList<>();
     ArrayList<EBracelet> eBracelets = new ArrayList<>(); // TODO: check if to join as child: ticket, bracelet
@@ -17,7 +19,7 @@ public class ParkSystem {
     }
 
     //get
-    public HashMap<String, Child> getChildUsers() { return childUsers; }
+    public HashMap<Integer, Child> getChildUsers() { return childUsers; }
     public HashMap<String, String> getID_Password() {return ID_Password; }
     public ArrayList<Guardian> getGuardians() { return this.guardians; }
     public ArrayList<EBracelet> geteBracelets() { return eBracelets; }
@@ -25,7 +27,7 @@ public class ParkSystem {
     public ParkMap getMap() { return parkMap; }
 
     //set
-    public void setChildUsers(HashMap<String, Child> childUsers) { this.childUsers = childUsers;}
+    public void setChildUsers(HashMap<Integer, Child> childUsers) { this.childUsers = childUsers;}
     public void setID_Password(HashMap<String, String> ID_Password) { this.ID_Password = ID_Password; }
     public void setMap(ParkMap parkMap) {
         if (parkMap ==null || this.parkMap !=null)
@@ -200,6 +202,32 @@ public class ParkSystem {
             guardian.CloseAccount();
             guardian.Delete();
         }
+    }
+
+    public void CreateETicket(Child child){
+        if (child==null)
+            return;
+        Date today=new Date();
+        ETicket eTicket=new ETicket(today,this,child);
+        this.childID_eTicket.put(child.getID(),eTicket);
+    }
+    public void CreateEBracelet(Child child){
+        if (child==null)
+            return;
+        EBracelet eBracelet=new EBracelet("Entrance",child,this,child.geteTicket());
+        this.eBracelets.add(eBracelet);
+    }
+    public void CreateAccount(Guardian guardian,double maxAmount){
+        if (guardian==null)
+            return;
+        Account account=new Account(guardian,maxAmount);
+    }
+    public void AddChildUser(Child child){
+        if(child==null)
+            return;
+        this.childUsers.put(ChildID,child);
+        this.ChildID++;
+        //TODO:add the CHILD ID AND PASSWORD IN THE RIGHT PLACE
     }
 
 }

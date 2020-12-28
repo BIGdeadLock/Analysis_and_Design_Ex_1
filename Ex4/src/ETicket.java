@@ -23,6 +23,12 @@ public class ETicket {
         this.setChild(child);
     }
 
+    public ETicket(Date entrance, ParkSystem parkSystem, Child child) { //timeleft +status optional
+        Entrance = entrance;
+        this.setparkSystem(parkSystem);
+        this.setChild(child);
+    }
+
     //GET
     public Date getEntrance() { return Entrance;}
     public Double getTimeLeft() { return timeLeft; }
