@@ -42,8 +42,26 @@ public class ETicket {
     public void setChildWeight(Double childWeight) { this.childWeight = childWeight;}
     public void setChildHeight(Double childHeight) { this.childHeight = childHeight;}
     public void addRide(Device device){
-        devicesAllowed.add(device);
+        int flag = 0;
+        if (devicesAllowed.size() == 0){
+            devicesAllowed.add(device);
+            System.out.println("the " + device.getName() + " device was added successfully\n");
+        }
+        else{
+            for (Device dev : devicesAllowed) {
+                if (dev.getName().toLowerCase().equals(device.getName().toLowerCase())){
+                    flag = 1;
+                    System.out.println("the " + device.getName() + " is already on the list");
+                    break;
+                }
+            }
+            if (flag == 0){
+                devicesAllowed.add(device);
+                System.out.println("the " + device.getName() + " device was added successfully\n");
+            }
+        }
     }
+
     public void setparkSystem(ParkSystem parkSystem) {
         if (parkSystem==null || this.parkSystem!=null)
             return;
@@ -78,10 +96,11 @@ public class ETicket {
     public void removeRide(String name){
         int flag = 0;
         for (Device dev : devicesAllowed) {
-            if (dev.getName().equals(name.toLowerCase())){
+            if (dev.getName().toLowerCase().equals(name.toLowerCase())){
                 devicesAllowed.remove(dev);
                 flag = 1;
                 System.out.println("the " + name.toLowerCase() + " device was removed successfully");
+                break;
             }
         }
         if (flag == 0){
@@ -110,14 +129,15 @@ public class ETicket {
         String myStr = "";
         myStr += "these are ticket's details:\n";
         myStr += "the date: "+ this.Entrance+"\n";
-        myStr += "the time you have left: " + this.timeLeft + ":\n";
+        myStr += "the time you have left: " + this.timeLeft + "\n";
         myStr += "the devices you have entrances for:\n";
         for (Device dev:this.devicesAllowed){
             myStr += dev + "\n";
         }
-        myStr += "The child is :" + this.child + "\n";
-        myStr += "Child's Height :" + this.childHeight + "\n";
-        myStr += "Child's Weight :" + this.childWeight + "\n";
+        myStr += "The child is: " + this.child.getName() + "\n";
+        myStr += "Child's  age: " + this.child.getAge() + "\n";
+        myStr += "Child's Height: " + this.childHeight + "\n";
+        myStr += "Child's Weight: " + this.childWeight + "\n";
         //myStr += "status :" + this.Status + "\n";
         return myStr;
     }

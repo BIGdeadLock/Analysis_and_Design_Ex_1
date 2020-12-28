@@ -28,12 +28,15 @@ public class Main {
         Device MambaRide = new Device("Mamba Ride", 12.0, 1.4, null, 20.0, true);
         Device GiantWheel = new Device("Giant Wheel", null, null, null, 15.0, true);
         Device Carrousel = new Device("Carrousel", 8.0, null, null, 10.0, true);
+        ExtremeDevice ex = new ExtremeDevice("ex");
         systemObjects.add(MambaRide);
         systemObjects.add(GiantWheel);
         systemObjects.add(Carrousel);
+        systemObjects.add(ex);
         devicesMap.put("Mamba Ride",MambaRide);
         devicesMap.put("Giant Wheel",GiantWheel);
         devicesMap.put("Carrousel",Carrousel);
+        devicesMap.put("ex",ex);
 
 
 
@@ -114,7 +117,8 @@ public class Main {
                     break;
 
                 case "manageticket":
-                    System.out.println(argument);
+                    //System.out.println(argument);
+                    ArrayList<Device> suitableForChild = new ArrayList<>();
                     int flag = 0;
                     ETicket et = null;
                     for (Map.Entry name : childrenMap.entrySet()) {
@@ -124,35 +128,40 @@ public class Main {
                             et = chosenChild.geteTicket();
                             flag = 1;
                             System.out.println(et);
-                            ArrayList<Device> suitableForChild = new ArrayList<>();
                             for (Map.Entry device : devicesMap.entrySet()) {
                                 Device temp = (Device)(device.getValue());
-                                if (temp.getMinAge() <= chosenChild.getAge() && temp.getMinHeight() <= chosenChild.getHeight() && temp.getMinWeight() <= chosenChild.getWeight()){
-                                    suitableForChild.add(temp);
+                                if (temp.getMinAge() == null || temp.getMinAge() <= chosenChild.getAge()){
+                                    if(temp.getMinHeight() == null || temp.getMinHeight() <= chosenChild.getHeight()){
+                                        if(temp.getMinWeight() == null || temp.getMinWeight() <= chosenChild.getWeight()){
+                                            suitableForChild.add(temp);
+                                        }
+                                    }
                                 }
                             }
-                            if (suitableForChild.size() > 0){
-                                System.out.println("These are the devices you child can get on:\n");
-                                for(Device d: suitableForChild){
-                                    System.out.println(d);
-                                }
-                            }
-                            else{
-                                System.out.println("There are not suitable devices for your child\n");
-                            }
-                            //System.out.println("the " + name.toLowerCase() + " device was removed successfully");
                         }
                     }
                     if (flag == 0){
                         System.out.println("the child " + argument + " does not exists");
                     }
+
                     else{
+                        flag = 0;
                         String input;
                         do{
                             System.out.println("Do you want to add or remove device?(Y/N)");
                             input = scanner.nextLine();
                             if(input.equals("Y")){
-                                System.out.println("please choose an option:");
+                                if (suitableForChild.size() > 0){
+                                    System.out.println("These are the devices you child can get on:");
+                                    for(Device d: suitableForChild){
+                                        System.out.println(d.getName());
+                                    }
+                                }
+                                else{
+                                    System.out.println("There are not suitable devices for your child");
+                                }
+
+                                System.out.println("\nplease choose an option:");
                                 System.out.println("1. Add ride *rideName*");
                                 System.out.println("2. Remove ride *rideName*");
                                 String gaurdChoice = scanner.nextLine();
@@ -161,15 +170,25 @@ public class Main {
 
                                 for (String function : functions_call.keySet()) {
                                     if (gaurdChoice.contains(function)) {
-                                        newArg = userChoice_split[gaurdChoice_split.length - 1];
+                                        int i = 1;
+                                        while (i < gaurdChoice_split.length){
+                                            newArg += gaurdChoice_split[i];
+                                            if(i + 1 != gaurdChoice_split.length){
+                                                newArg+= " " ;
+                                            }
+                                            i+= 1;
+                                            //System.out.println(newArg);
+                                        }
+                                        //newArg = gaurdChoice_split[gaurdChoice_split.length - 1];
                                         new_function_call = function;
                                         break;
                                     }
                                 }
                                 switch(new_function_call){
                                     case "add":
+                                        flag = 0;
                                         for (Map.Entry name : devicesMap.entrySet()) {
-                                            if (argument.equals(name.getKey())){
+                                            if (newArg.equals(name.getKey())){
                                                 Device devToadd = (Device)(name.getValue());
 
                                                 flag = 1;
@@ -177,29 +196,30 @@ public class Main {
                                                     System.out.println("This is an Extreme device , do you allow it?(Y/N)");
                                                     String allow = scanner.nextLine();
                                                     if(allow.equals("N")){
-                                                        System.out.println("the " + name + " device will not be added\n");
+                                                        System.out.println("the " + name.getKey() + " device will not be added\n");
                                                         break;
                                                     }
                                                 }
 
                                                 et.addRide(devToadd);
-                                                System.out.println("the " + name + " device was added successfully\n");
+
                                             }
                                         }
                                         if (flag == 0){
-                                            System.out.println("the" + argument + "device does not exists\n");
+                                            System.out.println("the " + newArg + " device does not exists\n");
                                         }
                                         break;
                                     case "remove":
+                                        flag = 0;
                                         for (Map.Entry name : devicesMap.entrySet()) {
-                                            if (argument.equals(name.getKey())){
-                                                et.addRide((Device)(name.getValue()));
+                                            if (newArg.equals(name.getKey())){
+                                                et.removeRide((String)name.getKey());
                                                 flag = 1;
-                                                System.out.println("the " + name + " device was removed successfully\n");
+                                                //System.out.println("the " + name.getKey() + " device was removed successfully\n");
                                             }
                                         }
                                         if (flag == 0){
-                                            System.out.println("the" + argument + "device does not exists\n");
+                                            System.out.println("the " + newArg + " device does not exists\n");
                                         }
                                         break;
                                     default:
