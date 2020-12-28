@@ -36,11 +36,11 @@ public class Main {
 
         functions_call = new HashMap<>();
         functions_call.put("register", "");
-        functions_call.put("Manage Ticket", "*");
-        functions_call.put("Add ride", "*");
-        functions_call.put("Remove ride", "*");
-        functions_call.put("Exit park", "");
-        functions_call.put("Exit", "");
+        functions_call.put("manageticket", "*");
+        functions_call.put("add", "*");
+        functions_call.put("remove", "*");
+        functions_call.put("exitpark", "");
+        functions_call.put("exit", "");
 
         do {
             System.out.println("1. Register child");
@@ -99,7 +99,7 @@ public class Main {
                     guardian1.UpdateHeightAndWeight(child1.ID,childHeight,childWeight);
                     break;
 
-                case "Manage Ticket":
+                case "manageticket":
                     int flag = 0;
                     ETicket et = null;
                     for (Map.Entry name : childrenMap.entrySet()) {
@@ -151,7 +151,7 @@ public class Main {
                                     }
                                 }
                                 switch(new_function_call){
-                                    case "Add ride":
+                                    case "add":
                                         for (Map.Entry name : devicesMap.entrySet()) {
                                             if (argument.equals(name.getKey())){
                                                 Device devToadd = (Device)(name.getValue());
@@ -174,7 +174,7 @@ public class Main {
                                             System.out.println("the" + argument + "device does not exists\n");
                                         }
                                         break;
-                                    case "Remove ride":
+                                    case "remove":
                                         for (Map.Entry name : devicesMap.entrySet()) {
                                             if (argument.equals(name.getKey())){
                                                 et.addRide((Device)(name.getValue()));
@@ -201,7 +201,7 @@ public class Main {
                     RemoveWebUser(argument);*/
                     break;
 
-                case "Exit park":
+                case "exitpark":
                     System.out.println("please state your exiting child's id");
                     String childID = scanner.nextLine();
                     System.out.println("please state your exiting child's password");
@@ -219,32 +219,8 @@ public class Main {
                         System.out.println("wrong input, please try again");
                     break;
 
-                case "Exit":
-                    /*
-                    if (argument.equals("WebUser")){
-                        System.out.println("No login id detected. Please try again with a login id");
-                        break;
-                    }
-                    LogoutWebUser(argument);*/
-                    break;
 
                 case "exit":
-                    /*
-                    if (argument.equals("WebUser")){
-                        System.out.println("No login id detected. Please try again with a login id");
-                        break;
-                    }
-                    LogoutWebUser(argument);*/
-                    break;
-
-
-                case "EXIT":
-                    /*
-                    if (argument.equals("WebUser")){
-                        System.out.println("No login id detected. Please try again with a login id");
-                        break;
-                    }
-                    LogoutWebUser(argument);*/
                     break;
 
                 default:
