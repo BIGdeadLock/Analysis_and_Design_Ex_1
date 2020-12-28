@@ -61,10 +61,10 @@ public class Main {
                     break;
                 }
             }
-
+            Guardian guardian1 = null;
             switch (function_call) {
                 case "Register child":
-                    Guardian guardian1 = new Guardian(parkSystem);
+                    guardian1 = new Guardian(parkSystem);
                     systemObjects.add(guardian1);
                     String ChildID;
                     String ChildAge;
@@ -208,6 +208,10 @@ public class Main {
                     String childPASS = scanner.nextLine();
                     if(parkSystem.validateGuardian(childID,childPASS)){
                         //parkSystem.get
+                        if (guardian1 == null){
+                            System.out.println("Need to register before");
+                            break;
+                        }
                         Child child = guardian1.getChildByID(childID);
                         parkSystem.ExitPark(guardian1, child);
                     }
