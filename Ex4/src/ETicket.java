@@ -5,9 +5,7 @@ public class ETicket {
     Date Entrance;
     Double timeLeft;
     ArrayList<Device> devicesAllowed = new ArrayList<Device>();
-    int Status;
     Double childHeight;
-    ArrayList<Device> extremeDevicesPermitted = new ArrayList<Device>();
     Double childWeight;
     Child child;
 
@@ -18,7 +16,6 @@ public class ETicket {
     public ETicket(Date entrance, Double timeLeft, int status, ParkSystem parkSystem, Child child) {
         Entrance = entrance;
         this.timeLeft = timeLeft;
-        Status = status;
         this.setparkSystem(parkSystem);
         this.setChild(child);
     }
@@ -33,9 +30,7 @@ public class ETicket {
     public Date getEntrance() { return Entrance;}
     public Double getTimeLeft() { return timeLeft; }
     public ArrayList<Device> getDevicesAllowed() { return devicesAllowed; }
-    public int getStatus() { return Status; }
     public Double getChildHeight() { return childHeight; }
-    public ArrayList<Device> getExtremeDevicesPermitted() { return extremeDevicesPermitted; }
     public Double getChildWeight() { return childWeight; }
     public EBracelet geteBracelet() { return eBracelet; }
     public ParkSystem getparkSystem() { return parkSystem; }
@@ -44,7 +39,6 @@ public class ETicket {
     //SET
     public void setEntrance(Date entrance) { Entrance = entrance; }
     public void setTimeLeft(Double timeLeft) { this.timeLeft = timeLeft; }
-    public void setStatus(int status) { Status = status; }
     public void setChildWeight(Double childWeight) { this.childWeight = childWeight;}
     public void setChildHeight(Double childHeight) { this.childHeight = childHeight;}
     public void addRide(Device device){
@@ -103,7 +97,6 @@ public class ETicket {
 
     public void Delete() {
         //Devices were deleted during payment calculation
-        this.extremeDevicesPermitted = null;
         this.eBracelet = null;
         this.parkSystem = null;
     }
@@ -117,10 +110,9 @@ public class ETicket {
         for (Device dev:this.devicesAllowed){
             myStr += dev + "\n";
         }
-        myStr += "status :" + this.Status + "\n";
         myStr += "The child is :" + this.child + "\n";
-        myStr += "Child's weight :" + this.Status + "\n";
-        myStr += "Child's weight :" + this.Status + "\n";
+        myStr += "Child's Height :" + this.childHeight + "\n";
+        myStr += "Child's Weight :" + this.childWeight + "\n";
         //myStr += "status :" + this.Status + "\n";
         return myStr;
     }
