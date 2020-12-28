@@ -208,8 +208,8 @@ public class Main {
                     String childPASS = scanner.nextLine();
                     if(parkSystem.validateGuardian(childID,childPASS)){
                         //parkSystem.get
-                        Child child = guardian.getChildByID(childID);
-                        parkSystem.ExitPark(guardian, child);
+                        Child child = guardian1.getChildByID(childID);
+                        parkSystem.ExitPark(guardian1, child);
                     }
                     else
                         System.out.println("wrong input, please try again");
