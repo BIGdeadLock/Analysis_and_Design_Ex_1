@@ -6,7 +6,7 @@ import java.util.Date;
 public class ParkSystem {
     int ChildSystemID =1;
     int Passwords = 1;
-    HashMap<Integer, Child> childUsers = new HashMap<Integer, Child>();
+    HashMap<Integer, Child> childUsers = new HashMap<Integer, Child>();  //TODO: need to delete from here
     HashMap<Integer, Integer> ID_Password = new HashMap<Integer, Integer>();
     HashMap<String, Integer> childID_systemID = new HashMap<String, Integer>();
     ArrayList<Guardian> guardians = new ArrayList<>();
@@ -47,13 +47,9 @@ public class ParkSystem {
         if (guardian == null)
             return;
         if (!(this.guardians.contains(guardian))) {
-            if (guardian.getParkSystem() != this) {
-                if (guardian.getParkSystem() != null) {
-                    return;
-                } else {
-                    this.guardians.add(guardian);
-                    guardian.setParkSystem(this);
-                }
+            if (guardian.getParkSystem() == this) {
+                this.guardians.add(guardian);
+                guardian.setParkSystem(this);
             }
         }
     }
@@ -198,9 +194,11 @@ public class ParkSystem {
         if(child == null || guardian == null)
             return;
         int child_id = child.getSystemID();
+        EBracelet ebraceletToDelete = child.geteBracelet();
         if(!ID_Password.containsKey(child_id))
             return;
         ID_Password.remove(child_id);
+        eBracelets.remove(ebraceletToDelete);
         guardian.DeleteChild(child);
     }
 

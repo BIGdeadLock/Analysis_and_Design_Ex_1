@@ -60,7 +60,7 @@ public class Device {
     }
 
     public Double Delete(){
-
+        Main.systemObjects.remove(this);
         return this.price;
     }
 }

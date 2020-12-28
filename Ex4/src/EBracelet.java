@@ -54,6 +54,7 @@ public class EBracelet {
         this.child = null;
         if(this.eTicket != null)
             eTicket= null;
+        Main.systemObjects.remove(this);
 
     }
 
