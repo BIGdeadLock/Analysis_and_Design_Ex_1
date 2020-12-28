@@ -34,6 +34,8 @@ public class Account {
     }
 
     public void Delete(){
-
+        this.Orders = null;
+        this.Refunds = null;
+        this.guardian = null;
     }
 }

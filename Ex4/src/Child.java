@@ -49,11 +49,15 @@ public class Child {
     public void seteTicket(ETicket eTicket) {
         if (eTicket==null || this.eTicket!=null)
             return;
-        if (eTicket.getChild()!=this)
+        if (eTicket.getChild()!=this) {
             if (eTicket.getChild() == null) {
                 this.eTicket = eTicket;
                 eTicket.setChild(this);
             }
+        }
+        else
+            this.eTicket = eTicket;
+
     }
 
 

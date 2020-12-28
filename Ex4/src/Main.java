@@ -207,7 +207,6 @@ public class Main {
                     System.out.println("please state your exiting child's password");
                     String childPASS = scanner.nextLine();
                     if(parkSystem.validateGuardian(childID,childPASS)){
-                        //parkSystem.get
                         if (guardian1 == null){
                             System.out.println("Need to register before");
                             break;
@@ -217,6 +216,8 @@ public class Main {
                     }
                     else
                         System.out.println("wrong input, please try again");
+
+                    System.out.println("Successfully exited the park");
                     break;
 
 

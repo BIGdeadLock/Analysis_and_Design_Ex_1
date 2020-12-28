@@ -108,9 +108,8 @@ public class Guardian {
                 Child childTOUpdate = childID_Child.get(childID);
                 childTOUpdate.setHeight(Height);
                 childTOUpdate.setWeight(Weight);
-                ETicket eTicket=childTOUpdate.geteTicket();
-                eTicket.setChildHeight(Height);
-                eTicket.setChildWeight(Weight);
+                childTOUpdate.geteTicket().setChildHeight(Height);
+                childTOUpdate.geteTicket().setChildWeight(Weight);
             }
     }
 }

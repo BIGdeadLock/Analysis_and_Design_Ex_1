@@ -16,14 +16,14 @@ public class ETicket {
     public ETicket(Date entrance, Double timeLeft, int status, ParkSystem parkSystem, Child child) {
         Entrance = entrance;
         this.timeLeft = timeLeft;
-        this.setparkSystem(parkSystem);
         this.setChild(child);
+        this.setparkSystem(parkSystem);
     }
 
     public ETicket(Date entrance, ParkSystem parkSystem, Child child) { //timeleft +status optional
         Entrance = entrance;
-        this.setparkSystem(parkSystem);
         this.setChild(child);
+        this.setparkSystem(parkSystem);
     }
 
     //GET
