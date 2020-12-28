@@ -83,4 +83,16 @@ public class Guardian {
         account = null;
         parkSystem = null;
     }
+    public void CreateChild(String ID,int Age){
+        Child child=new Child(ID,Age,this);
+        this.addChild(child);
+    }
+
+    public void UpdateHeightAndWeight(String ID,int Height, int Weight){
+        for (Child child:children)
+            if (child.getID()==ID) {
+                child.setHeight(Height);
+                child.setWeight(Weight);
+            }
+    }
 }
