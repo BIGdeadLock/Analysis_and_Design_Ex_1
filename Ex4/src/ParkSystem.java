@@ -10,6 +10,7 @@ public class ParkSystem {
     HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
     Map map;
     CreditCardCompany creditCardCompany = new CreditCardCompany();
+
     public ParkSystem(Map map) {
         this.map = map;
         this.creditCardCompany = new CreditCardCompany();
@@ -26,9 +27,15 @@ public class ParkSystem {
     //set
     public void setChildUsers(HashMap<String, Child> childUsers) { this.childUsers = childUsers;}
     public void setID_Password(HashMap<String, String> ID_Password) { this.ID_Password = ID_Password; }
-    public void setMap(Map map) { this.map = map;}
-
-
+    public void setMap(Map map) {
+        if (map==null || this.map!=null)
+            return;
+        if (map.getParkSystem()!=this)
+            if (map.getParkSystem() == null) {
+                this.map= map;
+                map.setParkSystem(this);
+            }
+    }
     public void addGuardians(Guardian guardian) {
         if (guardian == null)
             return;
