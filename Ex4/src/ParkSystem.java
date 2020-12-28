@@ -222,23 +222,26 @@ public class ParkSystem {
         }
     }
 
-    public void CreateETicket(Child child){
+    public ETicket CreateETicket(Child child){
         if (child==null)
-            return;
+            return null;
         Date today=new Date();
         ETicket eTicket=new ETicket(today,this,child);
         this.childID_eTicket.put(child.getID(),eTicket);
+        return eTicket;
     }
-    public void CreateEBracelet(Child child){
+    public EBracelet CreateEBracelet(Child child){
         if (child==null)
-            return;
+            return null;
         EBracelet eBracelet=new EBracelet("Entrance",child,this,child.geteTicket());
         this.eBracelets.add(eBracelet);
+        return eBracelet;
     }
-    public void CreateAccount(Guardian guardian,double maxAmount){
+    public Account CreateAccount(Guardian guardian,double maxAmount){
         if (guardian==null)
-            return;
+            return null;
         Account account=new Account(guardian,maxAmount);
+        return account;
     }
     public void AddChildUser(Child child){
         if(child==null)

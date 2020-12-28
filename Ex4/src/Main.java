@@ -77,7 +77,11 @@ public class Main {
                     while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
                     guardian.CreateChild(ChildID,Integer.parseInt(ChildAge));
                     systemObjects.add(guardian.childID_Child.get(ChildID));
-
+                    systemObjects.add(parkSystem.CreateETicket(guardian.childID_Child.get(ChildID)));
+                    System.out.println("Please enter Credit Card Number");
+                    String CardNumber = scanner.nextLine();
+                    System.out.println("Please enter Credit Card Expiration Date");
+                    String CardDate
                     break;
 
                 case "Manage Ticket":
