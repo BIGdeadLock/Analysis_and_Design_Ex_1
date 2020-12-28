@@ -135,7 +135,9 @@ public class Main {
                     System.out.println("please state your exiting child's password");
                     String childPASS = scanner.nextLine();
                     if(parkSystem.validateGuardian(childID,childPASS)){
-
+                        //parkSystem.get
+                        Child child = guardian.getChildByID(childID);
+                        parkSystem.ExitPark(guardian, child);
                     }
                     else
                         System.out.println("wrong input, please try again");
