@@ -3,10 +3,9 @@ import java.util.HashMap;
 
 public class Guardian {
     CreditCard creditCard;
-    HashMap<String, String> ID_Password = new HashMap<String, String>();
+    HashMap<Integer, Integer> ID_Password = new HashMap<Integer, Integer>();
     int Weight;
     int Age;
-    //ArrayList<Child>children = new ArrayList<Child>();
     HashMap<String, Child> childID_Child = new HashMap<String, Child>();
     Account account;
     ParkSystem parkSystem;
@@ -22,7 +21,7 @@ public class Guardian {
 
     //get
     public CreditCard getCreditCard() { return creditCard; }
-    public HashMap<String, String> getID_Password() { return ID_Password;}
+    public HashMap<Integer, Integer> getID_Password() { return ID_Password;}
     public Account getAccount() { return account; }
     public ParkSystem getParkSystem() { return parkSystem; }
 
@@ -44,6 +43,10 @@ public class Guardian {
             this.parkSystem = parkSystem;
             parkSystem.addGuardians(this);
         }
+    }
+
+    public void addUserAndPassword(int username, int password){
+        this.ID_Password.put(username,password);
     }
 
     public Child getChildByID(String childID){

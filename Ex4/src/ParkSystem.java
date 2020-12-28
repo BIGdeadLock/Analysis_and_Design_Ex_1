@@ -5,8 +5,9 @@ import java.util.Date;
 
 public class ParkSystem {
     int ChildID=1;
+    int Passwords = 1;
     HashMap<Integer, Child> childUsers = new HashMap<Integer, Child>();
-    HashMap<String, String> ID_Password = new HashMap<String, String>();
+    HashMap<Integer, Integer> ID_Password = new HashMap<Integer, Integer>();
     ArrayList<Guardian> guardians = new ArrayList<>();
     ArrayList<EBracelet> eBracelets = new ArrayList<>(); // TODO: check if to join as child: ticket, bracelet
     HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
@@ -16,11 +17,12 @@ public class ParkSystem {
     public ParkSystem(ParkMap parkMap) {
         this.parkMap = parkMap;
         this.creditCardCompany = new CreditCardCompany();
+        Main.systemObjects.add(creditCardCompany);
     }
 
     //get
     public HashMap<Integer, Child> getChildUsers() { return childUsers; }
-    public HashMap<String, String> getID_Password() {return ID_Password; }
+    public HashMap<Integer, Integer> getID_Password() {return ID_Password; }
     public ArrayList<Guardian> getGuardians() { return this.guardians; }
     public ArrayList<EBracelet> geteBracelets() { return eBracelets; }
     public Collection<ETicket> geteTickets() { return childID_eTicket.values(); }
@@ -28,7 +30,7 @@ public class ParkSystem {
 
     //set
     public void setChildUsers(HashMap<Integer, Child> childUsers) { this.childUsers = childUsers;}
-    public void setID_Password(HashMap<String, String> ID_Password) { this.ID_Password = ID_Password; }
+    public void setID_Password(HashMap<Integer, Integer> ID_Password) { this.ID_Password = ID_Password; }
     public void setMap(ParkMap parkMap) {
         if (parkMap ==null || this.parkMap !=null)
             return;
@@ -92,10 +94,6 @@ public class ParkSystem {
         return false;
     }
 
-    public Guardian getGuardianBYChildID(String ChildID){
-
-    }
-
     public void ExitPark(Guardian guardian, Child child){
         if(guardian == null || child == null)
             return;
@@ -148,7 +146,7 @@ public class ParkSystem {
                 if (checkUserAccountLimit(user, ride.getPrice())){
                     // TODO: Change Status to a list of devices
                     // Actions 3,4 in UC4
-                    ticket.getStatus().add(ride);
+                    ticket.getDevicesAllowed().add(ride);
                     user.account.Orders.add(ride);
                     user.account.totalAmount+=ride.getPrice();
                 }
@@ -173,9 +171,8 @@ public class ParkSystem {
             if (ride.getName() == rideName){
                 // Action 2 in UC4
                 if (checkUserAccountLimit(user, ride.getPrice())){
-                    // TODO: Change Status to a list of devices
-                    // Actions 3,4 in UC4
-                    ticket.getStatus().remove(ride);
+                     // Actions 3,4 in UC4
+                    ticket.getDevicesAllowed().remove(ride);
                     user.account.Orders.remove(ride);
                     user.account.totalAmount-=ride.getPrice();
                 }
@@ -186,7 +183,7 @@ public class ParkSystem {
     public void CancelRegistration(Guardian guardian, Child child){
         if(child == null || guardian == null)
             return;
-        String child_id = child.getID();
+        int child_id = child.getSystemID();
         if(!ID_Password.containsKey(child_id))
             return;
         ID_Password.remove(child_id);
@@ -217,7 +214,6 @@ public class ParkSystem {
         creditCardCompany.ChargeCard(creditCard, payment);
         if(guardian.GetChildrenSize() == 0) {
             guardians.remove(guardian);
-            guardian.CloseAccount();
             guardian.Delete();
         }
     }
@@ -240,15 +236,17 @@ public class ParkSystem {
     public Account CreateAccount(Guardian guardian,double maxAmount){
         if (guardian==null)
             return null;
-        Account account=new Account(guardian,maxAmount);
+        Account account = new Account(guardian,maxAmount);
         return account;
     }
     public void AddChildUser(Child child){
         if(child==null)
             return;
         this.childUsers.put(ChildID,child);
+        child.getGuardian().addUserAndPassword(this.ChildID, this.Passwords);
+        this.ID_Password.put(this.ChildID,this.Passwords);
         this.ChildID++;
-        //TODO:add the CHILD ID AND PASSWORD IN THE RIGHT PLACE
+        this.Passwords++;
     }
 
 }
