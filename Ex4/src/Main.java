@@ -10,10 +10,10 @@ import java.util.Iterator;
 
 public class Main {
 
-    static HashMap<String, Child> childrenMap;
-    static HashMap<String, Device> devicesMap;
+    static HashMap<String, Child> childrenMap = new HashMap<String, Child>();
+    static HashMap<String, Device> devicesMap = new HashMap<String, Device>();
     static HashMap<String,String> functions_call;
-    static List<Object>  systemObjects;
+    static List<Object>  systemObjects = new ArrayList<Object>();
 
     public static void main(String[] args) throws ParseException {
 
@@ -35,7 +35,7 @@ public class Main {
 
 
         functions_call = new HashMap<>();
-        functions_call.put("Register child", "");
+        functions_call.put("register", "");
         functions_call.put("Manage Ticket", "*");
         functions_call.put("Add ride", "*");
         functions_call.put("Remove ride", "*");
@@ -52,7 +52,7 @@ public class Main {
             String argument = "", function_call = "";
 
             for (String function : functions_call.keySet()) {
-                if (userChoice.contains(function)) {
+                if (userChoice.contains(function.toLowerCase())) {
                     //if (functions_call.get(function).equals("*"))
                     argument = userChoice_split[userChoice_split.length - 1];
 
@@ -63,7 +63,7 @@ public class Main {
             }
             Guardian guardian1 = null;
             switch (function_call) {
-                case "Register child":
+                case "register":
                     guardian1 = new Guardian(parkSystem);
                     systemObjects.add(guardian1);
                     String ChildID;
