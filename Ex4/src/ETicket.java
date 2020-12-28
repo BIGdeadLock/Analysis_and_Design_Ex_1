@@ -101,4 +101,21 @@ public class ETicket {
         this.eBracelet = null;
         this.parkSystem = null;
     }
+
+    public String toString(){
+        String myStr = "";
+        myStr += "these are ticket's details:\n";
+        myStr += "the date: "+ this.Entrance+"\n";
+        myStr += "the time you have left: " + this.timeLeft + ":\n";
+        myStr += "the devices you have entrances for:\n";
+        for (Device dev:this.devicesAllowed){
+            myStr += dev + "\n";
+        }
+        myStr += "status :" + this.Status + "\n";
+        myStr += "The child is :" + this.child + "\n";
+        myStr += "Child's weight :" + this.Status + "\n";
+        myStr += "Child's weight :" + this.Status + "\n";
+        //myStr += "status :" + this.Status + "\n";
+        return myStr;
+    }
 }

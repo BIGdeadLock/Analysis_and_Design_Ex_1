@@ -68,8 +68,26 @@ public class Main {
                     ETicket et = null;
                     for (Map.Entry name : childrenMap.entrySet()) {
                         if (argument.equals(name.getKey())){
-                            et = ((Child)(name.getValue())).geteBracelet().geteTicket();
+                            Child chosenChild = (Child)(name.getValue());
+                            et = chosenChild.geteBracelet().geteTicket();
                             flag = 1;
+                            System.out.println(et);
+                            ArrayList<Device> suitableForChild = new ArrayList<>();
+                            for (Map.Entry device : devicesMap.entrySet()) {
+                                Device temp = (Device)(device.getValue());
+                                if (temp.getMinAge() <= chosenChild.getAge() && temp.getMinHeight() <= chosenChild.getHeight() && temp.getMinWeight() <= chosenChild.getWeight()){
+                                    suitableForChild.add(temp);
+                                }
+                            }
+                            if (suitableForChild.size() > 0){
+                                System.out.println("These are the devices you child can get on:\n");
+                                for(Device d: suitableForChild){
+                                    System.out.println(d);
+                                }
+                            }
+                            else{
+                                System.out.println("There are not suitable devices for your child\n");
+                            }
                             //System.out.println("the " + name.toLowerCase() + " device was removed successfully");
                         }
                     }
@@ -77,49 +95,67 @@ public class Main {
                         System.out.println("the child" + argument + " does not exists");
                     }
                     else{
-                        System.out.println("please choose an option:");
-                        System.out.println("1. Add ride *rideName*");
-                        System.out.println("2. Remove ride *rideName*");
-                        String gaurdChoice = scanner.nextLine();
-                        String[] gaurdChoice_split = gaurdChoice.split(" ");
-                        String newArg = "", new_function_call = "";
+                        String input;
+                        do{
+                            System.out.println("Do you want to add or remove device?(Y/N)");
+                            input = scanner.nextLine();
+                            if(input.equals("Y")){
+                                System.out.println("please choose an option:");
+                                System.out.println("1. Add ride *rideName*");
+                                System.out.println("2. Remove ride *rideName*");
+                                String gaurdChoice = scanner.nextLine();
+                                String[] gaurdChoice_split = gaurdChoice.split(" ");
+                                String newArg = "", new_function_call = "";
 
-                        for (String function : functions_call.keySet()) {
-                            if (gaurdChoice.contains(function)) {
-                                newArg = userChoice_split[gaurdChoice_split.length - 1];
-                                new_function_call = function;
-                                break;
+                                for (String function : functions_call.keySet()) {
+                                    if (gaurdChoice.contains(function)) {
+                                        newArg = userChoice_split[gaurdChoice_split.length - 1];
+                                        new_function_call = function;
+                                        break;
+                                    }
+                                }
+                                switch(new_function_call){
+                                    case "Add ride":
+                                        for (Map.Entry name : devicesMap.entrySet()) {
+                                            if (argument.equals(name.getKey())){
+                                                Device devToadd = (Device)(name.getValue());
+
+                                                flag = 1;
+                                                if (devToadd instanceof ExtremeDevice){
+                                                    System.out.println("This is an Extreme device , do you allow it?(Y/N)");
+                                                    String allow = scanner.nextLine();
+                                                    if(allow.equals("N")){
+                                                        System.out.println("the " + name + " device will not be added\n");
+                                                        break;
+                                                    }
+                                                }
+
+                                                et.addRide(devToadd);
+                                                System.out.println("the " + name + " device was added successfully\n");
+                                            }
+                                        }
+                                        if (flag == 0){
+                                            System.out.println("the" + argument + "device does not exists\n");
+                                        }
+                                        break;
+                                    case "Remove ride":
+                                        for (Map.Entry name : devicesMap.entrySet()) {
+                                            if (argument.equals(name.getKey())){
+                                                et.addRide((Device)(name.getValue()));
+                                                flag = 1;
+                                                System.out.println("the " + name + " device was removed successfully\n");
+                                            }
+                                        }
+                                        if (flag == 0){
+                                            System.out.println("the" + argument + "device does not exists\n");
+                                        }
+                                        break;
+                                    default:
+                                        System.out.println("Command Not Found. Please Try Again\n");
+                                        break;
+                                }
                             }
-                        }
-                        switch(new_function_call){
-                            case "Add ride":
-                                for (Map.Entry name : devicesMap.entrySet()) {
-                                    if (argument.equals(name.getKey())){
-                                        et.addRide((Device)(name.getValue()));
-                                        flag = 1;
-                                        System.out.println("the " + name + " device was added successfully");
-                                    }
-                                }
-                                if (flag == 0){
-                                    System.out.println("the" + argument + "device does not exists");
-                                }
-                                break;
-                            case "Remove ride":
-                                for (Map.Entry name : devicesMap.entrySet()) {
-                                    if (argument.equals(name.getKey())){
-                                        et.addRide((Device)(name.getValue()));
-                                        flag = 1;
-                                        System.out.println("the " + name + " device was removed successfully");
-                                    }
-                                }
-                                if (flag == 0){
-                                    System.out.println("the" + argument + "device does not exists");
-                                }
-                                break;
-                            default:
-                                System.out.println("Command Not Found. Please Try Again");
-                                break;
-                        }
+                        }while(!input.equals("N"));
 
                     }
                     /*if (argument.equals("WebUser")){
