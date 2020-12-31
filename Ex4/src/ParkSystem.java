@@ -99,9 +99,10 @@ public class ParkSystem {
     public void ExitPark(Guardian guardian, Child child){
         if(guardian == null || child == null)
             return;
-        EBracelet eBracelet = guardian.ReturnBracelet(child);
-        CancelRegistration(guardian, child);
-        MakePayment(guardian, child);
+        String childID = CancelRegistration(guardian, child);
+        if(childID == null)
+            return;
+        MakePayment(guardian, childID);
 
     }
     //Use Case 1
@@ -190,22 +191,27 @@ public class ParkSystem {
         }
     }
 
-    public void CancelRegistration(Guardian guardian, Child child){
+    public String CancelRegistration(Guardian guardian, Child child){
         if(child == null || guardian == null)
-            return;
-        int child_id = child.getSystemID();
-        EBracelet ebraceletToDelete = child.geteBracelet();
-        if(!ID_Password.containsKey(child_id))
-            return;
-        ID_Password.remove(child_id);
+            return null;
+        EBracelet ebraceletToDelete = guardian.ReturnBracelet(child);
         eBracelets.remove(ebraceletToDelete);
-        guardian.DeleteChild(child);
+        String childID = child.getID();
+        guardian.DeleteChild(childID);
+        return childID;
     }
 
-    private Double CalculatePayment(Child child){
-        ETicket eticket = childID_eTicket.get(child.getID());
+    private Double CalculatePayment(Guardian guardian, String childID){
+        ETicket eticket = childID_eTicket.get(childID);
         double child_total_payment = eticket.getPaymentByEntries();
         eticket.Delete();
+
+        int child_id = this.childID_systemID.get(childID);
+        if(!ID_Password.containsKey(child_id))
+            return null;
+        ID_Password.remove(child_id);
+      // guardian.DeleteChild(childID);
+
         return child_total_payment;
     }
 
@@ -214,17 +220,17 @@ public class ParkSystem {
         double newAmount = userAccount.getTotalAmount() + priceToAdd;
         if (newAmount > userAccount.getMaxAmount())
             return false;
-
         return true;
     }
 
-    public void MakePayment(Guardian guardian, Child child){
+    public void MakePayment(Guardian guardian, String childID){
         if(!guardians.contains(guardian))
             return;
-        Double payment = CalculatePayment(child);
+        Double payment = CalculatePayment(guardian, childID);
         CreditCard creditCard = guardian.getCreditCard();
         creditCardCompany.ChargeCard(creditCard, payment);
-        if(guardian.GetChildrenSize() == 0) {
+        int childrenAmount = guardian.GetChildrenSize();
+        if(childrenAmount == 0) {
             guardians.remove(guardian);
             guardian.Delete();
         }

@@ -82,13 +82,13 @@ public class Guardian {
         return child.geteBracelet();
     }
 
-    public void DeleteChild(Child child) {
-        if(child == null)
+    public void DeleteChild(String childID) {
+        if(childID == null)
             return;
-        String childID= child.getID();
         if(this.childID_Child.containsKey(childID)) {
+            Child childToRemove = this.getChildByID(childID);
             this.childID_Child.remove(childID);
-            child.Delete();
+            childToRemove.Delete();
         }
     }
 
