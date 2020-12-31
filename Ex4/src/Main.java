@@ -195,7 +195,7 @@ public class Main {
                                                 Device devToadd = (Device)(name.getValue());
 
                                                 flag = 1;
-                                                if (devToadd instanceof ExtremeDevice){
+                                                if (devToadd.checkExtreme()){
                                                     System.out.println("This is an Extreme device , do you allow it?(Y/N)");
                                                     String allow = scanner.nextLine();
                                                     if(allow.equals("N")){

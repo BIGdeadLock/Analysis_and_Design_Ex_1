@@ -55,8 +55,13 @@ public class Device {
         eBracelet.addDevice(this);
     }
 
-    public boolean isOpen() {
-        return open;
+    public boolean checkExtreme() {
+        try {
+            ExtremeDevice DEV = (ExtremeDevice) this;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     public Double Delete(){
