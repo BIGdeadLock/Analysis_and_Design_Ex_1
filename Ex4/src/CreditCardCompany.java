@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.*;
 
 public class CreditCardCompany {
 
@@ -15,6 +16,10 @@ public class CreditCardCompany {
     public boolean ApproveCard(CreditCard card){
         if (card==null)
             return false;
+        Date currentDate = new Date();
+        if (card.Expiration.before(currentDate))
+            return false;
+
         return true;
     }
 }
