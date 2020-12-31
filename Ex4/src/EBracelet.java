@@ -64,4 +64,9 @@ public class EBracelet {
         this.Devices.add(device);
         device.addEBracelet(this);
     }
+    public void deleteDevice(Device device){
+        if (Devices.contains(device)){
+            Devices.remove(device);
+        }
+    }
 }

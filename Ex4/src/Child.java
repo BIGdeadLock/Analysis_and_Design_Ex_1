@@ -74,7 +74,10 @@ public class Child {
             this.eBracelet.Delete();
             this.eBracelet = null;
         }
-        this.guardian = null;
+        if (this.guardian!=null) {
+            this.guardian.DeleteChild(this.getID());
+            this.guardian = null;
+        }
         Main.systemObjects.remove(this);
     }
 

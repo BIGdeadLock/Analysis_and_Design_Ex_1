@@ -246,6 +246,7 @@ public class ParkSystem {
             guardians.remove(guardian);
             guardian.Delete();
         }
+        clearChlid(childID);
     }
 
     public ETicket CreateETicket(Child child){
@@ -283,6 +284,20 @@ public class ParkSystem {
 
     public int getChildPassword(int childID){
         return this.ID_Password.get(childID);
+    }
+
+    public void clearChlid(String ChildID){
+        if(!childID_systemID.containsKey(ChildID)) {
+            if (childID_eTicket.containsKey(ChildID))
+                childID_eTicket.remove(ChildID);
+        }
+        else {
+            childID_eTicket.remove(ChildID);
+            int sysmID=childID_systemID.get(ChildID);
+            childUsers.remove(sysmID);
+            ID_Password.remove(sysmID);
+            childID_systemID.remove(ChildID);
+        }
     }
 
 

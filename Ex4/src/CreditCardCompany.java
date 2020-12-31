@@ -19,6 +19,12 @@ public class CreditCardCompany {
         Date currentDate = new Date();
         if (card.Expiration.before(currentDate))
             return false;
+        boolean isNumericNumber = card.getNumber().chars().allMatch( Character::isDigit );
+        boolean isNumericCVV = card.getNumber().chars().allMatch( Character::isDigit );
+        if (!isNumericNumber && !isNumericCVV){
+            return false;
+        }
+
         return true;
     }
 }

@@ -101,7 +101,9 @@ public class Main {
                     CreditCard card = new CreditCard(CardNumber, date1,CardCVV);
                     if (!parkSystem.companyApproval(card)) {
                         System.out.println("CreditCard not approved");
+                        String ID=child1.getID();
                         child1.Delete();
+                        parkSystem.clearChlid(ID);
                         eTicket1.Delete();
                         guardian1.Delete();
                         break;
@@ -111,7 +113,9 @@ public class Main {
                     }
                     catch (Exception e){
                         System.out.println("MaxAmount must be Number");
+                        String ID=child1.getID();
                         child1.Delete();
+                        parkSystem.clearChlid(ID);
                         eTicket1.Delete();
                         guardian1.Delete();
                         break;

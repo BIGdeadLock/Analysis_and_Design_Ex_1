@@ -72,6 +72,10 @@ public class Device {
 
     public Double Delete(){
         Main.systemObjects.remove(this);
+        for(EBracelet e:eBracelets){
+            e.deleteDevice(this);
+        }
         return this.price;
+
     }
 }
