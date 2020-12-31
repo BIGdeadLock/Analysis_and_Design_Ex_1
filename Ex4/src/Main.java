@@ -200,8 +200,8 @@ public class Main {
                                                         break;
                                                     }
                                                 }
-                                                parkSystem.addDeviceToTicket(guardian1, et, devToadd);
-                                                //et.addRide(devToadd);
+
+                                                et.addRide(devToadd);
 
                                             }
                                         }
