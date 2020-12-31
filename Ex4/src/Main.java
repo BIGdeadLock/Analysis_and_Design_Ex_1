@@ -76,17 +76,20 @@ public class Main {
                     parkSystem.addGuardians(guardian1);
                     String ChildID;
                     String ChildAge;
+                    String ChildName;
                     do {
                         System.out.println("Please enter child ID");
                         ChildID = scanner.nextLine();
                         System.out.println("Please enter child age");
                         ChildAge = scanner.nextLine();
+                        System.out.println("Please enter child name");
+                        ChildName = scanner.nextLine();
                     }
                     while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
-                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge),"Yossi"); // TODO: change to name
+                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge),ChildName); // TODO: change to name
                     Child child1 = guardian1.childID_Child.get(ChildID);
                     systemObjects.add(child1);
-                    childrenMap.put("Yossi",child1);
+                    childrenMap.put(ChildName,child1);
                     systemObjects.add(parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID)));
                     System.out.println("Please enter Credit Card Number");
                     String CardNumber = scanner.nextLine();
