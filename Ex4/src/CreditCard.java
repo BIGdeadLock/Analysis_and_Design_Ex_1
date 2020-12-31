@@ -14,6 +14,7 @@ public class CreditCard {
     //GET
     public String getNumber() { return Number; }
     public Date getExpiration() { return Expiration; }
+    public String getCVV(){return CVV;}
 
     //SET
     public void setNumber(String number) { Number = number; }

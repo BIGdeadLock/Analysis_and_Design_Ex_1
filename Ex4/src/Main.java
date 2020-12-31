@@ -220,8 +220,8 @@ public class Main {
                                                         break;
                                                     }
                                                 }
-
-                                                et.addRide(devToadd);
+                                                parkSystem.addDeviceToTicket(guardian1,et,devToadd);
+                                               // et.addRide(devToadd);
 
                                             }
                                         }
