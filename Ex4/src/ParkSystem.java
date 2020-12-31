@@ -184,7 +184,7 @@ public class ParkSystem {
          * remove the device from the account and update the total amount
          */
         if (ticket.getDevicesAllowed().size() == 0){
-            ticket.addRide(deviceToAdd);
+            //ticket.addRide(deviceToAdd);
             user.account.Orders.remove(deviceToAdd);
             user.account.totalAmount-=deviceToAdd.getPrice();
         }
@@ -194,6 +194,7 @@ public class ParkSystem {
                     // Action 2 in UC4
                     if (checkUserAccountLimit(user, ride.getPrice())) {
                         // Actions 3,4 in UC4
+                        ticket.removeRide(deviceToAdd.getName());
                         ticket.getDevicesAllowed().remove(ride);
                         user.account.Orders.remove(ride);
                         user.account.totalAmount -= ride.getPrice();

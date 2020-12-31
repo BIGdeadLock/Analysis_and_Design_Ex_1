@@ -70,6 +70,18 @@ public class Device {
         return true;
     }
 
+    public boolean suitableDevices(Child chosenChild){
+        if (this.getMinAge() == null || this.getMinAge() <= chosenChild.getAge()){
+            if(this.getMinHeight() == null || this.getMinHeight() <= chosenChild.getHeight()){
+                if(this.getMinWeight() == null || this.getMinWeight() <= chosenChild.getWeight()){
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
     public Double Delete(){
         Main.systemObjects.remove(this);
         for(EBracelet e:eBracelets){

@@ -148,15 +148,14 @@ public class Main {
                             et = chosenChild.geteTicket();
                             flag = 1;
                             System.out.println(et);
+
                             for (Map.Entry device : devicesMap.entrySet()) {
                                 Device temp = (Device)(device.getValue());
-                                if (temp.getMinAge() == null || temp.getMinAge() <= chosenChild.getAge()){
-                                    if(temp.getMinHeight() == null || temp.getMinHeight() <= chosenChild.getHeight()){
-                                        if(temp.getMinWeight() == null || temp.getMinWeight() <= chosenChild.getWeight()){
-                                            suitableForChild.add(temp);
-                                        }
-                                    }
+                                Boolean suitable = temp.suitableDevices(chosenChild);
+                                if (suitable){
+                                    suitableForChild.add(temp);
                                 }
+
                             }
                         }
                     }
@@ -233,7 +232,8 @@ public class Main {
                                         flag = 0;
                                         for (Map.Entry name : devicesMap.entrySet()) {
                                             if (newArg.equals(name.getKey())){
-                                                et.removeRide((String)name.getKey());
+                                                parkSystem.removeDeviceFromTicket(guardian1,et,(Device)name.getValue());
+                                                //et.removeRide((String)name.getKey());
                                                 flag = 1;
                                                 //System.out.println("the " + name.getKey() + " device was removed successfully\n");
                                             }
