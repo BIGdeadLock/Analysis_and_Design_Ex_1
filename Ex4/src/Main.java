@@ -207,7 +207,7 @@ public class Main {
                                     case "add":
                                         flag = 0;
                                         for (Map.Entry name : devicesMap.entrySet()) {
-                                            if (newArg.equals(name.getKey())){
+                                            if (newArg.toLowerCase().equals(((String)name.getKey()).toLowerCase())){
                                                 Device devToadd = (Device)(name.getValue());
 
                                                 flag = 1;
@@ -231,7 +231,7 @@ public class Main {
                                     case "remove":
                                         flag = 0;
                                         for (Map.Entry name : devicesMap.entrySet()) {
-                                            if (newArg.equals(name.getKey())){
+                                            if (newArg.toLowerCase().equals(((String)name.getKey()).toLowerCase())){
                                                 parkSystem.removeDeviceFromTicket(guardian1,et,(Device)name.getValue());
                                                 //et.removeRide((String)name.getKey());
                                                 flag = 1;
@@ -277,7 +277,7 @@ public class Main {
                 case "exit":
                     Main.systemObjects.remove(parkSystem);
                     System.out.println("Successfully exited the system. Goodbye!");
-                    break;
+                    return;
 
                 default:
                     System.out.println("Command Not Found. Please Try Again");

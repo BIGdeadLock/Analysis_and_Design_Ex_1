@@ -156,17 +156,25 @@ public class ParkSystem {
             user.account.totalAmount+=deviceToAdd.getPrice();
         }
         else {
+            boolean flag = false; // used to prevent looping on the same list (the devices) twice in the same function
             for (Device ride : ticket.getDevicesAllowed()) {
-                if (ride.getName().equals(deviceToAdd.getName())) {
+                if (ride.getName().toLowerCase().equals(deviceToAdd.getName().toLowerCase())) {
                     // Action 2 in UC4
                     if (checkUserAccountLimit(user, ride.getPrice())) {
                         // Actions 3,4 in UC4
-                        ticket.addRide(ride);
                         user.account.Orders.add(ride);
                         user.account.totalAmount += ride.getPrice();
+                        System.out.println("Updated the user account");
+                        flag = true;
                     }
+                    else
+                        System.out.println("Device price is over the limit of the user's account");
+
                 }
             }
+            if (flag)
+                ticket.addRide(deviceToAdd);
+
         }
     }
 
@@ -183,25 +191,31 @@ public class ParkSystem {
          * Get the price of the ride.
          * remove the device from the account and update the total amount
          */
-        if (ticket.getDevicesAllowed().size() == 0){
-            //ticket.addRide(deviceToAdd);
-            user.account.Orders.remove(deviceToAdd);
-            user.account.totalAmount-=deviceToAdd.getPrice();
+
+        ArrayList<Device> rides = ticket.getDevicesAllowed();
+        if (rides == null || rides.size() == 0){
+            System.out.println("No devices to remove from");
+            return;
         }
-        else {
-            for (Device ride : ticket.getDevicesAllowed()) {
-                if (ride.getName().equals(deviceToAdd.getName())) {
-                    // Action 2 in UC4
-                    if (checkUserAccountLimit(user, ride.getPrice())) {
-                        // Actions 3,4 in UC4
-                        ticket.removeRide(deviceToAdd.getName());
-                        ticket.getDevicesAllowed().remove(ride);
-                        user.account.Orders.remove(ride);
+
+        for (Device ride : ticket.getDevicesAllowed()) {
+            if (ride.getName().toLowerCase().equals(deviceToAdd.getName().toLowerCase())) {
+                    // Actions 3,4 in UC4
+                    user.account.Orders.remove(ride);
+                    if (user.account.totalAmount - ride.getPrice() <= 0)
+                        user.account.totalAmount = 0;
+                    else
                         user.account.totalAmount -= ride.getPrice();
-                    }
-                }
+                System.out.println("Updated the user account");
+
             }
+
         }
+        ticket.removeRide(deviceToAdd.getName());
+
+
+
+
     }
 
     public String CancelRegistration(Guardian guardian, Child child){
