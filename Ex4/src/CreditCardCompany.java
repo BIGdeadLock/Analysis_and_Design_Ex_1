@@ -19,7 +19,6 @@ public class CreditCardCompany {
         Date currentDate = new Date();
         if (card.Expiration.before(currentDate))
             return false;
-
         return true;
     }
 }

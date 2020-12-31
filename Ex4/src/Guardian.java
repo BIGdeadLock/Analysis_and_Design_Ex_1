@@ -98,6 +98,9 @@ public class Guardian {
             this.account.Delete();
             account = null;
         }
+        if(this.creditCard!=null){
+            this.creditCard=null;
+        }
         ID_Password = null;
         childID_Child = null;
         parkSystem = null;

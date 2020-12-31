@@ -83,11 +83,12 @@ public class Main {
                         ChildName = scanner.nextLine();
                     }
                     while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
-                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge),ChildName); // TODO: change to name
+                    guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge),ChildName);
                     Child child1 = guardian1.childID_Child.get(ChildID);
                     systemObjects.add(child1);
                     childrenMap.put(ChildName,child1);
-                    systemObjects.add(parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID)));
+                    ETicket eTicket1=parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID));
+                    systemObjects.add(eTicket1);
                     System.out.println("Please enter Credit Card Number");
                     String CardNumber = scanner.nextLine();
                     System.out.println("Please enter Credit Card Expiration Date in format DD/MM/YYYY");
@@ -98,8 +99,23 @@ public class Main {
                     String maxAmount = scanner.nextLine();
                     Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(CardDate);
                     CreditCard card = new CreditCard(CardNumber, date1,CardCVV);
-                    if (!parkSystem.companyApproval(card))
+                    if (!parkSystem.companyApproval(card)) {
+                        System.out.println("CreditCard not approved");
+                        child1.Delete();
+                        eTicket1.Delete();
+                        guardian1.Delete();
                         break;
+                    }
+                    try{
+                        Double.parseDouble(maxAmount);
+                    }
+                    catch (Exception e){
+                        System.out.println("MaxAmount must be Number");
+                        child1.Delete();
+                        eTicket1.Delete();
+                        guardian1.Delete();
+                        break;
+                    }
                     systemObjects.add(parkSystem.CreateAccount(guardian1,Double.parseDouble(maxAmount)));
                     parkSystem.AddChildUser(child1);
                     systemObjects.add(parkSystem.CreateEBracelet(child1));
@@ -110,7 +126,7 @@ public class Main {
                     int childSystemID = guardian1.getChildByID(ChildID).getSystemId();
                     int password = parkSystem.getChildPassword(childSystemID);
 
-                    System.out.println("The following account was created for child: " + ChildID);
+                    System.out.println("The following account was created for child: " + ChildName);
                     System.out.println("The child system id created: " + childSystemID);
                     System.out.println("The child password created: " + password);
                     System.out.println("\n");
