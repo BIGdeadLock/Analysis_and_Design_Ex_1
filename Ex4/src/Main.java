@@ -172,7 +172,7 @@ public class Main {
                                 String newArg = "", new_function_call = "";
 
                                 for (String function : functions_call.keySet()) {
-                                    if (gaurdChoice.contains(function)) {
+                                    if (gaurdChoice_split[0].toLowerCase().equals(function)) {
                                         int i = 1;
                                         while (i < gaurdChoice_split.length){
                                             newArg += gaurdChoice_split[i];
