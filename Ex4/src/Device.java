@@ -22,6 +22,12 @@ public class Device {
 
     public Device(String name){
         this.name = name;
+        this.minAge = 0.0;
+        this.minHeight = 0.0;
+        this.minWeight = 0.0;
+        this.open = true;
+        this.price=0.0;
+
     }
 
     //GET

@@ -9,6 +9,7 @@ public class Account {
 
     public Account(Guardian guardian,double maxamount) {
         this.MaxAmount=maxamount;
+        this.totalAmount = 0;
         setGuardian(guardian);
     }
 
