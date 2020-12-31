@@ -28,7 +28,7 @@ public class Main {
         Device MambaRide = new Device("Mamba Ride", 12.0, 1.4, null, 20.0, true);
         Device GiantWheel = new Device("Giant Wheel", null, null, null, 15.0, true);
         Device Carrousel = new Device("Carrousel", 8.0, null, null, 10.0, true);
-        ExtremeDevice ex = new ExtremeDevice("ex");
+        ExtremeDevice ex = new ExtremeDevice("ex",8.0, null, null, 10.0, true);
         systemObjects.add(MambaRide);
         systemObjects.add(GiantWheel);
         systemObjects.add(Carrousel);
@@ -203,8 +203,8 @@ public class Main {
                                                         break;
                                                     }
                                                 }
-
-                                                et.addRide(devToadd);
+                                                parkSystem.addDeviceToTicket(guardian1, et, devToadd);
+                                                //et.addRide(devToadd);
 
                                             }
                                         }

@@ -141,25 +141,30 @@ public class ParkSystem {
      * Action 1 in Use Case 4.
      * @param user - Guardian | The guardian that requested to add the ride
      * @param ticket - ETicket | the ticket to add the new ride to
-     * @param rideName - String | The name of the device
+     * @param deviceToAdd - Device | The name of the device
      */
-    public void addDeviceToTicket(Guardian user, ETicket ticket, String rideName){
+    public void addDeviceToTicket(Guardian user, ETicket ticket, Device deviceToAdd){
         /**
          * Find the ride from the list of allowed rides for the child.
          * Get the price of the ride.
          * Validate that the user can pay for it (MaxAmount).
          * If yes add the new ride to the list of rides.
          */
-
-        for (Device ride :ticket.getDevicesAllowed()) {
-            if (ride.getName() == rideName){
-                // Action 2 in UC4
-                if (checkUserAccountLimit(user, ride.getPrice())){
-                    // TODO: Change Status to a list of devices
-                    // Actions 3,4 in UC4
-                    ticket.getDevicesAllowed().add(ride);
-                    user.account.Orders.add(ride);
-                    user.account.totalAmount+=ride.getPrice();
+        if (ticket.getDevicesAllowed().size() == 0){
+            ticket.addRide(deviceToAdd);
+            user.account.Orders.add(deviceToAdd);
+            user.account.totalAmount+=deviceToAdd.getPrice();
+        }
+        else {
+            for (Device ride : ticket.getDevicesAllowed()) {
+                if (ride.getName().equals(deviceToAdd.getName())) {
+                    // Action 2 in UC4
+                    if (checkUserAccountLimit(user, ride.getPrice())) {
+                        // Actions 3,4 in UC4
+                        ticket.addRide(ride);
+                        user.account.Orders.add(ride);
+                        user.account.totalAmount += ride.getPrice();
+                    }
                 }
             }
         }
@@ -170,22 +175,29 @@ public class ParkSystem {
      * Action 1 in Use Case 4.
      * @param user - Guardian | The guardian that requested to add the ride
      * @param ticket - ETicket | the ticket to add the new ride to
-     * @param rideName - String | The name of the device
+     * @param deviceToAdd - String | The name of the device
      */
-    public void removeDeviceFromTicket(Guardian user, ETicket ticket, String rideName){
+    public void removeDeviceFromTicket(Guardian user, ETicket ticket, Device deviceToAdd){
         /**
          * Find the ride from the list of allowed rides for the child.
          * Get the price of the ride.
          * remove the device from the account and update the total amount
          */
-        for (Device ride :ticket.getDevicesAllowed()) {
-            if (ride.getName() == rideName){
-                // Action 2 in UC4
-                if (checkUserAccountLimit(user, ride.getPrice())){
-                     // Actions 3,4 in UC4
-                    ticket.getDevicesAllowed().remove(ride);
-                    user.account.Orders.remove(ride);
-                    user.account.totalAmount-=ride.getPrice();
+        if (ticket.getDevicesAllowed().size() == 0){
+            ticket.addRide(deviceToAdd);
+            user.account.Orders.remove(deviceToAdd);
+            user.account.totalAmount-=deviceToAdd.getPrice();
+        }
+        else {
+            for (Device ride : ticket.getDevicesAllowed()) {
+                if (ride.getName().equals(deviceToAdd.getName())) {
+                    // Action 2 in UC4
+                    if (checkUserAccountLimit(user, ride.getPrice())) {
+                        // Actions 3,4 in UC4
+                        ticket.getDevicesAllowed().remove(ride);
+                        user.account.Orders.remove(ride);
+                        user.account.totalAmount -= ride.getPrice();
+                    }
                 }
             }
         }

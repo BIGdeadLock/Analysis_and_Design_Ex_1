@@ -30,11 +30,12 @@ public class Guardian {
     public void setAccount(Account account) {
         if (account==null || this.account!=null)
             return;
-        if (account.getGuardian()!=this)
+        if (account.getGuardian()!=this) {
             if (account.getGuardian() == null) {
                 this.account = account;
                 account.setGuardian(this);
             }
+        }
         else
             this.account=account;
     }
