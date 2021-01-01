@@ -150,32 +150,27 @@ public class ParkSystem {
          * Validate that the user can pay for it (MaxAmount).
          * If yes add the new ride to the list of rides.
          */
+        if (user == null || ticket == null || deviceToAdd == null) {
+            System.out.println("There was a problem, can't add the device");
+            return;
+        }
         if (ticket.getDevicesAllowed().size() == 0){
             ticket.addRide(deviceToAdd);
             user.account.Orders.add(deviceToAdd);
             user.account.totalAmount+=deviceToAdd.getPrice();
+            System.out.println("Updated the user account");
         }
         else {
-            boolean flag = false; // used to prevent looping on the same list (the devices) twice in the same function
-            for (Device ride : ticket.getDevicesAllowed()) {
-                if (ride.getName().toLowerCase().equals(deviceToAdd.getName().toLowerCase())) {
-                    // Action 2 in UC4
-                    if (checkUserAccountLimit(user, ride.getPrice())) {
-                        // Actions 3,4 in UC4
-                        user.account.Orders.add(ride);
-                        user.account.totalAmount += ride.getPrice();
-                        System.out.println("Updated the user account");
-                        flag = true;
-                    }
-                    else
-                        System.out.println("Device price is over the limit of the user's account");
-
+            if (checkUserAccountLimit(user, deviceToAdd.getPrice())) {
+                    ticket.addRide(deviceToAdd);
+                    user.account.Orders.add(deviceToAdd);
+                    user.account.totalAmount += deviceToAdd.getPrice();
+                    System.out.println("Updated the user account");
                 }
-            }
-            if (flag)
-                ticket.addRide(deviceToAdd);
-
+            else
+                    System.out.println("Device price is over the limit of the user's account");
         }
+
     }
 
     /**
@@ -191,6 +186,10 @@ public class ParkSystem {
          * Get the price of the ride.
          * remove the device from the account and update the total amount
          */
+        if (user == null || ticket == null || deviceToAdd == null) {
+            System.out.println("There was a problem, can't add the device");
+            return;
+        }
 
         ArrayList<Device> rides = ticket.getDevicesAllowed();
         if (rides == null || rides.size() == 0){
@@ -207,7 +206,7 @@ public class ParkSystem {
                     else
                         user.account.totalAmount -= ride.getPrice();
                 System.out.println("Updated the user account");
-
+                break;
             }
 
         }

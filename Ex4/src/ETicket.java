@@ -42,24 +42,8 @@ public class ETicket {
     public void setChildWeight(Double childWeight) { this.childWeight = childWeight;}
     public void setChildHeight(Double childHeight) { this.childHeight = childHeight;}
     public void addRide(Device device){
-        int flag = 0;
-        if (devicesAllowed.size() == 0){
-            devicesAllowed.add(device);
-            System.out.println("the " + device.getName() + " device was added successfully\n");
-        }
-        else{
-            for (Device dev : devicesAllowed) {
-                if (dev.getName().toLowerCase().equals(device.getName().toLowerCase())){
-                    flag = 1;
-                    System.out.println("the " + device.getName() + " is already on the list");
-                    break;
-                }
-            }
-            if (flag == 0){
-                devicesAllowed.add(device);
-                System.out.println("the " + device.getName() + " device was added successfully\n");
-            }
-        }
+        devicesAllowed.add(device);
+        System.out.println("the " + device.getName() + " device was added successfully\n");
     }
 
     public void setparkSystem(ParkSystem parkSystem) {
