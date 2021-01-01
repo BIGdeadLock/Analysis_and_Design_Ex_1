@@ -144,7 +144,7 @@ public class Main {
                             Child chosenChild = (Child)(name.getValue());
                             et = chosenChild.geteTicket();
                             flag = 1;
-                            System.out.println(et);
+                            System.out.println(et.ShowDetails());
 
                             for (Map.Entry device : devicesMap.entrySet()) {
                                 Device temp = (Device)(device.getValue());

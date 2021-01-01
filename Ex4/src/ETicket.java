@@ -107,7 +107,7 @@ public class ETicket {
         Main.systemObjects.remove(this);
     }
 
-    public String toString(){
+    public String ShowDetails(){
         String myStr = "";
         myStr += "these are ticket's details:\n";
         myStr += "the date: "+ this.Entrance+"\n";
@@ -120,7 +120,6 @@ public class ETicket {
         myStr += "Child's  age: " + this.child.getAge() + "\n";
         myStr += "Child's Height: " + this.childHeight + "\n";
         myStr += "Child's Weight: " + this.childWeight + "\n";
-        //myStr += "status :" + this.Status + "\n";
         return myStr;
     }
 }
