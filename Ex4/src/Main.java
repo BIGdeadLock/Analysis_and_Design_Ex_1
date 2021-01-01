@@ -56,12 +56,9 @@ public class Main {
 
             for (String function : functions_call.keySet()) {
                 if (userChoice_split[0].toLowerCase().equals(function.toLowerCase())) {
-                    //if (functions_call.get(function).equals("*"))
                     argument = userChoice_split[userChoice_split.length - 1];
-                    //System.out.println(argument);
 
                     function_call = function;
-                    //System.out.println(function_call);
                     break;
                 }
             }
@@ -99,6 +96,8 @@ public class Main {
                     String maxAmount = scanner.nextLine();
                     Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(CardDate);
                     CreditCard card = new CreditCard(CardNumber, date1,CardCVV);
+                    systemObjects.add(card);
+                    guardian1.setCreditCard(card);
                     if (!parkSystem.companyApproval(card)) {
                         System.out.println("CreditCard not approved");
                         String ID=child1.getID();
