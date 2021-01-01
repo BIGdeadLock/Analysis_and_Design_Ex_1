@@ -137,7 +137,6 @@ public class Main {
                     break;
 
                 case "manageticket":
-                    //System.out.println(argument);
                     ArrayList<Device> suitableForChild = new ArrayList<>();
                     int flag = 0;
                     ETicket et = null;

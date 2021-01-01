@@ -80,8 +80,9 @@ public class ParkSystem {
     }
 
     public boolean validateGuardian(String childID, String childPASS){
-        if(childID == null || childPASS == null)
+        if(childID == null || childPASS == null || !childID_systemID.containsKey(childID))
             return false;
+
         int SystemId = childID_systemID.get(childID);
         int SystemPass = Integer.parseInt(childPASS);
 
