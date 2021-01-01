@@ -275,7 +275,7 @@ public class Main {
 
 
                 case "exit":
-                    Main.systemObjects.remove(parkSystem);
+                    systemObjects.clear();
                     System.out.println("Successfully exited the system. Goodbye!");
                     return;
 
