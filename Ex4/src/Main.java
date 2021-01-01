@@ -80,12 +80,12 @@ public class Main {
                         ChildName = scanner.nextLine();
                     }
                     while (!parkSystem.checkIfDetailsValid(ChildID,ChildAge));
-                    ETicket eTicket1=parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID));
-                    systemObjects.add(eTicket1);
                     guardian1.CreateChild(ChildID,Integer.parseInt(ChildAge),ChildName);
                     Child child1 = guardian1.childID_Child.get(ChildID);
                     systemObjects.add(child1);
                     childrenMap.put(ChildName,child1);
+                    ETicket eTicket1=parkSystem.CreateETicket(guardian1.childID_Child.get(ChildID));
+                    systemObjects.add(eTicket1);
                     System.out.println("Please enter Credit Card Number");
                     String CardNumber = scanner.nextLine();
                     System.out.println("Please enter Credit Card Expiration Date in format DD/MM/YYYY");
