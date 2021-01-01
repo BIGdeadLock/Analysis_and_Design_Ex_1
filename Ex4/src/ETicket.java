@@ -43,7 +43,6 @@ public class ETicket {
     public void setChildHeight(Double childHeight) { this.childHeight = childHeight;}
     public void addRide(Device device){
         devicesAllowed.add(device);
-        System.out.println("the " + device.getName() + " device was added successfully\n");
     }
 
     public void setparkSystem(ParkSystem parkSystem) {
@@ -83,7 +82,6 @@ public class ETicket {
             if (dev.getName().toLowerCase().equals(name.toLowerCase())){
                 devicesAllowed.remove(dev);
                 flag = 1;
-                System.out.println("the " + name.toLowerCase() + " device was removed successfully");
                 break;
             }
         }

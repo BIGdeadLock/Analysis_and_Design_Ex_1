@@ -4,8 +4,6 @@ import java.util.HashMap;
 public class Guardian {
     CreditCard creditCard;
     HashMap<Integer, Integer> ID_Password = new HashMap<Integer, Integer>();
-    int Weight;
-    int Age;
     HashMap<String, Child> childID_Child = new HashMap<String, Child>();
     Account account;
     ParkSystem parkSystem;

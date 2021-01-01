@@ -144,7 +144,6 @@ public class Main {
                     for (Map.Entry name : childrenMap.entrySet()) {
                         if (argument.equals(name.getKey())){
                             Child chosenChild = (Child)(name.getValue());
-                            //et = chosenChild.geteBracelet().geteTicket();
                             et = chosenChild.geteTicket();
                             flag = 1;
                             System.out.println(et);
@@ -181,8 +180,8 @@ public class Main {
                                 }
 
                                 System.out.println("\nplease choose an option:");
-                                System.out.println("1. Add ride *rideName*");
-                                System.out.println("2. Remove ride *rideName*");
+                                System.out.println("1. Add ride");
+                                System.out.println("2. Remove ride");
                                 String gaurdChoice = scanner.nextLine();
                                 String[] gaurdChoice_split = gaurdChoice.split(" ");
                                 String newArg = "", new_function_call = "";
@@ -196,9 +195,7 @@ public class Main {
                                                 newArg+= " " ;
                                             }
                                             i+= 1;
-                                            //System.out.println(newArg);
                                         }
-                                        //newArg = gaurdChoice_split[gaurdChoice_split.length - 1];
                                         new_function_call = function;
                                         break;
                                     }
@@ -210,7 +207,6 @@ public class Main {
                                             if (newArg.toLowerCase().equals(((String)name.getKey()).toLowerCase())){
                                                 Device devToadd = (Device)(name.getValue());
 
-                                                flag = 1;
                                                 if (devToadd.checkExtreme()){
                                                     System.out.println("This is an Extreme device , do you allow it?(Y/N)");
                                                     String allow = scanner.nextLine();
@@ -220,7 +216,7 @@ public class Main {
                                                     }
                                                 }
                                                 parkSystem.addDeviceToTicket(guardian1,et,devToadd);
-                                               // et.addRide(devToadd);
+                                                flag = 1;
 
                                             }
                                         }
@@ -233,9 +229,7 @@ public class Main {
                                         for (Map.Entry name : devicesMap.entrySet()) {
                                             if (newArg.toLowerCase().equals(((String)name.getKey()).toLowerCase())){
                                                 parkSystem.removeDeviceFromTicket(guardian1,et,(Device)name.getValue());
-                                                //et.removeRide((String)name.getKey());
                                                 flag = 1;
-                                                //System.out.println("the " + name.getKey() + " device was removed successfully\n");
                                             }
                                         }
                                         if (flag == 0){

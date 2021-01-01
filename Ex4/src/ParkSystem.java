@@ -6,14 +6,13 @@ import java.util.Date;
 public class ParkSystem {
     int ChildSystemID =1;
     int Passwords = 1;
-    HashMap<Integer, Child> childUsers = new HashMap<Integer, Child>();  //TODO: need to delete from here
     HashMap<Integer, Integer> ID_Password = new HashMap<Integer, Integer>();
     HashMap<String, Integer> childID_systemID = new HashMap<String, Integer>();
     ArrayList<Guardian> guardians = new ArrayList<>();
-    ArrayList<EBracelet> eBracelets = new ArrayList<>(); // TODO: check if to join as child: ticket, bracelet
+    ArrayList<EBracelet> eBracelets = new ArrayList<>();
     HashMap<String, ETicket> childID_eTicket = new HashMap<String, ETicket>();
     ParkMap parkMap;
-    CreditCardCompany creditCardCompany = new CreditCardCompany();
+    CreditCardCompany creditCardCompany;
 
     public ParkSystem(ParkMap parkMap) {
         this.parkMap = parkMap;
@@ -22,7 +21,6 @@ public class ParkSystem {
     }
 
     //get
-    public HashMap<Integer, Child> getChildUsers() { return childUsers; }
     public HashMap<Integer, Integer> getID_Password() {return ID_Password; }
     public ArrayList<Guardian> getGuardians() { return this.guardians; }
     public ArrayList<EBracelet> geteBracelets() { return eBracelets; }
@@ -30,7 +28,6 @@ public class ParkSystem {
     public ParkMap getMap() { return parkMap; }
 
     //set
-    public void setChildUsers(HashMap<Integer, Child> childUsers) { this.childUsers = childUsers;}
     public void setID_Password(HashMap<Integer, Integer> ID_Password) { this.ID_Password = ID_Password; }
     public void setMap(ParkMap parkMap) {
         if (parkMap ==null || this.parkMap !=null)
@@ -159,6 +156,7 @@ public class ParkSystem {
             user.account.Orders.add(deviceToAdd);
             user.account.totalAmount+=deviceToAdd.getPrice();
             System.out.println("Updated the user account");
+            System.out.println("the " + deviceToAdd.getName() + " device was added successfully\n");
         }
         else {
             if (checkUserAccountLimit(user, deviceToAdd.getPrice())) {
@@ -166,7 +164,8 @@ public class ParkSystem {
                     user.account.Orders.add(deviceToAdd);
                     user.account.totalAmount += deviceToAdd.getPrice();
                     System.out.println("Updated the user account");
-                }
+                    System.out.println("the " + deviceToAdd.getName() + " device was added successfully\n");
+            }
             else
                     System.out.println("Device price is over the limit of the user's account");
         }
@@ -206,13 +205,12 @@ public class ParkSystem {
                     else
                         user.account.totalAmount -= ride.getPrice();
                 System.out.println("Updated the user account");
+                System.out.println("the " + deviceToAdd.getName() + " device was removed successfully");
                 break;
             }
 
         }
         ticket.removeRide(deviceToAdd.getName());
-
-
 
 
     }
@@ -236,8 +234,6 @@ public class ParkSystem {
         if(!ID_Password.containsKey(child_id))
             return null;
         ID_Password.remove(child_id);
-      // guardian.DeleteChild(childID);
-
         return child_total_payment;
     }
 
@@ -287,7 +283,6 @@ public class ParkSystem {
     public void AddChildUser(Child child){
         if(child==null)
             return;
-        this.childUsers.put(ChildSystemID,child);
         child.getGuardian().addUserAndPassword(this.ChildSystemID, this.Passwords);
         child.setSystemID(this.ChildSystemID);
         this.childID_systemID.put(child.getID(),this.ChildSystemID);
@@ -308,7 +303,6 @@ public class ParkSystem {
         else {
             childID_eTicket.remove(ChildID);
             int sysmID=childID_systemID.get(ChildID);
-            childUsers.remove(sysmID);
             ID_Password.remove(sysmID);
             childID_systemID.remove(ChildID);
         }
