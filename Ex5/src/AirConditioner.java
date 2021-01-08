@@ -22,18 +22,28 @@ public class AirConditioner {
     }
 
     public void setC_temp(int temp){
-        System.out.println("set c_temp to " + temp);
-        C_Temperature = temp;
-        modeState.changeCTemp();
-        operationState.changeCTemp();
+        if (validate(temp)) {
+            System.out.println("set c_temp to " + temp);
+            C_Temperature = temp;
+            modeState.changeCTemp();
+            operationState.changeCTemp();
+        }
+        else
+            System.out.println("Wrong input");
     }
 
 
     public void setR_temp(int temp){
-        System.out.println("set r_temp to " + temp);
-        R_Temperature = temp;
-        modeState.changeCTemp();
-        operationState.changeRTemp();
+        if (validate(temp)) {
+
+            System.out.println("set r_temp to " + temp);
+            R_Temperature = temp;
+            modeState.changeCTemp();
+            operationState.changeRTemp();
+        }
+        else
+            System.out.println("Wrong input");
+
     }
 
     public void on(){
@@ -58,4 +68,13 @@ public class AirConditioner {
     public State getOperationState() {
         return operationState;
     }
+
+    public boolean validate(Object obj) {
+        if (obj instanceof Integer && (Integer)obj >= 0){
+            return true;
+        }
+        return false;
+    }
+
+
 }
